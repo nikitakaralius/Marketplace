@@ -2,16 +2,16 @@ namespace Marketplace.Domain.Services;
 
 public interface ICurrencyLookup
 {
-    CurrencyDetails FindCurrency(string currencyCode);
+    Currency FindCurrency(string currencyCode);
 }
 
-public sealed class CurrencyDetails
+public sealed class Currency
 {
-    public string CurrencyCode { get; init; } = "";
+    public string Code { get; init; } = "";
 
     public bool InUse { get; init; } = true;
 
     public int DecimalPlaces { get; init; }
 
-    public static CurrencyDetails None => new() {InUse = false};
+    public static Currency None => new() {InUse = false};
 }

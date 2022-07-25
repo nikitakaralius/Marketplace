@@ -4,13 +4,13 @@ public sealed class ClassifiedAdTests
 {
     private sealed class FakeCurrencyLookup : ICurrencyLookup
     {
-        public CurrencyDetails FindCurrency(string currencyCode) =>
+        public Currency FindCurrency(string currencyCode) =>
             currencyCode switch
             {
-                "USD" => new() {CurrencyCode = "USD", DecimalPlaces = 2},
-                "EUR" => new() {CurrencyCode = "EUR", DecimalPlaces = 2},
-                "JPY" => new() {CurrencyCode = "JPY", DecimalPlaces = 0},
-                _     => CurrencyDetails.None
+                "USD" => new() {Code = "USD", DecimalPlaces = 2},
+                "EUR" => new() {Code = "EUR", DecimalPlaces = 2},
+                "JPY" => new() {Code = "JPY", DecimalPlaces = 0},
+                _     => Currency.None
             };
     }
 

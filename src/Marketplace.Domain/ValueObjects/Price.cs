@@ -13,6 +13,8 @@ public sealed record Price : Money
         }
     }
 
+    internal Price(decimal amount, string currencyCode) : base(amount, new Currency {Code = currencyCode}) { }
+
     public new static Price FromDecimal(decimal amount, string currency, ICurrencyLookup currencyLookup) =>
         new(amount, currency, currencyLookup);
 }

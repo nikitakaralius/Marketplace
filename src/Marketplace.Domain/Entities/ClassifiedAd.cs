@@ -14,18 +14,12 @@ public sealed class ClassifiedAd : Entity<ClassifiedAd>
         MarkedAsSold
     }
 
-    public ClassifiedAd(ClassifiedAdId id, UserId ownerId)
-    {
-        Id = id;
-        OwnerId = ownerId;
-        State = AdState.Inactive;
-        EnsureValidState();
-        Raise(new Events.ClassifiedAdCreated(Id, OwnerId));
-    }
+    public ClassifiedAd(ClassifiedAdId id, UserId ownerId) =>
+        Apply(new Events.ClassifiedAdCreated(id, ownerId));
 
-    public ClassifiedAdId Id { get; }
+    public ClassifiedAdId Id { get; private set; } = null!;
 
-    public UserId OwnerId { get; }
+    public UserId OwnerId { get; private set; } = null!;
 
     public ClassifiedAdTitle? Title { get; private set; }
 
@@ -37,35 +31,45 @@ public sealed class ClassifiedAd : Entity<ClassifiedAd>
 
     public AdState State { get; private set; }
 
-    public void SetTitle(ClassifiedAdTitle title)
+    public void SetTitle(ClassifiedAdTitle title) =>
+        Apply(new Events.ClassifiedAdTitleChanged(Id, title));
+
+    public void UpdateDescription(ClassifiedAdDescription description) =>
+        Apply(new Events.ClassifiedAdDescriptionUpdated(Id, description));
+
+    public void UpdatePrice(Price price) =>
+        Apply(new Events.ClassifiedAdPriceUpdated(Id, price.Amount, price.Currency.Code));
+
+    public void RequestToPublish() =>
+        Apply(new Events.ClassifiedAdSentForReview(Id));
+
+    protected override void When(IEvent<ClassifiedAd> @event)
     {
-        Title = title;
-        EnsureValidState();
-        Raise(new Events.ClassifiedAdTitleChanged(Id, Title));
+        switch (@event)
+        {
+            case Events.ClassifiedAdCreated e:
+                Id = new ClassifiedAdId(e.Id);
+                OwnerId = new UserId(e.OwnerId);
+                State = AdState.Inactive;
+                break;
+            case Events.ClassifiedAdTitleChanged e:
+                Title = ClassifiedAdTitle.FromString(e.Title);
+                break;
+            case Events.ClassifiedAdDescriptionUpdated e:
+                Description = ClassifiedAdDescription.FromString(e.Description);
+                break;
+            case Events.ClassifiedAdPriceUpdated e:
+                Price = new Price(e.Price, e.CurrencyCode);
+                break;
+            case Events.ClassifiedAdSentForReview _:
+                State = AdState.PendingReview;
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(@event));
+        }
     }
 
-    public void UpdateDescription(ClassifiedAdDescription description)
-    {
-        Description = description;
-        EnsureValidState();
-        Raise(new Events.ClassifiedAdDescriptionUpdated(Id, Description));
-    }
-
-    public void UpdatePrice(Price price)
-    {
-        Price = price;
-        EnsureValidState();
-        Raise(new Events.ClassifiedAdPriceUpdated(Id, price.Amount, price.CurrencyCode));
-    }
-
-    public void RequestToPublish()
-    {
-        State = AdState.PendingReview;
-        EnsureValidState();
-        Raise(new Events.ClassifiedAdSentForReview(Id));
-    }
-
-    private void EnsureValidState()
+    protected override void EnsureValidState()
     {
         bool valid = State switch
         {

@@ -29,13 +29,13 @@ public record Money
         }
 
         Amount = amount;
-        CurrencyCode = currencyCode;
+        Currency = currency;
     }
 
-    private Money(decimal amount, string currencyCode)
+    protected Money(decimal amount, Currency currency)
     {
         Amount = amount;
-        CurrencyCode = currencyCode;
+        Currency = currency;
     }
 
     public static Money FromDecimal(decimal amount, string currency, ICurrencyLookup currencyLookup) =>
@@ -46,31 +46,31 @@ public record Money
 
     public decimal Amount { get; }
 
-    public string CurrencyCode { get; }
+    public Currency Currency { get; }
 
     public Money Add(Money summand)
     {
-        if (CurrencyCode != summand.CurrencyCode)
+        if (Currency != summand.Currency)
         {
             throw new CurrencyMismatchException("Cannot sum amounts with different currencies");
         }
 
-        return new Money(Amount + summand.Amount, CurrencyCode);
+        return new Money(Amount + summand.Amount, Currency);
     }
 
     public Money Subtract(Money subtrahend)
     {
-        if (CurrencyCode != subtrahend.CurrencyCode)
+        if (Currency != subtrahend.Currency)
         {
             throw new CurrencyMismatchException("Cannot subtract amounts with different currencies");
         }
 
-        return new Money(Amount - subtrahend.Amount, CurrencyCode);
+        return new Money(Amount - subtrahend.Amount, Currency);
     }
 
     public static Money operator +(Money firstSummand, Money secondSummand) => firstSummand.Add(secondSummand);
 
     public static Money operator -(Money minuend, Money subtrahend) => minuend.Subtract(subtrahend);
 
-    public override string ToString() => $"{CurrencyCode} {Amount}";
+    public override string ToString() => $"{Currency} {Amount}";
 }
