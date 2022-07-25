@@ -2,11 +2,25 @@ namespace Marketplace.Tests.ValueObjects;
 
 public sealed class PriceTests
 {
+    private sealed class FakeCurrencyLookup : ICurrencyLookup
+    {
+        public CurrencyDetails FindCurrency(string currencyCode) =>
+            currencyCode switch
+            {
+                "USD" => new() {CurrencyCode = "USD", DecimalPlaces = 2},
+                "EUR" => new() {CurrencyCode = "EUR", DecimalPlaces = 2},
+                "JPY" => new() {CurrencyCode = "JPY", DecimalPlaces = 0},
+                _     => CurrencyDetails.None
+            };
+    }
+
+    private static readonly ICurrencyLookup CurrencyLookup = new FakeCurrencyLookup();
+
     [Fact]
     public void PriceObjectsWithTheSameAmountShouldBeEqual()
     {
-        Price first = new(5);
-        Price second = new(5);
+        Price first = Price.FromDecimal(5, "EUR", CurrencyLookup);
+        Price second = Price.FromDecimal(5, "EUR", CurrencyLookup);
         first.Should().Be(second);
         (first == second).Should().BeTrue();
         (first != second).Should().BeFalse();
@@ -15,7 +29,7 @@ public sealed class PriceTests
     [Fact]
     public void ThrowsExceptionWhenInitializingPriceWithNegativeAmount()
     {
-        var initializing = () => new Price(-5);
+        var initializing = () => Price.FromDecimal(-5, "EUR", CurrencyLookup);
         initializing.Should().Throw<ArgumentException>();
     }
 }

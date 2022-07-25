@@ -80,15 +80,14 @@ public sealed class MoneyTests
     public void CreatingMoneyWithMoreDecimalsThanCurrencyHasShouldNotBeAllowed()
     {
         var creating1 = () => Money.FromDecimal(10.12345667m, "EUR", CurrencyLookup);
-        var creating2 = () => Money.FromString("10.0000000", "EUR", CurrencyLookup);
+        var creating2 = () => Money.FromString("10.124135", "EUR", CurrencyLookup);
         creating1.Should().Throw<Exception>();
         creating2.Should().Throw<Exception>();
     }
 
     [Fact]
     public void UsageOfUnknownCurrencyShouldNotBeAllowed()
-    {
-        var usage = () => Money.FromDecimal(123, "RUB", CurrencyLookup);
+    { var usage = () => Money.FromDecimal(123, "RUB", CurrencyLookup);
         usage.Should().Throw<Exception>();
     }
 }
