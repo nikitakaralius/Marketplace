@@ -5,7 +5,7 @@ namespace Marketplace.Domain;
 
 using ClassifiedAdEvent = IEvent<ClassifiedAd>;
 
-public sealed class Events
+public static class Events
 {
     public sealed record ClassifiedAdCreated(Guid Id, Guid OwnerId) : ClassifiedAdEvent;
 
