@@ -1,6 +1,6 @@
 namespace Marketplace.Domain.Exceptions;
 
-internal sealed class InvalidEntityStateException : Exception
+public sealed class InvalidEntityStateException : Exception
 {
     public InvalidEntityStateException(object entity, string message)
         : base($"Entity {entity.GetType().Name} state change rejected, {message}")
