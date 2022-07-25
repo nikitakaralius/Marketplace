@@ -13,4 +13,6 @@ public sealed record ClassifiedAdId
 
         _value = value;
     }
+
+    public static implicit operator Guid(ClassifiedAdId id) => id._value;
 }

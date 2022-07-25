@@ -17,4 +17,6 @@ public sealed record ClassifiedAdTitle
     }
 
     public static ClassifiedAdTitle FromString(string title) => new(title);
+
+    public static implicit operator string(ClassifiedAdTitle title) => title._value;
 };

@@ -13,4 +13,6 @@ public sealed record UserId
 
         _value = value;
     }
+
+    public static implicit operator Guid(UserId id) => id._value;
 }

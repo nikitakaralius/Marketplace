@@ -8,7 +8,7 @@ public abstract class Entity<T>
 
     protected void Raise(IEvent<T> @event) => _events.Add(@event);
 
-    public IEnumerable<IEvent<T>> GetChanges() => _events;
+    public IEnumerable<IEvent<T>> Changes() => _events;
 
     public void ClearChanges() => _events.Clear();
 }

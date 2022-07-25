@@ -20,6 +20,7 @@ public sealed class ClassifiedAd : Entity<ClassifiedAd>
         OwnerId = ownerId;
         State = AdState.Inactive;
         EnsureValidState();
+        Raise(new Events.ClassifiedAdCreated(Id, OwnerId));
     }
 
     public ClassifiedAdId Id { get; }
@@ -40,24 +41,28 @@ public sealed class ClassifiedAd : Entity<ClassifiedAd>
     {
         Title = title;
         EnsureValidState();
+        Raise(new Events.ClassifiedAdTitleChanged(Id, Title));
     }
 
     public void UpdateDescription(ClassifiedAdDescription description)
     {
         Description = description;
         EnsureValidState();
+        Raise(new Events.ClassifiedAdDescriptionUpdated(Id, Description));
     }
 
     public void UpdatePrice(Price price)
     {
         Price = price;
         EnsureValidState();
+        Raise(new Events.ClassifiedAdPriceUpdated(Id, price.Amount, price.CurrencyCode));
     }
 
     public void RequestToPublish()
     {
         State = AdState.PendingReview;
         EnsureValidState();
+        Raise(new Events.ClassifiedAdSentForReview(Id));
     }
 
     private void EnsureValidState()
