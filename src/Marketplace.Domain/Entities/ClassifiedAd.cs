@@ -1,9 +1,10 @@
 using Marketplace.Domain.Exceptions;
 using Marketplace.Domain.ValueObjects;
+using Marketplace.Framework;
 
 namespace Marketplace.Domain.Entities;
 
-public sealed class ClassifiedAd
+public sealed class ClassifiedAd : Entity<ClassifiedAd>
 {
     public enum AdState
     {
