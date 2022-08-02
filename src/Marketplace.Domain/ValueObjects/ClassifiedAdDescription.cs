@@ -2,10 +2,7 @@ namespace Marketplace.Domain.ValueObjects;
 
 public sealed record ClassifiedAdDescription
 {
-    private ClassifiedAdDescription(string value)
-    {
-        Value = value;
-    }
+    internal ClassifiedAdDescription(string value) => Value = value;
 
     public static ClassifiedAdDescription FromString(string description) => new(description);
 

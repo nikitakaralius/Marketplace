@@ -6,14 +6,18 @@ public sealed record ClassifiedAdTitle
 
     private ClassifiedAdTitle(string value)
     {
+        CheckValidity(value);
+        _value = value;
+    }
+
+    private static void CheckValidity(string value)
+    {
         if (value.Length > 100)
         {
             throw new ArgumentOutOfRangeException(
                 nameof(value),
                 "Title cannot be longer than 100 characters");
         }
-
-        _value = value;
     }
 
     public static ClassifiedAdTitle FromString(string title) => new(title);
