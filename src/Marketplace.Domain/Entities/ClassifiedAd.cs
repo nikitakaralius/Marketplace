@@ -45,28 +45,32 @@ public sealed class ClassifiedAd : Entity<ClassifiedAd>
 
     protected override void When(IEvent<ClassifiedAd> @event)
     {
-        switch (@event)
+        Action when = @event switch
         {
-            case Events.ClassifiedAdCreated e:
-                Id = new ClassifiedAdId(e.Id);
-                OwnerId = new UserId(e.OwnerId);
-                State = AdState.Inactive;
-                break;
-            case Events.ClassifiedAdTitleChanged e:
-                Title = ClassifiedAdTitle.FromString(e.Title);
-                break;
-            case Events.ClassifiedAdDescriptionUpdated e:
+            Events.ClassifiedAdCreated e => () =>
+            {
+                (Id, OwnerId, State) =
+                    (new ClassifiedAdId(e.Id), new UserId(e.OwnerId), AdState.Inactive);
+            },
+            Events.ClassifiedAdDescriptionUpdated e => () =>
+            {
                 Description = ClassifiedAdDescription.FromString(e.Description);
-                break;
-            case Events.ClassifiedAdPriceUpdated e:
+            },
+            Events.ClassifiedAdPriceUpdated e  => () =>
+            {
                 Price = new Price(e.Price, e.CurrencyCode);
-                break;
-            case Events.ClassifiedAdSentForReview _:
+            },
+            Events.ClassifiedAdSentForReview => () =>
+            {
                 State = AdState.PendingReview;
-                break;
-            default:
-                throw new ArgumentOutOfRangeException(nameof(@event));
-        }
+            },
+            Events.ClassifiedAdTitleChanged e  => () =>
+            {
+                Title = ClassifiedAdTitle.FromString(e.Title);
+            },
+            _ => throw new ArgumentOutOfRangeException(nameof(@event))
+        };
+        when();
     }
 
     protected override void EnsureValidState()

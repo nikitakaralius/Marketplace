@@ -5,7 +5,7 @@ public interface ICurrencyLookup
     Currency FindCurrency(string currencyCode);
 }
 
-public sealed class Currency
+public sealed record Currency
 {
     public string Code { get; init; } = "";
 

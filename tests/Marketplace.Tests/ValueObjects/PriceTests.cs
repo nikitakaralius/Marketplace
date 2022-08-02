@@ -19,8 +19,8 @@ public sealed class PriceTests
     [Fact]
     public void PriceObjectsWithTheSameAmountShouldBeEqual()
     {
-        Price first = Price.FromDecimal(5, "EUR", CurrencyLookup);
-        Price second = Price.FromDecimal(5, "EUR", CurrencyLookup);
+        var first = Price.FromDecimal(5, "EUR", CurrencyLookup);
+        var second = Price.FromDecimal(5, "EUR", CurrencyLookup);
         first.Should().Be(second);
         (first == second).Should().BeTrue();
         (first != second).Should().BeFalse();
