@@ -4,28 +4,30 @@ public static class ClassifiedAds
 {
     public static class V1
     {
-        public class Create
+        public interface ICommand { }
+
+        public sealed class Create : ICommand
         {
             public Guid Id { get; init; }
 
             public Guid OwnerId { get; init; }
         }
 
-        public class SetTitle
+        public sealed class SetTitle : ICommand
         {
             public Guid Id { get; init; }
 
             public string Title { get; init; } = "";
         }
 
-        public class UpdateDescription
+        public sealed class UpdateDescription : ICommand
         {
             public Guid Id { get; init; }
 
             public string Description { get; init; } = "";
         }
 
-        public class UpdatePrice
+        public sealed class UpdatePrice : ICommand
         {
             public Guid Id { get; init; }
 
@@ -34,7 +36,7 @@ public static class ClassifiedAds
             public string Currency { get; init; } = "";
         }
 
-        public class RequestToPublish
+        public sealed class RequestToPublish : ICommand
         {
             public Guid Id { get; init; }
         }

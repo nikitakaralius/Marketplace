@@ -1,8 +1,11 @@
+using Marketplace.Framework;
+using static Marketplace.Contracts.ClassifiedAds;
+
 namespace Marketplace.Api;
 
-public sealed class ClassifiedAdsApplicationService
+public sealed class ClassifiedAdsApplicationService : IApplicationService<V1.ICommand>
 {
-    public void Handle(ClassifiedAds.V1.Create request)
+    public async Task HandleAsync(V1.ICommand command)
     {
 
     }
