@@ -31,6 +31,14 @@ public sealed class ClassifiedAdsApplicationService : IApplicationService<V1.ICo
         };
     }
 
+    private async Task<ClassifiedAd> HandleUpdateAsync(Guid id, Action<ClassifiedAd> operation)
+    {
+        var entity = await LoadClassifiedAd(id);
+        operation(entity);
+        await _entityStore.SaveAsync(entity);
+        return entity;
+    }
+
     private async Task<ClassifiedAd> CreateAsync(V1.Create request)
     {
         string entityId = request.Id.ToString();
@@ -48,40 +56,32 @@ public sealed class ClassifiedAdsApplicationService : IApplicationService<V1.ICo
         return entity;
     }
 
-    private async Task<ClassifiedAd> SetTitleAsync(V1.SetTitle request)
-    {
-        var entity = await LoadClassifiedAd(request.Id);
-        var title = ClassifiedAdTitle.FromString(request.Title);
-        entity.SetTitle(title);
-        await _entityStore.SaveAsync(entity);
-        return entity;
-    }
+    private async Task<ClassifiedAd> SetTitleAsync(V1.SetTitle request) =>
+        await HandleUpdateAsync(request.Id, entity =>
+        {
+            var title = ClassifiedAdTitle.FromString(request.Title);
+            entity.SetTitle(title);
+        });
 
-    private async Task<ClassifiedAd> UpdateDescriptionAsync(V1.UpdateDescription request)
-    {
-        var entity = await LoadClassifiedAd(request.Id);
-        var description = ClassifiedAdDescription.FromString(request.Description);
-        entity.UpdateDescription(description);
-        await _entityStore.SaveAsync(entity);
-        return entity;
-    }
+    private async Task<ClassifiedAd> UpdateDescriptionAsync(V1.UpdateDescription request) =>
+        await HandleUpdateAsync(request.Id, entity =>
+        {
+            var description = ClassifiedAdDescription.FromString(request.Description);
+            entity.UpdateDescription(description);
+        });
 
-    private async Task<ClassifiedAd> UpdatePriceAsync(V1.UpdatePrice request)
-    {
-        var entity = await LoadClassifiedAd(request.Id);
-        var price = Price.FromDecimal(request.Price, request.Currency, _currencyLookup);
-        entity.UpdatePrice(price);
-        await _entityStore.SaveAsync(entity);
-        return entity;
-    }
+    private async Task<ClassifiedAd> UpdatePriceAsync(V1.UpdatePrice request) =>
+        await HandleUpdateAsync(request.Id, entity =>
+        {
+            var price = Price.FromDecimal(request.Price, request.Currency, _currencyLookup);
+            entity.UpdatePrice(price);
+        });
 
-    private async Task<ClassifiedAd> RequestToPublishAsync(V1.RequestToPublish request)
-    {
-        var entity = await LoadClassifiedAd(request.Id);
-        entity.RequestToPublish();
-        await _entityStore.SaveAsync(entity);
-        return entity;
-    }
+    private async Task<ClassifiedAd> RequestToPublishAsync(V1.RequestToPublish request) =>
+        await HandleUpdateAsync(request.Id, entity =>
+        {
+            entity.RequestToPublish();
+        });
 
     private async Task<ClassifiedAd> LoadClassifiedAd(Guid entityId)
     {
