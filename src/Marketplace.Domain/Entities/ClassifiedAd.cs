@@ -4,7 +4,7 @@ using Marketplace.Framework;
 
 namespace Marketplace.Domain.Entities;
 
-public sealed class ClassifiedAd : Entity<ClassifiedAd>
+public sealed class ClassifiedAd : AggregateRoot
 {
     public enum AdState
     {
@@ -43,9 +43,17 @@ public sealed class ClassifiedAd : Entity<ClassifiedAd>
     public void RequestToPublish() =>
         Apply(new Events.ClassifiedAdSentForReview(Id));
 
-    protected override void When(IEvent<ClassifiedAd> @event)
+    public void AddPicture(Uri pictureUri, PictureSize size) =>
+        Apply(new Events.PictureAddedToClassifiedAd(
+                  Id,
+                  new Guid(),
+                  pictureUri.ToString(),
+                  size.Height,
+                  size.Width));
+
+    protected override void When(IEvent eventHappened)
     {
-        Action when = @event switch
+        Action when = eventHappened switch
         {
             Events.ClassifiedAdCreated e => () =>
             {
@@ -56,19 +64,20 @@ public sealed class ClassifiedAd : Entity<ClassifiedAd>
             {
                 Description = ClassifiedAdDescription.FromString(e.Description);
             },
-            Events.ClassifiedAdPriceUpdated e  => () =>
+            Events.ClassifiedAdPriceUpdated e => () =>
             {
                 Price = new Price(e.Price, e.CurrencyCode);
             },
-            Events.ClassifiedAdSentForReview => () =>
+            Events.ClassifiedAdSentForReview  => () =>
             {
                 State = AdState.PendingReview;
             },
-            Events.ClassifiedAdTitleChanged e  => () =>
+            Events.ClassifiedAdTitleChanged e => () =>
             {
                 Title = ClassifiedAdTitle.FromString(e.Title);
             },
-            _ => throw new ArgumentOutOfRangeException(nameof(@event))
+            _ =>
+                throw new ArgumentOutOfRangeException(nameof(eventHappened))
         };
         when();
     }

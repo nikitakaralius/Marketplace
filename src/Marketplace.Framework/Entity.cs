@@ -1,21 +1,21 @@
 namespace Marketplace.Framework;
 
-public abstract class Entity<TEntity>
+public abstract class Entity
 {
-    private readonly List<IEvent<TEntity>> _changes = new();
+    private readonly List<IEvent> _changes = new();
 
-    protected void Apply(IEvent<TEntity> @event)
+    protected void Apply(IEvent @event)
     {
-        When(@event);
+        When(eventHappened: @event);
         EnsureValidState();
         _changes.Add(@event);
     }
 
-    public IEnumerable<IEvent<TEntity>> Changes() => _changes;
+    public IEnumerable<IEvent> Changes() => _changes;
 
     public void ClearChanges() => _changes.Clear();
 
-    protected abstract void When(IEvent<TEntity> @event);
+    protected abstract void When(IEvent eventHappened);
 
     protected abstract void EnsureValidState();
 }
