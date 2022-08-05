@@ -1,6 +1,11 @@
 namespace Marketplace.Framework;
 
-public interface IEvent<T>
+public interface IEvent
+{
+
+}
+
+public interface IEvent<T> : IEvent
 {
 
 }
