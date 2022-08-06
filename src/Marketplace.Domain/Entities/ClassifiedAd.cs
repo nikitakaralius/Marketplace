@@ -1,10 +1,11 @@
 using Marketplace.Domain.Exceptions;
+using Marketplace.Domain.Rules;
 using Marketplace.Domain.ValueObjects;
 using Marketplace.Framework;
 
 namespace Marketplace.Domain.Entities;
 
-public sealed class ClassifiedAd : Entity<ClassifiedAd>
+public sealed class ClassifiedAd : AggregateRoot
 {
     public enum AdState
     {
@@ -14,8 +15,12 @@ public sealed class ClassifiedAd : Entity<ClassifiedAd>
         MarkedAsSold
     }
 
+    private readonly List<Picture> _pictures = new();
+
     public ClassifiedAd(ClassifiedAdId id, UserId ownerId) =>
         Apply(new Events.ClassifiedAdCreated(id, ownerId));
+
+    #region Properties
 
     public ClassifiedAdId Id { get; private set; } = null!;
 
@@ -31,6 +36,14 @@ public sealed class ClassifiedAd : Entity<ClassifiedAd>
 
     public AdState State { get; private set; }
 
+    public IEnumerable<Picture> Pictures => _pictures;
+
+    #endregion
+
+    private Picture? FirstPicture => _pictures.FirstOrDefault();
+
+    #region Events
+
     public void SetTitle(ClassifiedAdTitle title) =>
         Apply(new Events.ClassifiedAdTitleChanged(Id, title));
 
@@ -43,9 +56,31 @@ public sealed class ClassifiedAd : Entity<ClassifiedAd>
     public void RequestToPublish() =>
         Apply(new Events.ClassifiedAdSentForReview(Id));
 
-    protected override void When(IEvent<ClassifiedAd> @event)
+    public void AddPicture(Uri pictureUri, PictureSize size) =>
+        Apply(new Events.PictureAddedToClassifiedAd(
+                  ClassifiedAdId: Id,
+                  PictureId: new Guid(),
+                  Url: pictureUri.ToString(),
+                  Height: size.Height,
+                  Width: size.Width,
+                  Order: _pictures.Max(p => p.Order) + 1));
+
+    public void ResizePicture(PictureId pictureId, PictureSize newSize)
     {
-        Action when = @event switch
+        var picture = FindPictureBy(pictureId);
+        if (picture is null)
+        {
+            throw new InvalidOperationException("Cannot resize picture that does not belong to this ad");
+        }
+
+        picture.Resize(newSize);
+    }
+
+    #endregion
+
+    protected override void When(IEvent eventHappened)
+    {
+        Action when = eventHappened switch
         {
             Events.ClassifiedAdCreated e => () =>
             {
@@ -56,19 +91,25 @@ public sealed class ClassifiedAd : Entity<ClassifiedAd>
             {
                 Description = ClassifiedAdDescription.FromString(e.Description);
             },
-            Events.ClassifiedAdPriceUpdated e  => () =>
+            Events.ClassifiedAdPriceUpdated e => () =>
             {
                 Price = new Price(e.Price, e.CurrencyCode);
             },
-            Events.ClassifiedAdSentForReview => () =>
+            Events.ClassifiedAdSentForReview  => () =>
             {
                 State = AdState.PendingReview;
             },
-            Events.ClassifiedAdTitleChanged e  => () =>
+            Events.ClassifiedAdTitleChanged e => () =>
             {
                 Title = ClassifiedAdTitle.FromString(e.Title);
             },
-            _ => throw new ArgumentOutOfRangeException(nameof(@event))
+            Events.PictureAddedToClassifiedAd e => () =>
+            {
+                Picture picture = new(Apply);
+                ApplyToEntity(picture, e);
+                _pictures.Add(picture);
+            },
+            _ => throw new ArgumentOutOfRangeException(nameof(eventHappened))
         };
         when();
     }
@@ -80,12 +121,14 @@ public sealed class ClassifiedAd : Entity<ClassifiedAd>
             AdState.PendingReview =>
                 Title is not null
                 && Description is not null
-                && Price?.Amount > 0,
+                && Price?.Amount > 0
+                && FirstPicture.HasCorrectSize(),
             AdState.Active =>
                 Title is not null
                 && Description is not null
                 && Price?.Amount > 0
-                && ApprovedBy is not null,
+                && ApprovedBy is not null
+                && FirstPicture.HasCorrectSize(),
             _ => true
         };
 
@@ -94,4 +137,7 @@ public sealed class ClassifiedAd : Entity<ClassifiedAd>
             throw new InvalidEntityStateException(this, $"Post checks failed in state {State}");
         }
     }
+
+    private Picture? FindPictureBy(PictureId id) =>
+        Pictures.FirstOrDefault(p => p.Id == id);
 }

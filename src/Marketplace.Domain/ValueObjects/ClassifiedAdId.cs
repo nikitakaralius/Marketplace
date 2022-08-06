@@ -15,4 +15,6 @@ public sealed record ClassifiedAdId
     }
 
     public static implicit operator Guid(ClassifiedAdId id) => id._value;
+
+    public static implicit operator ClassifiedAdId(string value) => new(Guid.Parse(value));
 }

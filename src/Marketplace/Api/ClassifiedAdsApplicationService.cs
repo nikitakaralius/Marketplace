@@ -8,12 +8,12 @@ namespace Marketplace.Api;
 
 public sealed class ClassifiedAdsApplicationService : IApplicationService<V1.ICommand>
 {
-    private readonly IEntityStore _entityStore;
+    private readonly IClassifiedAdRepository _repository;
     private readonly ICurrencyLookup _currencyLookup;
 
-    public ClassifiedAdsApplicationService(IEntityStore entityStore, ICurrencyLookup currencyLookup)
+    public ClassifiedAdsApplicationService(IClassifiedAdRepository repository, ICurrencyLookup currencyLookup)
     {
-        _entityStore = entityStore;
+        _repository = repository;
         _currencyLookup = currencyLookup;
     }
 
@@ -35,14 +35,14 @@ public sealed class ClassifiedAdsApplicationService : IApplicationService<V1.ICo
     {
         var entity = await LoadClassifiedAd(id);
         operation(entity);
-        await _entityStore.SaveAsync(entity);
+        await _repository.SaveAsync(entity);
         return entity;
     }
 
     private async Task<ClassifiedAd> CreateAsync(V1.Create request)
     {
         string entityId = request.Id.ToString();
-        if (await _entityStore.ExistsAsync<ClassifiedAd>(entityId))
+        if (await _repository.ExistsAsync(entityId))
         {
             throw new InvalidOperationException($"Entity with id {entityId} already exists");
         }
@@ -51,7 +51,7 @@ public sealed class ClassifiedAdsApplicationService : IApplicationService<V1.ICo
             new ClassifiedAdId(request.Id),
             new UserId(request.OwnerId));
 
-        await _entityStore.SaveAsync(entity);
+        await _repository.SaveAsync(entity);
 
         return entity;
     }
@@ -78,15 +78,12 @@ public sealed class ClassifiedAdsApplicationService : IApplicationService<V1.ICo
         });
 
     private async Task<ClassifiedAd> RequestToPublishAsync(V1.RequestToPublish request) =>
-        await HandleUpdateAsync(request.Id, entity =>
-        {
-            entity.RequestToPublish();
-        });
+        await HandleUpdateAsync(request.Id, entity => { entity.RequestToPublish(); });
 
     private async Task<ClassifiedAd> LoadClassifiedAd(Guid entityId)
     {
         string id = entityId.ToString();
-        var entity = await _entityStore.LoadAsync<ClassifiedAd>(id);
+        var entity = await _repository.LoadAsync(id);
         return entity ?? throw new InvalidOperationException($"Entity with {id} cannot be found");
     }
 }
