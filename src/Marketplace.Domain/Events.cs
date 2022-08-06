@@ -24,5 +24,7 @@ public static class Events
         string Url,
         int Height,
         int Width,
-        int Order) : ClassifiedAdEvent;
+        int Order) : ClassifiedAdEvent, PictureEvent;
+
+    public sealed record PictureResized(Guid PictureId, int Height, int Width) : PictureEvent;
 }

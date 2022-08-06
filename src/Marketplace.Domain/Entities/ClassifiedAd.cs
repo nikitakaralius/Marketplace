@@ -1,4 +1,5 @@
 using Marketplace.Domain.Exceptions;
+using Marketplace.Domain.Rules;
 using Marketplace.Domain.ValueObjects;
 using Marketplace.Framework;
 
@@ -39,6 +40,8 @@ public sealed class ClassifiedAd : AggregateRoot
 
     #endregion
 
+    private Picture? FirstPicture => _pictures.FirstOrDefault();
+
     #region Events
 
     public void SetTitle(ClassifiedAdTitle title) =>
@@ -61,6 +64,17 @@ public sealed class ClassifiedAd : AggregateRoot
                   Height: size.Height,
                   Width: size.Width,
                   Order: _pictures.Max(p => p.Order) + 1));
+
+    public void ResizePicture(PictureId pictureId, PictureSize newSize)
+    {
+        var picture = FindPictureBy(pictureId);
+        if (picture is null)
+        {
+            throw new InvalidOperationException("Cannot resize picture that does not belong to this ad");
+        }
+
+        picture.Resize(newSize);
+    }
 
     #endregion
 
@@ -107,12 +121,14 @@ public sealed class ClassifiedAd : AggregateRoot
             AdState.PendingReview =>
                 Title is not null
                 && Description is not null
-                && Price?.Amount > 0,
+                && Price?.Amount > 0
+                && FirstPicture.HasCorrectSize(),
             AdState.Active =>
                 Title is not null
                 && Description is not null
                 && Price?.Amount > 0
-                && ApprovedBy is not null,
+                && ApprovedBy is not null
+                && FirstPicture.HasCorrectSize(),
             _ => true
         };
 
@@ -121,4 +137,7 @@ public sealed class ClassifiedAd : AggregateRoot
             throw new InvalidEntityStateException(this, $"Post checks failed in state {State}");
         }
     }
+
+    private Picture? FindPictureBy(PictureId id) =>
+        Pictures.FirstOrDefault(p => p.Id == id);
 }

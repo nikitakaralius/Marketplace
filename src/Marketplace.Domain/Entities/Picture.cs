@@ -32,8 +32,19 @@ public sealed class Picture : Entity
                 Location = new(e.Url);
                 Order = e.Order;
             },
+            Events.PictureResized e => () =>
+            {
+                Size = new PictureSize
+                {
+                    Height = e.Height,
+                    Width = e.Width
+                };
+            },
             _ => throw new ArgumentOutOfRangeException(nameof(eventHappened))
         };
         when();
     }
+
+    public void Resize(PictureSize newSize) =>
+        Apply(new Events.PictureResized(Id.Value, newSize.Height, newSize.Width));
 }

@@ -19,7 +19,7 @@ public abstract class AggregateRoot : IInternalEventHandler
         _changes.Add(@event);
     }
 
-    protected void ApplyToEntity(IInternalEventHandler entity, IEvent @event) =>
+    protected void ApplyToEntity(IInternalEventHandler? entity, IEvent @event) =>
         entity?.Handle(@event);
 
     void IInternalEventHandler.Handle(IEvent @event) =>
