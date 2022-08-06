@@ -14,8 +14,12 @@ public sealed class ClassifiedAd : AggregateRoot
         MarkedAsSold
     }
 
+    private readonly List<Picture> _pictures = new();
+
     public ClassifiedAd(ClassifiedAdId id, UserId ownerId) =>
         Apply(new Events.ClassifiedAdCreated(id, ownerId));
+
+    #region Properties
 
     public ClassifiedAdId Id { get; private set; } = null!;
 
@@ -31,6 +35,12 @@ public sealed class ClassifiedAd : AggregateRoot
 
     public AdState State { get; private set; }
 
+    public IEnumerable<Picture> Pictures => _pictures;
+
+    #endregion
+
+    #region Events
+
     public void SetTitle(ClassifiedAdTitle title) =>
         Apply(new Events.ClassifiedAdTitleChanged(Id, title));
 
@@ -45,11 +55,14 @@ public sealed class ClassifiedAd : AggregateRoot
 
     public void AddPicture(Uri pictureUri, PictureSize size) =>
         Apply(new Events.PictureAddedToClassifiedAd(
-                  Id,
-                  new Guid(),
-                  pictureUri.ToString(),
-                  size.Height,
-                  size.Width));
+                  ClassifiedAdId: Id,
+                  PictureId: new Guid(),
+                  Url: pictureUri.ToString(),
+                  Height: size.Height,
+                  Width: size.Width,
+                  Order: _pictures.Max(p => p.Order) + 1));
+
+    #endregion
 
     protected override void When(IEvent eventHappened)
     {
@@ -76,8 +89,13 @@ public sealed class ClassifiedAd : AggregateRoot
             {
                 Title = ClassifiedAdTitle.FromString(e.Title);
             },
-            _ =>
-                throw new ArgumentOutOfRangeException(nameof(eventHappened))
+            Events.PictureAddedToClassifiedAd e => () =>
+            {
+                Picture picture = new(Apply);
+                ApplyToEntity(picture, e);
+                _pictures.Add(picture);
+            },
+            _ => throw new ArgumentOutOfRangeException(nameof(eventHappened))
         };
         when();
     }

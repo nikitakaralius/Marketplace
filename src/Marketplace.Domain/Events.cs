@@ -23,5 +23,6 @@ public static class Events
         Guid PictureId,
         string Url,
         int Height,
-        int Width) : ClassifiedAdEvent;
+        int Width,
+        int Order) : ClassifiedAdEvent;
 }

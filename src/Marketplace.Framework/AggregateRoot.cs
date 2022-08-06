@@ -1,6 +1,6 @@
 namespace Marketplace.Framework;
 
-public abstract class AggregateRoot
+public abstract class AggregateRoot : IInternalEventHandler
 {
     private readonly List<IEvent> _changes = new();
 
@@ -18,4 +18,10 @@ public abstract class AggregateRoot
         EnsureValidState();
         _changes.Add(@event);
     }
+
+    protected void ApplyToEntity(IInternalEventHandler entity, IEvent @event) =>
+        entity?.Handle(@event);
+
+    void IInternalEventHandler.Handle(IEvent @event) =>
+        When(eventHappened: @event);
 }
