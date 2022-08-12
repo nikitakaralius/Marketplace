@@ -17,6 +17,8 @@ public sealed record Price : Money
 
     private Price() { }
 
+    public static readonly Price None = new();
+
     public new static Price FromDecimal(decimal amount, string currency, ICurrencyLookup currencyLookup) =>
         new(amount, currency, currencyLookup);
 }

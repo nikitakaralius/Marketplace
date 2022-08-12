@@ -30,13 +30,13 @@ public sealed class ClassifiedAd : AggregateRoot
 
     public UserId OwnerId { get; private set; } = null!;
 
-    public ClassifiedAdTitle? Title { get; private set; }
+    public ClassifiedAdTitle Title { get; private set; } = ClassifiedAdTitle.None;
 
-    public ClassifiedAdDescription? Description { get; private set; }
+    public ClassifiedAdDescription Description { get; private set; } = ClassifiedAdDescription.None;
 
-    public Price? Price { get; private set; }
+    public Price Price { get; private set; } = Price.None;
 
-    public UserId? ApprovedBy { get; private set; }
+    public UserId ApprovedBy { get; private set; } = UserId.None;
 
     public AdState State { get; private set; }
 
@@ -123,15 +123,15 @@ public sealed class ClassifiedAd : AggregateRoot
         bool valid = State switch
         {
             AdState.PendingReview =>
-                Title is not null
-                && Description is not null
-                && Price?.Amount > 0
+                Title != ClassifiedAdTitle.None
+                && Description != ClassifiedAdDescription.None
+                && Price.Amount > 0
                 && FirstPicture.HasCorrectSize(),
             AdState.Active =>
-                Title is not null
-                && Description is not null
-                && Price?.Amount > 0
-                && ApprovedBy is not null
+                Title != ClassifiedAdTitle.None
+                && Description != ClassifiedAdDescription.None
+                && Price.Amount > 0
+                && ApprovedBy != UserId.None
                 && FirstPicture.HasCorrectSize(),
             _ => true
         };

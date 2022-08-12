@@ -2,7 +2,7 @@ namespace Marketplace.Domain.ValueObjects;
 
 public sealed record ClassifiedAdTitle
 {
-    public readonly string Value = null!;
+    public readonly string Value = "";
 
     private ClassifiedAdTitle(string value)
     {
@@ -21,6 +21,8 @@ public sealed record ClassifiedAdTitle
                 "Title cannot be longer than 100 characters");
         }
     }
+
+    public static readonly ClassifiedAdTitle None = new();
 
     public static ClassifiedAdTitle FromString(string title) => new(title);
 

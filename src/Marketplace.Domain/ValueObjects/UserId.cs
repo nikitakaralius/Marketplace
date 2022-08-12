@@ -16,5 +16,7 @@ public sealed record UserId
 
     private UserId() { }
 
+    public static readonly UserId None = new();
+
     public static implicit operator Guid(UserId id) => id.Value;
 }
