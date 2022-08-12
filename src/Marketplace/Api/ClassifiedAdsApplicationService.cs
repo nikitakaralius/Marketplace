@@ -1,5 +1,7 @@
-using Marketplace.Domain.Services;
-using Marketplace.Domain.ValueObjects;
+using Marketplace.Domain.ClassifiedAd;
+using Marketplace.Domain.ClassifiedAd.ValueObjects;
+using Marketplace.Domain.Shared;
+using Marketplace.Domain.UserProfile;
 using Marketplace.Framework;
 using static Marketplace.Contracts.ClassifiedAds;
 

@@ -1,4 +1,4 @@
-namespace Marketplace.Domain.Exceptions;
+namespace Marketplace.Domain.Shared.Exceptions;
 
 public sealed class InvalidEntityStateException : Exception
 {

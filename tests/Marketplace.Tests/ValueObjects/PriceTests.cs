@@ -1,3 +1,6 @@
+using Marketplace.Domain.ClassifiedAd.ValueObjects;
+using Marketplace.Domain.Shared;
+
 namespace Marketplace.Tests.ValueObjects;
 
 public sealed class PriceTests

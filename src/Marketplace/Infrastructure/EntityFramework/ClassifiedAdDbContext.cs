@@ -1,3 +1,4 @@
+using Marketplace.Domain.ClassifiedAd;
 using Marketplace.Infrastructure.EntityFramework.Configuration;
 using Microsoft.EntityFrameworkCore;
 

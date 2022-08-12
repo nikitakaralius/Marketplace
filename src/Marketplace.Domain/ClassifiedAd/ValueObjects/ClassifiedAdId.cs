@@ -1,4 +1,4 @@
-namespace Marketplace.Domain.ValueObjects;
+namespace Marketplace.Domain.ClassifiedAd.ValueObjects;
 
 public sealed record ClassifiedAdId
 {

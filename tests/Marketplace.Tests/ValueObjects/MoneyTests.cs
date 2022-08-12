@@ -1,3 +1,7 @@
+using Marketplace.Domain.Shared;
+using Marketplace.Domain.Shared.Exceptions;
+using Marketplace.Domain.Shared.ValueObjects;
+
 namespace Marketplace.Tests.ValueObjects;
 
 public sealed class MoneyTests

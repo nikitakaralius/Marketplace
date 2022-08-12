@@ -1,6 +1,7 @@
-using Marketplace.Domain.Services;
+using Marketplace.Domain.Shared;
+using Marketplace.Domain.Shared.ValueObjects;
 
-namespace Marketplace.Domain.ValueObjects;
+namespace Marketplace.Domain.ClassifiedAd.ValueObjects;
 
 public sealed record Price : Money
 {

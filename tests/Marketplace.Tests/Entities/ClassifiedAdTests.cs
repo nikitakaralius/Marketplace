@@ -1,3 +1,9 @@
+using Marketplace.Domain.ClassifiedAd;
+using Marketplace.Domain.ClassifiedAd.ValueObjects;
+using Marketplace.Domain.Shared;
+using Marketplace.Domain.Shared.Exceptions;
+using Marketplace.Domain.UserProfile;
+
 namespace Marketplace.Tests.Entities;
 
 public sealed class ClassifiedAdTests
