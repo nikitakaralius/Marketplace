@@ -8,8 +8,11 @@ public class ClassifiedAdsCommandsApi : ControllerBase
 {
     private readonly ClassifiedAdsApplicationService _applicationService;
 
-    public ClassifiedAdsCommandsApi(ClassifiedAdsApplicationService applicationService) =>
+    public ClassifiedAdsCommandsApi(ClassifiedAdsApplicationService applicationService)
+    {
+        throw new InvalidOperationException("Minimal APIs refactoring required");
         _applicationService = applicationService;
+    }
 
     [HttpPost]
     public async Task<IActionResult> Post(V1.Create request)
