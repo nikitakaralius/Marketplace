@@ -7,7 +7,7 @@ public record Money
 {
     public readonly decimal Amount;
 
-    public readonly Currency Currency;
+    public readonly Currency Currency = null!;
 
     protected Money(decimal amount, string currencyCode, ICurrencyLookup currencyLookup)
     {
@@ -41,6 +41,8 @@ public record Money
         Amount = amount;
         Currency = currency;
     }
+
+    protected Money() { }
 
     public static Money FromDecimal(decimal amount, string currency, ICurrencyLookup currencyLookup) =>
         new(amount, currency, currencyLookup);

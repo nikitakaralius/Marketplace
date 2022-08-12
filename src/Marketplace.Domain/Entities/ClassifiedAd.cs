@@ -20,6 +20,8 @@ public sealed class ClassifiedAd : AggregateRoot
     public ClassifiedAd(ClassifiedAdId id, UserId ownerId) =>
         Apply(new Events.ClassifiedAdCreated(id, ownerId));
 
+    private ClassifiedAd() { }
+
     #region Properties
 
     public Guid DatabaseId { get; private set; }

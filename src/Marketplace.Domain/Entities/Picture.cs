@@ -9,6 +9,8 @@ public sealed class Picture : Entity
     {
     }
 
+    private Picture() { }
+
     internal PictureId Id { get; private set; } = null!;
 
     internal PictureSize Size { get; private set; } = null!;

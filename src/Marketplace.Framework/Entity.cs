@@ -2,10 +2,12 @@ namespace Marketplace.Framework;
 
 public abstract class Entity : IInternalEventHandler
 {
-    private readonly Action<IEvent> _applier;
+    private readonly Action<IEvent> _applier = null!;
 
     protected Entity(Action<IEvent> applier) =>
         _applier = applier;
+
+    protected Entity() { }
 
     protected abstract void When(IEvent eventHappened);
 
