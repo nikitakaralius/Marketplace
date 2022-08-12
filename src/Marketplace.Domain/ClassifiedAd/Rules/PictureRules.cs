@@ -1,6 +1,4 @@
-using Marketplace.Domain.Entities;
-
-namespace Marketplace.Domain.Rules;
+namespace Marketplace.Domain.ClassifiedAd.Rules;
 
 internal static class PictureRules
 {

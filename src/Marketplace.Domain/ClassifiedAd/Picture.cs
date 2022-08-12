@@ -1,7 +1,7 @@
-using Marketplace.Domain.ValueObjects;
+using Marketplace.Domain.ClassifiedAd.ValueObjects;
 using Marketplace.Framework;
 
-namespace Marketplace.Domain.Entities;
+namespace Marketplace.Domain.ClassifiedAd;
 
 public sealed class Picture : Entity
 {

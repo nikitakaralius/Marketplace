@@ -1,5 +1,5 @@
-using Marketplace.Domain.Services;
-using Marketplace.Domain.ValueObjects;
+using Marketplace.Domain.ClassifiedAd;
+using Marketplace.Domain.ClassifiedAd.ValueObjects;
 
 namespace Marketplace.Infrastructure.EntityFramework;
 

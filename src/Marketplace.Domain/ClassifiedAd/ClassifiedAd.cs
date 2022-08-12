@@ -1,9 +1,10 @@
-using Marketplace.Domain.Exceptions;
-using Marketplace.Domain.Rules;
-using Marketplace.Domain.ValueObjects;
+using Marketplace.Domain.ClassifiedAd.Rules;
+using Marketplace.Domain.ClassifiedAd.ValueObjects;
+using Marketplace.Domain.Shared.Exceptions;
+using Marketplace.Domain.UserProfile;
 using Marketplace.Framework;
 
-namespace Marketplace.Domain.Entities;
+namespace Marketplace.Domain.ClassifiedAd;
 
 public sealed class ClassifiedAd : AggregateRoot
 {

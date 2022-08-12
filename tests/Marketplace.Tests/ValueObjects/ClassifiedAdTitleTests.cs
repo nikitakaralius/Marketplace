@@ -1,3 +1,5 @@
+using Marketplace.Domain.ClassifiedAd.ValueObjects;
+
 namespace Marketplace.Tests.ValueObjects;
 
 public sealed class ClassifiedAdTitleTests

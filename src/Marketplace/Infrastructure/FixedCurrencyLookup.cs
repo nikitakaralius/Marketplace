@@ -1,4 +1,4 @@
-using Marketplace.Domain.Services;
+using Marketplace.Domain.Shared;
 
 namespace Marketplace.Infrastructure;
 

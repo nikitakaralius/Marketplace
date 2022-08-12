@@ -1,7 +1,6 @@
-using Marketplace.Domain.Exceptions;
-using Marketplace.Domain.Services;
+using Marketplace.Domain.Shared.Exceptions;
 
-namespace Marketplace.Domain.ValueObjects;
+namespace Marketplace.Domain.Shared.ValueObjects;
 
 public record Money
 {

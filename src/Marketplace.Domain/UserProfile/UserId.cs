@@ -1,4 +1,4 @@
-namespace Marketplace.Domain.ValueObjects;
+namespace Marketplace.Domain.UserProfile;
 
 public sealed record UserId
 {
