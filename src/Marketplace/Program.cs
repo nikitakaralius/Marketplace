@@ -6,7 +6,7 @@ var app = builder.Build();
 
 app.EnsureDatabase();
 
-app.MapDefaultControllerRoute();
+app.MapClassifiedAdsCommandsApi();
 
 app.UseSwagger();
 app.UseSwaggerUI(c =>
