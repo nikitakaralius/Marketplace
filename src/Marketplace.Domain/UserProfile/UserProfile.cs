@@ -56,12 +56,28 @@ public sealed class UserProfile : AggregateRoot
         var @event = eventHappened as UserEvent;
         Action when = @event switch
         {
-            ProfilePhotoUpdated e    => () => { },
-            UserDisplayNameUpdated e => () => { },
-            UserFullNameUpdated e    => () => { },
-            UserRegistered e         => () => { },
+            UserRegistered e => () =>
+            {
+                DatabaseId = e.UserId;
+                Id = new(e.UserId);
+                FullName = new(e.FullName);
+                DisplayName = new(e.DisplayName);
+            },
+            UserFullNameUpdated e => () =>
+            {
+                FullName = new(e.FullName);
+            },
+            UserDisplayNameUpdated e => () =>
+            {
+                DisplayName = new(e.DisplayName);
+            },
+            ProfilePhotoUpdated e => () =>
+            {
+                PhotoUrl = new(e.PhotoUrl);
+            },
             _                        => throw new ArgumentOutOfRangeException(nameof(@event))
         };
+        when();
     }
 
     protected override void EnsureValidState()
