@@ -1,6 +1,6 @@
 namespace Marketplace.Framework;
 
-internal interface IUnitOfWork
+public interface IUnitOfWork
 {
     Task CommitAsync();
 }
