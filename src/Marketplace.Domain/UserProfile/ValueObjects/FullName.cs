@@ -13,5 +13,7 @@ public sealed record FullName
 
     public static implicit operator string(FullName fullName) => fullName.Value;
 
+    public static readonly FullName None = new();
+
     private FullName() { }
 }

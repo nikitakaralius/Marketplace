@@ -2,7 +2,7 @@ using Marketplace.Domain.Shared;
 
 namespace Marketplace.Domain.UserProfile.ValueObjects;
 
-internal sealed record DisplayName
+public sealed record DisplayName
 {
     public readonly string Value = "";
 
@@ -18,6 +18,8 @@ internal sealed record DisplayName
     }
 
     public static implicit operator string(DisplayName displayName) => displayName.Value;
+
+    public static readonly DisplayName None = new();
 
     private DisplayName() { }
 }

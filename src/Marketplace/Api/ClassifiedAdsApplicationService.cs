@@ -2,6 +2,7 @@ using Marketplace.Domain.ClassifiedAd;
 using Marketplace.Domain.ClassifiedAd.ValueObjects;
 using Marketplace.Domain.Shared;
 using Marketplace.Domain.UserProfile;
+using Marketplace.Domain.UserProfile.ValueObjects;
 using Marketplace.Framework;
 using static Marketplace.Contracts.ClassifiedAds;
 
