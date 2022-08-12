@@ -1,0 +1,17 @@
+namespace Marketplace.Domain.UserProfile.ValueObjects;
+
+public sealed record FullName
+{
+    public readonly string Value = "";
+
+    internal FullName(string value) => Value = value;
+
+    public static FullName FromString(string fullName) =>
+        string.IsNullOrWhiteSpace(fullName) ?
+            new FullName(fullName)
+            : throw new ArgumentNullException(nameof(fullName));
+
+    public static implicit operator string(FullName fullName) => fullName.Value;
+
+    private FullName() { }
+}
