@@ -10,7 +10,7 @@ public class ClassifiedAdsCommandsApi : ControllerBase
 
     public ClassifiedAdsCommandsApi(ClassifiedAdsApplicationService applicationService)
     {
-        throw new InvalidOperationException("Minimal APIs refactoring required");
+        // throw new InvalidOperationException("Minimal APIs refactoring required");
         _applicationService = applicationService;
     }
 
