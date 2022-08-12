@@ -2,7 +2,7 @@ namespace Marketplace.Domain.ValueObjects;
 
 public sealed record ClassifiedAdId
 {
-    private readonly Guid _value;
+    public readonly Guid Value;
 
     public ClassifiedAdId(Guid value)
     {
@@ -11,10 +11,12 @@ public sealed record ClassifiedAdId
             throw new ArgumentException("Classified Ad id cannot be empty", nameof(value));
         }
 
-        _value = value;
+        Value = value;
     }
 
-    public static implicit operator Guid(ClassifiedAdId id) => id._value;
+    public static implicit operator Guid(ClassifiedAdId id) => id.Value;
 
     public static implicit operator ClassifiedAdId(string value) => new(Guid.Parse(value));
+
+    public override string ToString() => Value.ToString();
 }

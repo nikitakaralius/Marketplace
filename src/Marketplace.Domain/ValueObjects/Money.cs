@@ -5,6 +5,10 @@ namespace Marketplace.Domain.ValueObjects;
 
 public record Money
 {
+    public readonly decimal Amount;
+
+    public readonly Currency Currency;
+
     protected Money(decimal amount, string currencyCode, ICurrencyLookup currencyLookup)
     {
         if (string.IsNullOrEmpty(currencyCode))
@@ -43,10 +47,6 @@ public record Money
 
     public static Money FromString(string amount, string currency, ICurrencyLookup currencyLookup) =>
         new(decimal.Parse(amount), currency, currencyLookup);
-
-    public decimal Amount { get; }
-
-    public Currency Currency { get; }
 
     public Money Add(Money summand)
     {

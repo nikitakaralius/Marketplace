@@ -2,7 +2,7 @@ namespace Marketplace.Domain.ValueObjects;
 
 public sealed record UserId
 {
-    private readonly Guid _value;
+    public readonly Guid Value;
 
     public UserId(Guid value)
     {
@@ -11,8 +11,8 @@ public sealed record UserId
             throw new ArgumentException("User id cannot be empty", nameof(value));
         }
 
-        _value = value;
+        Value = value;
     }
 
-    public static implicit operator Guid(UserId id) => id._value;
+    public static implicit operator Guid(UserId id) => id.Value;
 }
