@@ -1,4 +1,3 @@
-using Marketplace.Domain.Entities;
 using Marketplace.Domain.Services;
 using Marketplace.Domain.ValueObjects;
 using Marketplace.Framework;
