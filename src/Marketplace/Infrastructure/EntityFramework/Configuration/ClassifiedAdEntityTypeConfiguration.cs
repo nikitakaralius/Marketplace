@@ -5,5 +5,5 @@ namespace Marketplace.Infrastructure.EntityFramework.Configuration;
 
 internal sealed class ClassifiedAdEntityTypeConfiguration : IEntityTypeConfiguration<ClassifiedAd>
 {
-    public void Configure(EntityTypeBuilder<ClassifiedAd> builder) => builder.HasKey(x => x.Id);
+    public void Configure(EntityTypeBuilder<ClassifiedAd> builder) => builder.HasKey(x => x.DatabaseId);
 }

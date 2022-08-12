@@ -22,6 +22,8 @@ public sealed class ClassifiedAd : AggregateRoot
 
     #region Properties
 
+    public Guid DatabaseId { get; private set; }
+
     public ClassifiedAdId Id { get; private set; } = null!;
 
     public UserId OwnerId { get; private set; } = null!;
@@ -84,8 +86,8 @@ public sealed class ClassifiedAd : AggregateRoot
         {
             Events.ClassifiedAdCreated e => () =>
             {
-                (Id, OwnerId, State) =
-                    (new ClassifiedAdId(e.Id), new UserId(e.OwnerId), AdState.Inactive);
+                (Id, DatabaseId, OwnerId, State) =
+                    (new ClassifiedAdId(e.Id), e.Id, new UserId(e.OwnerId), AdState.Inactive);
             },
             Events.ClassifiedAdDescriptionUpdated e => () =>
             {
