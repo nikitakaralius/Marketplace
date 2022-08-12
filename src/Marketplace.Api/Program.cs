@@ -1,3 +1,5 @@
+using Marketplace.ClassifiedAds;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddInfrastructure(builder.Configuration);

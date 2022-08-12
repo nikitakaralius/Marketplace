@@ -15,7 +15,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{CA8DE6C7-854
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{C9E996C0-6D9B-4FBF-A4D9-6A2F57615A81}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Marketplace", "src\Marketplace\Marketplace.csproj", "{B4DAC730-BCAE-4F4E-9B70-657F896672A0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Marketplace.Api", "src\Marketplace.Api\Marketplace.Api.csproj", "{B4DAC730-BCAE-4F4E-9B70-657F896672A0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Marketplace.Domain", "src\Marketplace.Domain\Marketplace.Domain.csproj", "{3F70E36B-C8A1-462A-BC6C-27099108BE03}"
 EndProject

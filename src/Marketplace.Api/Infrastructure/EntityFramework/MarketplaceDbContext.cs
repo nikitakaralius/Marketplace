@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Marketplace.Infrastructure.EntityFramework;
 
-internal sealed class ClassifiedAdDbContext : DbContext
+internal sealed class MarketplaceDbContext : DbContext
 {
     private readonly ILoggerFactory _loggerFactory;
 
-    public ClassifiedAdDbContext(DbContextOptions<ClassifiedAdDbContext> options, ILoggerFactory loggerFactory) :
+    public MarketplaceDbContext(DbContextOptions<MarketplaceDbContext> options, ILoggerFactory loggerFactory) :
         base(options) => _loggerFactory = loggerFactory;
 
     public DbSet<ClassifiedAd> ClassifiedAds => Set<ClassifiedAd>();

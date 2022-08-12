@@ -1,6 +1,6 @@
-namespace Marketplace.Contracts;
+namespace Marketplace.ClassifiedAds;
 
-public static class ClassifiedAds
+public static class ClassifiedAdContract
 {
     public static class V1
     {

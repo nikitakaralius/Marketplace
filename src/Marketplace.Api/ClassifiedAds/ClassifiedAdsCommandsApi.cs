@@ -1,7 +1,7 @@
-using static Marketplace.Contracts.ClassifiedAds;
+using static Marketplace.ClassifiedAds.ClassifiedAdContract;
 using static Microsoft.AspNetCore.Http.Results;
 
-namespace Marketplace.Api;
+namespace Marketplace.ClassifiedAds;
 
 using Handler = ClassifiedAdsApplicationService;
 

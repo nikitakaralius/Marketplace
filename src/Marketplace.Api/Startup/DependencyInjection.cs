@@ -1,7 +1,9 @@
+using Marketplace.ClassifiedAds;
 using Marketplace.Domain.ClassifiedAd;
 using Marketplace.Domain.Shared;
 using Marketplace.Framework;
 using Marketplace.Infrastructure;
+using Marketplace.Infrastructure.Common;
 using Marketplace.Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,7 +14,7 @@ internal static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddDbContext<ClassifiedAdDbContext>(options =>
+        services.AddDbContext<MarketplaceDbContext>(options =>
         {
             string connectionString = configuration.GetConnectionString("Postgres");
             options.UseNpgsql(connectionString);

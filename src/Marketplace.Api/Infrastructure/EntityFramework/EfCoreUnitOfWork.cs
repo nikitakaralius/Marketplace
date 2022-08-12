@@ -4,9 +4,9 @@ namespace Marketplace.Infrastructure.EntityFramework;
 
 internal sealed class EfCoreUnitOfWork : IUnitOfWork
 {
-    private readonly ClassifiedAdDbContext _dbContext;
+    private readonly MarketplaceDbContext _dbContext;
 
-    public EfCoreUnitOfWork(ClassifiedAdDbContext dbContext) => _dbContext = dbContext;
+    public EfCoreUnitOfWork(MarketplaceDbContext dbContext) => _dbContext = dbContext;
 
     public async Task CommitAsync() => await _dbContext.SaveChangesAsync();
 }

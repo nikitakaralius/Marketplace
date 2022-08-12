@@ -1,13 +1,14 @@
 using Marketplace.Domain.ClassifiedAd;
 using Marketplace.Domain.ClassifiedAd.ValueObjects;
+using Marketplace.Infrastructure.EntityFramework;
 
-namespace Marketplace.Infrastructure.EntityFramework;
+namespace Marketplace.ClassifiedAds;
 
 internal sealed class ClassifiedAdRepository : IClassifiedAdRepository
 {
-    private readonly ClassifiedAdDbContext _dbContext;
+    private readonly MarketplaceDbContext _dbContext;
 
-    public ClassifiedAdRepository(ClassifiedAdDbContext dbContext) => _dbContext = dbContext;
+    public ClassifiedAdRepository(MarketplaceDbContext dbContext) => _dbContext = dbContext;
 
     public async Task<ClassifiedAd?> LoadAsync(ClassifiedAdId id) =>
         await _dbContext.ClassifiedAds.FindAsync(id.Value);
