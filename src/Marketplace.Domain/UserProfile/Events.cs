@@ -1,12 +1,33 @@
+using Marketplace.Framework;
+
 namespace Marketplace.Domain.UserProfile;
+
+using UserEvent = IEvent<UserProfile>;
 
 public static class Events
 {
-    public record UserRegistered(Guid UserId, string FullName, string DisplayName);
+    public class UserRegistered : UserEvent
+    {
+        public Guid UserId { get; init; }
+        public string FullName { get; init; } = null!;
+        public string DisplayName { get; init; } = null!;
+    }
 
-    public record ProfilePhotoUpdated(Guid UserId, string PhotoUrl);
+    public class ProfilePhotoUpdated : UserEvent
+    {
+        public Guid UserId { get; init; }
+        public string PhotoUrl { get; init; } = null!;
+    }
 
-    public record UserFullNameUpdated(Guid UserId, string FullName);
+    public class UserFullNameUpdated : UserEvent
+    {
+        public Guid UserId { get; init; }
+        public string FullName { get; init; } = null!;
+    }
 
-    public record UserDisplayNameUpdated(Guid UserId, string DisplayName);
+    public class UserDisplayNameUpdated : UserEvent
+    {
+        public Guid UserId { get; init; }
+        public string DisplayName { get; init; } = null!;
+    }
 }

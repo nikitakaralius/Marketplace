@@ -19,9 +19,17 @@ public sealed class Picture : Entity
 
     public PictureSize Size { get; private set; } = null!;
 
-    public Uri? Location { get; set; }
+    public Uri? Location { get; private set; }
 
     public int Order { get; private set; }
+
+    public void Resize(PictureSize newSize) =>
+        Apply(new Events.PictureResized
+        {
+            PictureId = Id.Value,
+            Height = newSize.Height,
+            Width = newSize.Width
+        });
 
     protected override void When(IEvent eventHappened)
     {
@@ -52,7 +60,4 @@ public sealed class Picture : Entity
         };
         when();
     }
-
-    public void Resize(PictureSize newSize) =>
-        Apply(new Events.PictureResized(Id.Value, newSize.Height, newSize.Width));
 }
