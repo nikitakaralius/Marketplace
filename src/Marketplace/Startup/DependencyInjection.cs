@@ -11,12 +11,11 @@ internal static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddEntityFrameworkNpgsql()
-                .AddDbContext<ClassifiedAdDbContext>(options =>
-                {
-                    string connectionString = configuration.GetConnectionString("Postgres");
-                    options.UseNpgsql(connectionString);
-                });
+        services.AddDbContext<ClassifiedAdDbContext>(options =>
+        {
+            string connectionString = configuration.GetConnectionString("Postgres");
+            options.UseNpgsql(connectionString);
+        });
 
         services.AddSingleton<ICurrencyLookup, FixedCurrencyLookup>();
 
