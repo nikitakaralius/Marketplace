@@ -4,6 +4,8 @@ builder.Services.AddInfrastructure();
 
 var app = builder.Build();
 
+app.EnsureDatabase();
+
 app.MapDefaultControllerRoute();
 
 app.UseSwagger();
