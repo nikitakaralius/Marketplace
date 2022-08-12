@@ -19,9 +19,9 @@ public sealed class Picture : Entity
 
     public PictureSize Size { get; private set; } = null!;
 
-    internal Uri? Location { get; set; }
+    public Uri? Location { get; set; }
 
-    internal int Order { get; private set; }
+    public int Order { get; private set; }
 
     protected override void When(IEvent eventHappened)
     {

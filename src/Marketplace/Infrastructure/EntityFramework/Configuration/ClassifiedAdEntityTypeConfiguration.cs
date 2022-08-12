@@ -8,11 +8,37 @@ internal sealed class ClassifiedAdEntityTypeConfiguration : IEntityTypeConfigura
     public void Configure(EntityTypeBuilder<ClassifiedAd> builder)
     {
         builder.HasKey(x => x.DatabaseId);
-        builder.OwnsOne(x => x.Id);
-        builder.OwnsOne(x => x.Price, p => p.OwnsOne(c => c.Currency));
-        builder.OwnsOne(x => x.Title);
-        builder.OwnsOne(x => x.Description);
-        builder.OwnsOne(x => x.ApprovedBy);
-        builder.OwnsOne(x => x.OwnerId);
+
+        builder.OwnsOne(x => x.Id)
+               .Property(x => x.Value)
+               .IsRequired();
+
+        builder.OwnsOne(x => x.Price, p =>
+        {
+            p.Property(v => v.Amount).IsRequired();
+
+            p.OwnsOne(c => c.Currency, c =>
+            {
+                c.Property(x => x.Code).IsRequired();
+                c.Property(x => x.DecimalPlaces).IsRequired();
+                c.Property(x => x.InUse).IsRequired();
+            });
+        });
+
+        builder.OwnsOne(x => x.Title)
+               .Property(x => x.Value)
+               .IsRequired();
+
+        builder.OwnsOne(x => x.Description)
+               .Property(x => x.Value)
+               .IsRequired();
+
+        builder.OwnsOne(x => x.ApprovedBy)
+               .Property(x => x.Value)
+               .IsRequired();
+
+        builder.OwnsOne(x => x.OwnerId)
+               .Property(x => x.Value)
+               .IsRequired();
     }
 }
