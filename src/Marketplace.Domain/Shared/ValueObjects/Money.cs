@@ -1,5 +1,3 @@
-using Marketplace.Domain.Shared.Exceptions;
-
 namespace Marketplace.Domain.Shared.ValueObjects;
 
 public record Money
@@ -53,7 +51,7 @@ public record Money
     {
         if (Currency != summand.Currency)
         {
-            throw new CurrencyMismatchException("Cannot sum amounts with different currencies");
+            throw new DomainException.CurrencyMismatch("Cannot sum amounts with different currencies");
         }
 
         return new Money(Amount + summand.Amount, Currency);
@@ -63,7 +61,7 @@ public record Money
     {
         if (Currency != subtrahend.Currency)
         {
-            throw new CurrencyMismatchException("Cannot subtract amounts with different currencies");
+            throw new DomainException.CurrencyMismatch("Cannot subtract amounts with different currencies");
         }
 
         return new Money(Amount - subtrahend.Amount, Currency);

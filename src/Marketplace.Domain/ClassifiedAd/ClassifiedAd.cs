@@ -1,6 +1,6 @@
 using Marketplace.Domain.ClassifiedAd.Rules;
 using Marketplace.Domain.ClassifiedAd.ValueObjects;
-using Marketplace.Domain.Shared.Exceptions;
+using Marketplace.Domain.Shared;
 using Marketplace.Domain.UserProfile;
 using Marketplace.Framework;
 
@@ -139,7 +139,7 @@ public sealed class ClassifiedAd : AggregateRoot
 
         if (valid == false)
         {
-            throw new InvalidEntityStateException(this, $"Post checks failed in state {State}");
+            throw new DomainException.InvalidEntityState(this, $"Post checks failed in state {State}");
         }
     }
 
