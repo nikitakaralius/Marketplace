@@ -33,7 +33,8 @@ public sealed class Picture : Entity
 
     protected override void When(IEvent eventHappened)
     {
-        Action when = eventHappened switch
+        var @event = eventHappened as IEvent<Picture>;
+        Action when = @event switch
         {
             Events.PictureAddedToClassifiedAd e => () =>
             {

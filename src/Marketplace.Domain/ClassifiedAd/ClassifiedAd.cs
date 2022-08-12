@@ -108,7 +108,8 @@ public sealed class ClassifiedAd : AggregateRoot
 
     protected override void When(IEvent eventHappened)
     {
-        Action when = eventHappened switch
+        var @event = eventHappened as IEvent<ClassifiedAd>;
+        Action when = @event switch
         {
             ClassifiedAdCreated e => () =>
             {
