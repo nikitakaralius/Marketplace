@@ -5,7 +5,7 @@ namespace Marketplace.ClassifiedAds;
 
 using Handler = ClassifiedAdsApplicationService;
 
-public static class ClassifiedAdsCommandsApi
+public static class CommandsApi
 {
     public static void MapClassifiedAdsCommandsApi(this IEndpointRouteBuilder app)
     {
