@@ -2,18 +2,29 @@ using Marketplace.Domain.Services;
 using Marketplace.Framework;
 using Marketplace.Infrastructure;
 using Marketplace.Infrastructure.EntityFramework;
+using Microsoft.EntityFrameworkCore;
 
 // ReSharper disable once CheckNamespace
 namespace Microsoft.Extensions.DependencyInjection;
 
 internal static class DependencyInjection
 {
-    public static IServiceCollection AddInfrastructure(this IServiceCollection services)
+    public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddControllers();
+        services.AddEntityFrameworkNpgsql()
+                .AddDbContext<ClassifiedAdDbContext>(options =>
+                {
+                    string connectionString = configuration.GetConnectionString("Postgres");
+                    options.UseNpgsql(connectionString);
+                });
+
         services.AddSingleton<ICurrencyLookup, FixedCurrencyLookup>();
+
         services.AddScoped<IUnitOfWork, EfCoreUnitOfWork>();
+        services.AddScoped<IClassifiedAdRepository, ClassifiedAdRepository>();
         services.AddScoped<ClassifiedAdsApplicationService>();
+
+        services.AddControllers();
         services.AddSwaggerGen(c =>
         {
             c.SwaggerDoc("v1",
@@ -23,6 +34,7 @@ internal static class DependencyInjection
                              Version = "v1"
                          });
         });
+
         return services;
     }
 }
