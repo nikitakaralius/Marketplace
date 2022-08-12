@@ -11,11 +11,15 @@ public sealed class Picture : Entity
 
     private Picture() { }
 
-    internal PictureId Id { get; private set; } = null!;
+    public Guid DatabaseId { get; private set; }
 
-    internal PictureSize Size { get; private set; } = null!;
+    public PictureId Id { get; private set; } = null!;
 
-    internal Uri? Location { get; private set; }
+    public ClassifiedAdId ParentId { get; private set; } = null!;
+
+    public PictureSize Size { get; private set; } = null!;
+
+    internal Uri? Location { get; set; }
 
     internal int Order { get; private set; }
 
@@ -25,7 +29,9 @@ public sealed class Picture : Entity
         {
             Events.PictureAddedToClassifiedAd e => () =>
             {
+                ParentId = new(e.ClassifiedAdId);
                 Id = new(e.PictureId);
+                DatabaseId = e.PictureId;
                 Size = new PictureSize
                 {
                     Height = e.Height,

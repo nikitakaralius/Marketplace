@@ -17,5 +17,6 @@ internal sealed class ClassifiedAdDbContext : DbContext
                       .EnableSensitiveDataLogging();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder) =>
-        modelBuilder.ApplyConfiguration(new ClassifiedAdEntityTypeConfiguration());
+        modelBuilder.ApplyConfiguration(new ClassifiedAdEntityTypeConfiguration())
+                    .ApplyConfiguration(new PictureEntityTypeConfiguration());
 }
