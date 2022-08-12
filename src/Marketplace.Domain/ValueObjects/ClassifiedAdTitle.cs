@@ -2,13 +2,15 @@ namespace Marketplace.Domain.ValueObjects;
 
 public sealed record ClassifiedAdTitle
 {
-    private readonly string _value;
+    public readonly string Value = "";
 
     private ClassifiedAdTitle(string value)
     {
         CheckValidity(value);
-        _value = value;
+        Value = value;
     }
+
+    private ClassifiedAdTitle() { }
 
     private static void CheckValidity(string value)
     {
@@ -20,7 +22,9 @@ public sealed record ClassifiedAdTitle
         }
     }
 
+    public static readonly ClassifiedAdTitle None = new();
+
     public static ClassifiedAdTitle FromString(string title) => new(title);
 
-    public static implicit operator string(ClassifiedAdTitle title) => title._value;
+    public static implicit operator string(ClassifiedAdTitle title) => title.Value;
 };

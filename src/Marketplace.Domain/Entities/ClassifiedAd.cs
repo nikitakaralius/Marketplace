@@ -20,19 +20,23 @@ public sealed class ClassifiedAd : AggregateRoot
     public ClassifiedAd(ClassifiedAdId id, UserId ownerId) =>
         Apply(new Events.ClassifiedAdCreated(id, ownerId));
 
+    private ClassifiedAd() { }
+
     #region Properties
+
+    public Guid DatabaseId { get; private set; }
 
     public ClassifiedAdId Id { get; private set; } = null!;
 
     public UserId OwnerId { get; private set; } = null!;
 
-    public ClassifiedAdTitle? Title { get; private set; }
+    public ClassifiedAdTitle Title { get; private set; } = ClassifiedAdTitle.None;
 
-    public ClassifiedAdDescription? Description { get; private set; }
+    public ClassifiedAdDescription Description { get; private set; } = ClassifiedAdDescription.None;
 
-    public Price? Price { get; private set; }
+    public Price Price { get; private set; } = Price.None;
 
-    public UserId? ApprovedBy { get; private set; }
+    public UserId ApprovedBy { get; private set; } = UserId.None;
 
     public AdState State { get; private set; }
 
@@ -84,8 +88,8 @@ public sealed class ClassifiedAd : AggregateRoot
         {
             Events.ClassifiedAdCreated e => () =>
             {
-                (Id, OwnerId, State) =
-                    (new ClassifiedAdId(e.Id), new UserId(e.OwnerId), AdState.Inactive);
+                (Id, DatabaseId, OwnerId, State) =
+                    (new ClassifiedAdId(e.Id), e.Id, new UserId(e.OwnerId), AdState.Inactive);
             },
             Events.ClassifiedAdDescriptionUpdated e => () =>
             {
@@ -119,15 +123,15 @@ public sealed class ClassifiedAd : AggregateRoot
         bool valid = State switch
         {
             AdState.PendingReview =>
-                Title is not null
-                && Description is not null
-                && Price?.Amount > 0
+                Title != ClassifiedAdTitle.None
+                && Description != ClassifiedAdDescription.None
+                && Price.Amount > 0
                 && FirstPicture.HasCorrectSize(),
             AdState.Active =>
-                Title is not null
-                && Description is not null
-                && Price?.Amount > 0
-                && ApprovedBy is not null
+                Title != ClassifiedAdTitle.None
+                && Description != ClassifiedAdDescription.None
+                && Price.Amount > 0
+                && ApprovedBy != UserId.None
                 && FirstPicture.HasCorrectSize(),
             _ => true
         };

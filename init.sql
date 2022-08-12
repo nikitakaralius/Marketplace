@@ -1,0 +1,3 @@
+CREATE DATABASE "Marketplace";
+CREATE USER sa WITH PASSWORD 'pa$$word!';
+GRANT ALL PRIVILEGES ON DATABASE "Marketplace" to sa;

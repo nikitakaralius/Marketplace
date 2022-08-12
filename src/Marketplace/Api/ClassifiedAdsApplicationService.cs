@@ -1,4 +1,3 @@
-using Marketplace.Domain.Entities;
 using Marketplace.Domain.Services;
 using Marketplace.Domain.ValueObjects;
 using Marketplace.Framework;
@@ -9,12 +8,16 @@ namespace Marketplace.Api;
 public sealed class ClassifiedAdsApplicationService : IApplicationService<V1.ICommand>
 {
     private readonly IClassifiedAdRepository _repository;
+    private readonly IUnitOfWork _uow;
     private readonly ICurrencyLookup _currencyLookup;
 
-    public ClassifiedAdsApplicationService(IClassifiedAdRepository repository, ICurrencyLookup currencyLookup)
+    public ClassifiedAdsApplicationService(IClassifiedAdRepository repository,
+                                           ICurrencyLookup currencyLookup,
+                                           IUnitOfWork uow)
     {
         _repository = repository;
         _currencyLookup = currencyLookup;
+        _uow = uow;
     }
 
     public async Task HandleAsync(V1.ICommand command)
@@ -35,7 +38,7 @@ public sealed class ClassifiedAdsApplicationService : IApplicationService<V1.ICo
     {
         var entity = await LoadClassifiedAd(id);
         operation(entity);
-        await _repository.SaveAsync(entity);
+        await _uow.CommitAsync();
         return entity;
     }
 
@@ -51,7 +54,8 @@ public sealed class ClassifiedAdsApplicationService : IApplicationService<V1.ICo
             new ClassifiedAdId(request.Id),
             new UserId(request.OwnerId));
 
-        await _repository.SaveAsync(entity);
+        await _repository.AddAsync(entity);
+        await _uow.CommitAsync();
 
         return entity;
     }

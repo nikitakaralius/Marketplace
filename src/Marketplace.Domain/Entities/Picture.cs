@@ -9,13 +9,19 @@ public sealed class Picture : Entity
     {
     }
 
-    internal PictureId Id { get; private set; } = null!;
+    private Picture() { }
 
-    internal PictureSize Size { get; private set; } = null!;
+    public Guid DatabaseId { get; private set; }
 
-    internal Uri? Location { get; private set; }
+    public PictureId Id { get; private set; } = null!;
 
-    internal int Order { get; private set; }
+    public ClassifiedAdId ParentId { get; private set; } = null!;
+
+    public PictureSize Size { get; private set; } = null!;
+
+    public Uri? Location { get; set; }
+
+    public int Order { get; private set; }
 
     protected override void When(IEvent eventHappened)
     {
@@ -23,7 +29,9 @@ public sealed class Picture : Entity
         {
             Events.PictureAddedToClassifiedAd e => () =>
             {
+                ParentId = new(e.ClassifiedAdId);
                 Id = new(e.PictureId);
+                DatabaseId = e.PictureId;
                 Size = new PictureSize
                 {
                     Height = e.Height,

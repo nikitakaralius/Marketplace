@@ -1,19 +1,10 @@
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
-builder.Services.AddSingleton<ClassifiedAdsApplicationService>();
-
-builder.Services.AddSwaggerGen(c =>
-{
-    c.SwaggerDoc("v1",
-        new()
-        {
-            Title = "Classified Ads",
-            Version = "v1"
-        });
-});
+builder.Services.AddInfrastructure(builder.Configuration);
 
 var app = builder.Build();
+
+app.EnsureDatabase();
 
 app.MapDefaultControllerRoute();
 
