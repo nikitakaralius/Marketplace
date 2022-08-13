@@ -8,11 +8,11 @@ public sealed record DisplayName
 
     internal DisplayName(string displayName) => Value = displayName;
 
-    public static DisplayName FromString(string displayName, CheckTextForProfanity hasProfanity)
+    public static DisplayName FromString(string displayName, IContentModeration contentModeration)
     {
         if (string.IsNullOrWhiteSpace(displayName))
             throw new ArgumentNullException(nameof(displayName));
-        if (hasProfanity(displayName))
+        if (contentModeration.CheckForProfanityAsync(displayName))
             throw new DomainException.ProfanityFound(displayName);
         return new DisplayName(displayName);
     }

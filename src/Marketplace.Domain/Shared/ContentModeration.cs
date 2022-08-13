@@ -1,3 +1,6 @@
 namespace Marketplace.Domain.Shared;
 
-public delegate bool CheckTextForProfanity(string text);
+public interface IContentModeration
+{
+    bool CheckForProfanityAsync(string text);
+}

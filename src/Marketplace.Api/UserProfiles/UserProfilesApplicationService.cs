@@ -9,11 +9,11 @@ internal sealed class UserProfilesApplicationService : IApplicationService<V1.IC
 {
     private readonly IUserProfileRepository _repository;
     private readonly IUnitOfWork _uow;
-    private readonly CheckTextForProfanity _checkText;
+    private readonly IContentModeration _checkText;
 
     public UserProfilesApplicationService(IUserProfileRepository repository,
                                           IUnitOfWork uow,
-                                          CheckTextForProfanity checkText)
+                                          IContentModeration checkText)
     {
         _repository = repository;
         _uow = uow;
