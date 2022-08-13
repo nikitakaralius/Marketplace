@@ -1,4 +1,5 @@
 using Marketplace.Domain.ClassifiedAd;
+using Marketplace.Domain.UserProfile;
 using Marketplace.Infrastructure.EntityFramework.Configuration;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,6 +13,8 @@ internal sealed class MarketplaceDbContext : DbContext
         base(options) => _loggerFactory = loggerFactory;
 
     public DbSet<ClassifiedAd> ClassifiedAds => Set<ClassifiedAd>();
+
+    public DbSet<UserProfile> UserProfiles => Set<UserProfile>();
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
         optionsBuilder.UseLoggerFactory(_loggerFactory)
