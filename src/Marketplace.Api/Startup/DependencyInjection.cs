@@ -1,5 +1,6 @@
 using Marketplace.Domain.ClassifiedAd;
 using Marketplace.Domain.Shared;
+using Marketplace.Domain.UserProfile;
 using Marketplace.Infrastructure;
 using Marketplace.Infrastructure.Common;
 using Marketplace.Infrastructure.EntityFramework;
@@ -23,7 +24,9 @@ internal static class DependencyInjection
 
         services.AddScoped<IUnitOfWork, EfCoreUnitOfWork>();
         services.AddScoped<IClassifiedAdRepository, ClassifiedAdRepository>();
+        services.AddScoped<IUserProfileRepository, UserProfileRepository>();
         services.AddScoped<ClassifiedAdsApplicationService>();
+        services.AddScoped<UserProfilesApplicationService>();
 
         services.AddControllers();
         services.AddSwaggerGen(c =>
