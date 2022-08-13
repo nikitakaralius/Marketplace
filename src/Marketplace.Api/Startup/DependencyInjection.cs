@@ -1,4 +1,3 @@
-using Marketplace.ClassifiedAds;
 using Marketplace.Domain.ClassifiedAd;
 using Marketplace.Domain.Shared;
 using Marketplace.Infrastructure;

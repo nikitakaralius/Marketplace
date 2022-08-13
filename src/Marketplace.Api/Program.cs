@@ -1,5 +1,3 @@
-using Marketplace.ClassifiedAds;
-
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Logging.AddSerilog();
@@ -10,6 +8,7 @@ var app = builder.Build();
 app.EnsureDatabase();
 
 app.MapClassifiedAdsCommandsApi();
+app.MapUserProfilesCommandsApi();
 
 app.UseSwagger();
 app.UseSwaggerUI(c =>
