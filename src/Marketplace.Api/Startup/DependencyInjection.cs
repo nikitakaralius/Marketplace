@@ -20,6 +20,7 @@ internal static class DependencyInjection
         });
 
         services.AddSingleton<ICurrencyLookup, FixedCurrencyLookup>();
+        services.AddSingleton<IRequestHandler, SafeRequestHandler>();
 
         services.AddScoped<IUnitOfWork, EfCoreUnitOfWork>();
         services.AddScoped<IClassifiedAdRepository, ClassifiedAdRepository>();
