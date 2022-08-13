@@ -1,5 +1,3 @@
-using Marketplace.Framework;
-
 namespace Marketplace.Infrastructure.EntityFramework;
 
 internal sealed class EfCoreUnitOfWork : IUnitOfWork

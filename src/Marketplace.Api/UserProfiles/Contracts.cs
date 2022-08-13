@@ -4,7 +4,9 @@ public static class Contracts
 {
     public static class V1
     {
-        public class RegisterUser
+        public interface ICommand { }
+
+        public class RegisterUser : ICommand
         {
             public Guid Id { get; init; }
 
@@ -13,21 +15,21 @@ public static class Contracts
             public string DisplayName { get; init; } = "";
         }
 
-        public class UpdateUserFullName
+        public class UpdateUserFullName : ICommand
         {
             public Guid Id { get; init; }
 
             public string FullName { get; init; } = "";
         }
 
-        public class UpdateUserDisplayName
+        public class UpdateUserDisplayName : ICommand
         {
             public Guid Id { get; init; }
 
             public string DisplayName { get; init; } = "";
         }
 
-        public class UpdateUserProfilePhoto
+        public class UpdateUserProfilePhoto : ICommand
         {
             public Guid Id { get; init; }
 

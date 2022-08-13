@@ -1,7 +1,6 @@
 using Marketplace.ClassifiedAds;
 using Marketplace.Domain.ClassifiedAd;
 using Marketplace.Domain.Shared;
-using Marketplace.Framework;
 using Marketplace.Infrastructure;
 using Marketplace.Infrastructure.Common;
 using Marketplace.Infrastructure.EntityFramework;
