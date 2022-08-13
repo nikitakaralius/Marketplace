@@ -7,7 +7,7 @@ public sealed record FullName
     internal FullName(string value) => Value = value;
 
     public static FullName FromString(string fullName) =>
-        string.IsNullOrWhiteSpace(fullName) ?
+        string.IsNullOrWhiteSpace(fullName) == false ?
             new FullName(fullName)
             : throw new ArgumentNullException(nameof(fullName));
 
