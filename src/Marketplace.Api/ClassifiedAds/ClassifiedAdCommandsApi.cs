@@ -5,12 +5,12 @@ using static Marketplace.ClassifiedAds.ClassifiedAdContract;
 namespace Marketplace.ClassifiedAds;
 
 [ApiController, Route("ad")]
-public sealed class CommandsApi : ControllerBase
+public sealed class ClassifiedAdCommandsApi : ControllerBase
 {
     private readonly IRequestHandler _handler;
     private readonly ClassifiedAdsApplicationService _service;
 
-    public CommandsApi(IRequestHandler handler, ClassifiedAdsApplicationService service)
+    public ClassifiedAdCommandsApi(IRequestHandler handler, ClassifiedAdsApplicationService service)
     {
         _handler = handler;
         _service = service;
