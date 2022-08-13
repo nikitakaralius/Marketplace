@@ -22,5 +22,6 @@ internal sealed class MarketplaceDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder) =>
         modelBuilder.ApplyConfiguration(new ClassifiedAdEntityTypeConfiguration())
-                    .ApplyConfiguration(new PictureEntityTypeConfiguration());
+                    .ApplyConfiguration(new PictureEntityTypeConfiguration())
+                    .ApplyConfiguration(new UserProfileEntityTypeConfiguration());
 }
