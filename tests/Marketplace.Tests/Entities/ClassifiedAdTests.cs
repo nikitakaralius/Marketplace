@@ -1,8 +1,8 @@
 using Marketplace.Domain.ClassifiedAd;
 using Marketplace.Domain.ClassifiedAd.ValueObjects;
 using Marketplace.Domain.Shared;
-using Marketplace.Domain.Shared.Exceptions;
 using Marketplace.Domain.UserProfile;
+using Marketplace.Domain.UserProfile.ValueObjects;
 
 namespace Marketplace.Tests.Entities;
 
@@ -52,7 +52,7 @@ public sealed class ClassifiedAdTests
         _classifiedAd.UpdatePrice(
             Price.FromDecimal(400, "EUR", CurrencyLookup));
         var publish = () => _classifiedAd.RequestToPublish();
-        publish.Should().ThrowExactly<InvalidEntityStateException>();
+        publish.Should().ThrowExactly<DomainException.InvalidEntityState>();
     }
 
     [Fact]
@@ -63,7 +63,7 @@ public sealed class ClassifiedAdTests
         _classifiedAd.UpdatePrice(
             Price.FromDecimal(400, "EUR", CurrencyLookup));
         var publish = () => _classifiedAd.RequestToPublish();
-        publish.Should().ThrowExactly<InvalidEntityStateException>();
+        publish.Should().ThrowExactly<DomainException.InvalidEntityState>();
     }
 
     [Fact]
@@ -74,7 +74,7 @@ public sealed class ClassifiedAdTests
         _classifiedAd.UpdateDescription(
             ClassifiedAdDescription.FromString("An amazing speedy bicycle"));
         var publish = () => _classifiedAd.RequestToPublish();
-        publish.Should().ThrowExactly<InvalidEntityStateException>();
+        publish.Should().ThrowExactly<DomainException.InvalidEntityState>();
     }
 
     [Fact]
@@ -87,6 +87,6 @@ public sealed class ClassifiedAdTests
         _classifiedAd.UpdatePrice(
             Price.FromDecimal(0, "EUR", CurrencyLookup));
         var publish = () => _classifiedAd.RequestToPublish();
-        publish.Should().ThrowExactly<InvalidEntityStateException>();
+        publish.Should().ThrowExactly<DomainException.InvalidEntityState>();
     }
 }

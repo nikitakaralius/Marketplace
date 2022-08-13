@@ -1,4 +1,4 @@
-namespace Marketplace.Domain.UserProfile;
+namespace Marketplace.Domain.UserProfile.ValueObjects;
 
 public sealed record UserId
 {
@@ -19,4 +19,6 @@ public sealed record UserId
     public static readonly UserId None = new();
 
     public static implicit operator Guid(UserId id) => id.Value;
+
+    public static implicit operator UserId(Guid value) => new(value);
 }

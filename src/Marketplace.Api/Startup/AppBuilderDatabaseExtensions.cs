@@ -10,7 +10,7 @@ internal static class AppBuilderDatabaseExtensions
     public static void EnsureDatabase(this IApplicationBuilder app)
     {
         using var scope = app.ApplicationServices.CreateScope();
-        var context = scope.ServiceProvider.GetRequiredService<ClassifiedAdDbContext>();
+        var context = scope.ServiceProvider.GetRequiredService<MarketplaceDbContext>();
 
         if (context.Database.EnsureCreated() == false)
             context.Database.Migrate();

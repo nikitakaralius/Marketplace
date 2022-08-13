@@ -7,6 +7,7 @@ var app = builder.Build();
 app.EnsureDatabase();
 
 app.MapClassifiedAdsCommandsApi();
+app.MapUserProfilesCommandsApi();
 
 app.UseSwagger();
 app.UseSwaggerUI(c =>

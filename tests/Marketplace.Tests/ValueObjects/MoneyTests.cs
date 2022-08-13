@@ -1,5 +1,4 @@
 using Marketplace.Domain.Shared;
-using Marketplace.Domain.Shared.Exceptions;
 using Marketplace.Domain.Shared.ValueObjects;
 
 namespace Marketplace.Tests.ValueObjects;
@@ -57,8 +56,8 @@ public sealed class MoneyTests
         var usd = Money.FromDecimal(10, "USD", CurrencyLookup);
         var sum1 = () => eur + usd;
         var sum2 = () => eur.Add(usd);
-        sum1.Should().ThrowExactly<CurrencyMismatchException>();
-        sum2.Should().ThrowExactly<CurrencyMismatchException>();
+        sum1.Should().ThrowExactly<DomainException.CurrencyMismatch>();
+        sum2.Should().ThrowExactly<DomainException.CurrencyMismatch>();
     }
 
     [Fact]
@@ -68,8 +67,8 @@ public sealed class MoneyTests
         var usd = Money.FromDecimal(10, "USD", CurrencyLookup);
         var sub1 = () => eur - usd;
         var sub2 = () => eur.Subtract(usd);
-        sub1.Should().ThrowExactly<CurrencyMismatchException>();
-        sub2.Should().ThrowExactly<CurrencyMismatchException>();
+        sub1.Should().ThrowExactly<DomainException.CurrencyMismatch>();
+        sub2.Should().ThrowExactly<DomainException.CurrencyMismatch>();
     }
 
     [Fact]

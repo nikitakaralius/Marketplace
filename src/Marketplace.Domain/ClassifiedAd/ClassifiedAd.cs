@@ -1,8 +1,9 @@
 using Marketplace.Domain.ClassifiedAd.Rules;
 using Marketplace.Domain.ClassifiedAd.ValueObjects;
-using Marketplace.Domain.Shared.Exceptions;
-using Marketplace.Domain.UserProfile;
+using Marketplace.Domain.Shared;
+using Marketplace.Domain.UserProfile.ValueObjects;
 using Marketplace.Framework;
+using static Marketplace.Domain.ClassifiedAd.Events;
 
 namespace Marketplace.Domain.ClassifiedAd;
 
@@ -18,10 +19,7 @@ public sealed class ClassifiedAd : AggregateRoot
 
     private readonly List<Picture> _pictures = new();
 
-    public ClassifiedAd(ClassifiedAdId id, UserId ownerId) =>
-        Apply(new Events.ClassifiedAdCreated(id, ownerId));
-
-    private ClassifiedAd() { }
+    private ClassifiedAd() {}
 
     #region Properties
 
@@ -49,26 +47,51 @@ public sealed class ClassifiedAd : AggregateRoot
 
     #region Events
 
+    public ClassifiedAd(ClassifiedAdId id, UserId ownerId) =>
+        Apply(new ClassifiedAdCreated
+        {
+            Id = id,
+            OwnerId = ownerId
+        });
+
     public void SetTitle(ClassifiedAdTitle title) =>
-        Apply(new Events.ClassifiedAdTitleChanged(Id, title));
+        Apply(new ClassifiedAdTitleChanged
+        {
+            Id = Id,
+            Title = title
+        });
 
     public void UpdateDescription(ClassifiedAdDescription description) =>
-        Apply(new Events.ClassifiedAdDescriptionUpdated(Id, description));
+        Apply(new ClassifiedAdDescriptionUpdated
+        {
+            Id = Id,
+            Description = description
+        });
 
     public void UpdatePrice(Price price) =>
-        Apply(new Events.ClassifiedAdPriceUpdated(Id, price.Amount, price.Currency.Code));
+        Apply(new ClassifiedAdPriceUpdated
+        {
+            Id = Id,
+            Price = price.Amount,
+            CurrencyCode = price.Currency.Code
+        });
 
     public void RequestToPublish() =>
-        Apply(new Events.ClassifiedAdSentForReview(Id));
+        Apply(new ClassifiedAdSentForReview
+        {
+            Id = Id
+        });
 
     public void AddPicture(Uri pictureUri, PictureSize size) =>
-        Apply(new Events.PictureAddedToClassifiedAd(
-                  ClassifiedAdId: Id,
-                  PictureId: new Guid(),
-                  Url: pictureUri.ToString(),
-                  Height: size.Height,
-                  Width: size.Width,
-                  Order: _pictures.Max(p => p.Order) + 1));
+        Apply(new PictureAddedToClassifiedAd
+        {
+            ClassifiedAdId = Id,
+            PictureId = new Guid(),
+            Url = pictureUri.ToString(),
+            Height = size.Height,
+            Width = size.Width,
+            Order = _pictures.Max(p => p.Order) + 1
+        });
 
     public void ResizePicture(PictureId pictureId, PictureSize newSize)
     {
@@ -85,30 +108,22 @@ public sealed class ClassifiedAd : AggregateRoot
 
     protected override void When(IEvent eventHappened)
     {
-        Action when = eventHappened switch
+        var @event = eventHappened as IEvent<ClassifiedAd>;
+        Action when = @event switch
         {
-            Events.ClassifiedAdCreated e => () =>
+            ClassifiedAdCreated e => () =>
             {
                 (Id, DatabaseId, OwnerId, State) =
                     (new ClassifiedAdId(e.Id), e.Id, new UserId(e.OwnerId), AdState.Inactive);
             },
-            Events.ClassifiedAdDescriptionUpdated e => () =>
+            ClassifiedAdDescriptionUpdated e => () =>
             {
                 Description = ClassifiedAdDescription.FromString(e.Description);
             },
-            Events.ClassifiedAdPriceUpdated e => () =>
-            {
-                Price = new Price(e.Price, e.CurrencyCode);
-            },
-            Events.ClassifiedAdSentForReview  => () =>
-            {
-                State = AdState.PendingReview;
-            },
-            Events.ClassifiedAdTitleChanged e => () =>
-            {
-                Title = ClassifiedAdTitle.FromString(e.Title);
-            },
-            Events.PictureAddedToClassifiedAd e => () =>
+            ClassifiedAdPriceUpdated e => () => { Price = new Price(e.Price, e.CurrencyCode); },
+            ClassifiedAdSentForReview  => () => { State = AdState.PendingReview; },
+            ClassifiedAdTitleChanged e => () => { Title = ClassifiedAdTitle.FromString(e.Title); },
+            PictureAddedToClassifiedAd e => () =>
             {
                 Picture picture = new(Apply);
                 ApplyToEntity(picture, e);
@@ -139,7 +154,7 @@ public sealed class ClassifiedAd : AggregateRoot
 
         if (valid == false)
         {
-            throw new InvalidEntityStateException(this, $"Post checks failed in state {State}");
+            throw new DomainException.InvalidEntityState(this, $"Post checks failed in state {State}");
         }
     }
 

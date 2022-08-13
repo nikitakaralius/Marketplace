@@ -7,23 +7,50 @@ using PictureEvent = IEvent<Picture>;
 
 public static class Events
 {
-    public sealed record ClassifiedAdCreated(Guid Id, Guid OwnerId) : IEvent<ClassifiedAd>;
+    public sealed class ClassifiedAdCreated : IEvent<ClassifiedAd>
+    {
+        public Guid Id { get; init; }
+        public Guid OwnerId { get; init; }
+    }
 
-    public sealed record ClassifiedAdTitleChanged(Guid Id, string Title) : IEvent<ClassifiedAd>;
+    public sealed class ClassifiedAdTitleChanged : IEvent<ClassifiedAd>
+    {
+        public Guid Id { get; init; }
+        public string Title { get; init; } = null!;
+    }
 
-    public sealed record ClassifiedAdDescriptionUpdated(Guid Id, string Description) : IEvent<ClassifiedAd>;
+    public sealed class ClassifiedAdDescriptionUpdated : IEvent<ClassifiedAd>
+    {
+        public Guid Id { get; init; }
+        public string Description { get; init; } = null!;
+    }
 
-    public sealed record ClassifiedAdPriceUpdated(Guid Id, decimal Price, string CurrencyCode) : IEvent<ClassifiedAd>;
+    public sealed class ClassifiedAdPriceUpdated : IEvent<ClassifiedAd>
+    {
+        public Guid Id { get; init; }
+        public decimal Price { get; init; }
+        public string CurrencyCode { get; init; } = null!;
+    }
 
-    public sealed record ClassifiedAdSentForReview(Guid Id) : IEvent<ClassifiedAd>;
+    public sealed class ClassifiedAdSentForReview : IEvent<ClassifiedAd>
+    {
+        public Guid Id { get; init; }
+    }
 
-    public sealed record PictureAddedToClassifiedAd(
-        Guid ClassifiedAdId,
-        Guid PictureId,
-        string Url,
-        int Height,
-        int Width,
-        int Order) : IEvent<ClassifiedAd>, PictureEvent;
+    public sealed class PictureAddedToClassifiedAd : IEvent<ClassifiedAd>, PictureEvent
+    {
+        public Guid ClassifiedAdId { get; init; }
+        public Guid PictureId { get; init; }
+        public string Url { get; init; } = null!;
+        public int Height { get; init; }
+        public int Width { get; init; }
+        public int Order { get; init; }
+    }
 
-    public sealed record PictureResized(Guid PictureId, int Height, int Width) : PictureEvent;
+    public sealed class PictureResized : PictureEvent
+    {
+        public Guid PictureId { get; init; }
+        public int Height { get; init; }
+        public int Width { get; init; }
+    }
 }
