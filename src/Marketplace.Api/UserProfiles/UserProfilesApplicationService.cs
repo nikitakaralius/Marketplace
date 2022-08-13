@@ -5,7 +5,7 @@ using static Marketplace.UserProfiles.Contracts;
 
 namespace Marketplace.UserProfiles;
 
-internal sealed class UserProfilesApplicationService : IApplicationService<V1.ICommand>
+public sealed class UserProfilesApplicationService : IApplicationService<V1.ICommand>
 {
     private readonly IUserProfileRepository _repository;
     private readonly IUnitOfWork _uow;
