@@ -1,9 +1,9 @@
 using Marketplace.Domain.ClassifiedAd;
 using Marketplace.Domain.Shared;
 using Marketplace.Domain.UserProfile;
-using Marketplace.Infrastructure;
 using Marketplace.Infrastructure.Common;
 using Marketplace.Infrastructure.EntityFramework;
+using Marketplace.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 
 // ReSharper disable once CheckNamespace
@@ -13,6 +13,11 @@ internal static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
+        services.AddHttpClient(nameof(Constants.PurgoMalum), client =>
+        {
+            client.BaseAddress = new("https://www.purgomalum.com/service/containsprofanity");
+        });
+
         services.AddDbContext<MarketplaceDbContext>(options =>
         {
             string connectionString = configuration.GetConnectionString("Postgres");
@@ -27,6 +32,8 @@ internal static class DependencyInjection
         services.AddScoped<IUserProfileRepository, UserProfileRepository>();
         services.AddScoped<ClassifiedAdsApplicationService>();
         services.AddScoped<UserProfilesApplicationService>();
+
+        services.AddTransient<IContentModeration, PurgoMalumContentModeration>();
 
         services.AddControllers();
         services.AddSwaggerGen(c =>
