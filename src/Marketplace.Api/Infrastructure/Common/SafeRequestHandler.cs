@@ -1,4 +1,4 @@
-using static Microsoft.AspNetCore.Http.Results;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Marketplace.Infrastructure.Common;
 
@@ -8,18 +8,18 @@ internal sealed class SafeRequestHandler : IRequestHandler
 
     public SafeRequestHandler(ILogger<SafeRequestHandler> logger) => _logger = logger;
 
-    public async Task<IResult> HandleRequestAsync<TRequest>(TRequest request, Func<TRequest, Task> handler)
+    public async Task<IActionResult> HandleRequestAsync<TRequest>(TRequest request, Func<TRequest, Task> handler)
     {
         try
         {
             _logger.LogDebug("Handling HTTP request of type {Type}", typeof(TRequest).Name);
             await handler(request);
-            return Ok();
+            return new OkResult();
         }
         catch (Exception e)
         {
             _logger.LogError(e, "Error handling the request");
-            return BadRequest(new {error = e.Message, stackTrace = e.StackTrace});
+            return new BadRequestObjectResult(new {error = e.Message, stackTrace = e.StackTrace});
         }
     }
 }

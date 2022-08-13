@@ -1,6 +1,8 @@
+using Microsoft.AspNetCore.Mvc;
+
 namespace Marketplace.Infrastructure.Common;
 
-internal interface IRequestHandler
+public interface IRequestHandler
 {
-    Task<IResult> HandleRequestAsync<TRequest>(TRequest request, Func<TRequest, Task> handler);
+    Task<IActionResult> HandleRequestAsync<TRequest>(TRequest request, Func<TRequest, Task> handler);
 }
