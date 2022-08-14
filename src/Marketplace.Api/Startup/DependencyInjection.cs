@@ -1,6 +1,4 @@
-using Marketplace.Domain.ClassifiedAd;
 using Marketplace.Domain.Shared;
-using Marketplace.Domain.UserProfile;
 using Marketplace.Infrastructure.Common;
 using Marketplace.Infrastructure.Services;
 
@@ -19,8 +17,6 @@ internal static class DependencyInjection
         services.AddSingleton<ICurrencyLookup, FixedCurrencyLookup>();
         services.AddSingleton<IRequestHandler, SafeRequestHandler>();
 
-        services.AddScoped<IClassifiedAdRepository, ClassifiedAdRepository>();
-        services.AddScoped<IUserProfileRepository, UserProfileRepository>();
         services.AddScoped<ClassifiedAdsApplicationService>();
         services.AddScoped<UserProfilesApplicationService>();
 
