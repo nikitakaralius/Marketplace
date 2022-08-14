@@ -1,6 +1,6 @@
 namespace Marketplace.ClassifiedAds;
 
-internal static class QueryModels
+public static class QueryModels
 {
     public class GetPublishedClassifiedAds
     {
