@@ -13,10 +13,10 @@ internal static class Queries
         GetPublishedClassifiedAds query)
     {
         const string sql = """
-        SELECT "DatabaseId", "Price_Amount", "Title_Value"
+        SELECT "DatabaseId" id, "Price_Amount" price, "Title_Value" title, "Price_Currency_Code" currencyCode
         FROM "ClassifiedAds"
-        WHERE "State"=@State LIMIT
-        @PageSize OFFSET @Offset
+        WHERE "State"=@State
+        LIMIT @PageSize OFFSET @Offset
         """;
 
         var request = connection.QueryAsync<ClassifiedAdListItem>(sql, new
@@ -34,7 +34,7 @@ internal static class Queries
         GetOwnersClassifiedAds query)
     {
         const string sql = """
-        SELECT "DatabaseId", "Price_Amount" price, "Title_Value" title
+        SELECT "DatabaseId" id, "Price_Amount" price, "Title_Value" title
         FROM "ClassifiedAds"
         WHERE "OwnerId_Value"=@OwnerId
         LIMIT @PageSize
@@ -56,9 +56,10 @@ internal static class Queries
         GetPublicClassifiedAd query)
     {
         const string sql = """
-        SELECT "ClassifiedAds.DatabaseId" adId, "PriceAmount", "Title_Value", "Description_Value", "Display_Name"
-        FROM "ClassifiedAds", "UserProfiles"
-        WHERE adId=@Id AND "OwnerId_Value"="UserProfiles.DatabaseId"
+        SELECT ads."DatabaseId" id, "Price_Amount" price, "Title_Value" title,
+        "Description_Value" description, "DisplayName_Value" sellerdisplayname, "Price_Currency_Code" currencycode
+        FROM "ClassifiedAds" ads, "UserProfiles" profiles
+        WHERE ads."DatabaseId"=@Id AND "OwnerId_Value"=profiles."DatabaseId"
         """;
 
         var request = connection.QuerySingleOrDefaultAsync<ClassifiedAdDetails>(sql, new
@@ -69,5 +70,5 @@ internal static class Queries
         return await request;
     }
 
-    private static int Offset(int page, int pageSize) => page * pageSize;
+    private static int Offset(int page, int pageSize) => (page - 1) * pageSize;
 }

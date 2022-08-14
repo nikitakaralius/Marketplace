@@ -27,11 +27,11 @@ public sealed class ClassifiedAdQueriesApi : ControllerBase
     public async Task<IActionResult> Get(QueryModels.GetPublicClassifiedAd request) =>
         await _requestHandler.HandleQueryAsync(() => _connection.QueryAsync(request), _logger);
 
-    [HttpGet("/list")]
+    [HttpGet("list")]
     public async Task<IActionResult> Get(QueryModels.GetPublishedClassifiedAds request) =>
         await _requestHandler.HandleQueryAsync(() => _connection.QueryAsync(request), _logger);
 
-    [HttpGet("/myads")]
+    [HttpGet("myads")]
     public async Task<IActionResult> Get(QueryModels.GetOwnersClassifiedAds request) =>
         await _requestHandler.HandleQueryAsync(() => _connection.QueryAsync(request), _logger);
 }
