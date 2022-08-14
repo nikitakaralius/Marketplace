@@ -5,9 +5,9 @@ namespace Marketplace.ClassifiedAds;
 
 internal interface IClassifiedAdQueryService
 {
-    Task<IEnumerable<ClassifiedAdListItem>> Query(GetPublishedClassifiedAds query);
+    Task<IEnumerable<ClassifiedAdListItem>> QueryAsync(GetPublishedClassifiedAds query);
 
-    Task<ClassifiedAdDetails> Query(GetPublicClassifiedAd query);
+    Task<ClassifiedAdDetails> QueryAsync(GetPublicClassifiedAd query);
 
-    Task<IEnumerable<ClassifiedAdListItem>> Query(GetOwnersClassifiedAds query);
+    Task<IEnumerable<ClassifiedAdListItem>> QueryAsync(GetOwnersClassifiedAds query);
 }
