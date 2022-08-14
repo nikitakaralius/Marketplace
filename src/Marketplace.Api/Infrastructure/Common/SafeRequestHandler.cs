@@ -18,4 +18,21 @@ internal sealed class SafeRequestHandler : IRequestHandler
             return new BadRequestObjectResult(new {error = e.Message, stackTrace = e.StackTrace});
         }
     }
+
+    public async Task<IActionResult> HandleQueryAsync<TResponse>(Func<Task<TResponse>> query, ILogger logger)
+    {
+        try
+        {
+            return new OkObjectResult(await query());
+        }
+        catch (Exception e)
+        {
+            logger.LogError(e, "Error handling the query");
+            return new BadRequestObjectResult(new
+            {
+                error = e.Message,
+                stackTrace = e.StackTrace
+            });
+        }
+    }
 }
