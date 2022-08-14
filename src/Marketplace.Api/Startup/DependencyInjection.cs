@@ -1,12 +1,8 @@
-using System.Data.Common;
 using Marketplace.Domain.ClassifiedAd;
 using Marketplace.Domain.Shared;
 using Marketplace.Domain.UserProfile;
 using Marketplace.Infrastructure.Common;
-using Marketplace.Infrastructure.EntityFramework;
 using Marketplace.Infrastructure.Services;
-using Microsoft.EntityFrameworkCore;
-using Npgsql;
 
 // ReSharper disable once CheckNamespace
 namespace Microsoft.Extensions.DependencyInjection;
@@ -20,15 +16,9 @@ internal static class DependencyInjection
             client.BaseAddress = new("https://www.purgomalum.com/service/containsprofanity");
         });
 
-        string connectionString = configuration.GetConnectionString("Postgres");
-
-        services.AddDbContext<MarketplaceDbContext>(options => options.UseNpgsql(connectionString))
-                .AddScoped<DbConnection>(_ => new NpgsqlConnection(connectionString));
-
         services.AddSingleton<ICurrencyLookup, FixedCurrencyLookup>();
         services.AddSingleton<IRequestHandler, SafeRequestHandler>();
 
-        services.AddScoped<IUnitOfWork, EfCoreUnitOfWork>();
         services.AddScoped<IClassifiedAdRepository, ClassifiedAdRepository>();
         services.AddScoped<IUserProfileRepository, UserProfileRepository>();
         services.AddScoped<ClassifiedAdsApplicationService>();
