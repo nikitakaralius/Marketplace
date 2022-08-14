@@ -1,8 +1,10 @@
 namespace Marketplace.Framework;
 
-public abstract class AggregateRoot : IInternalEventHandler
+public abstract class AggregateRoot<TId> : IInternalEventHandler
 {
     private readonly List<IEvent> _changes = new();
+
+    public TId Id { get; protected set; }
 
     public void ClearChanges() => _changes.Clear();
 

@@ -6,15 +6,13 @@ namespace Marketplace.Domain.UserProfile;
 
 using UserEvent = IEvent<UserProfile>;
 
-public sealed class UserProfile : AggregateRoot
+public sealed class UserProfile : AggregateRoot<UserId>
 {
     private UserProfile()
     {
     }
 
     public Guid DatabaseId { get; private set; }
-
-    public UserId Id { get; private set; } = null!;
 
     public FullName FullName { get; private set; } = FullName.None;
 
