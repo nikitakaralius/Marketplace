@@ -4,5 +4,5 @@ namespace Marketplace.Infrastructure.Common;
 
 public interface IRequestHandler
 {
-    Task<IActionResult> HandleCommandAsync<TRequest>(TRequest request, Func<TRequest, Task> handler);
+    Task<IActionResult> HandleCommandAsync<TRequest>(TRequest request, Func<TRequest, Task> handler, ILogger logger);
 }
