@@ -18,21 +18,21 @@ public sealed class ClassifiedAdCommandsApi : ControllerBase
 
     [HttpPost]
     public async Task<IActionResult> Post(V1.Create request) =>
-        await _handler.HandleRequestAsync(request, _service.HandleAsync);
+        await _handler.HandleCommandAsync(request, _service.HandleAsync);
 
     [HttpPut("title")]
     public async Task<IActionResult> Put(V1.SetTitle request) =>
-        await _handler.HandleRequestAsync(request, _service.HandleAsync);
+        await _handler.HandleCommandAsync(request, _service.HandleAsync);
 
     [HttpPut("description")]
     public async Task<IActionResult> Put(V1.UpdateDescription request) =>
-        await _handler.HandleRequestAsync(request, _service.HandleAsync);
+        await _handler.HandleCommandAsync(request, _service.HandleAsync);
 
     [HttpPut("price")]
     public async Task<IActionResult> Put(V1.UpdatePrice request) =>
-        await _handler.HandleRequestAsync(request, _service.HandleAsync);
+        await _handler.HandleCommandAsync(request, _service.HandleAsync);
 
     [HttpPut("publish")]
     public async Task<IActionResult> Put(V1.RequestToPublish request) =>
-        await _handler.HandleRequestAsync(request, _service.HandleAsync);
+        await _handler.HandleCommandAsync(request, _service.HandleAsync);
 }

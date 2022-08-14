@@ -18,17 +18,17 @@ public sealed class UserProfileCommandsApi : ControllerBase
 
     [HttpPost]
     public async Task<IActionResult> Post(V1.RegisterUser request) =>
-        await _handler.HandleRequestAsync(request, _service.HandleAsync);
+        await _handler.HandleCommandAsync(request, _service.HandleAsync);
 
     [HttpPut("fullname")]
     public async Task<IActionResult> Put(V1.UpdateUserFullName request) =>
-        await _handler.HandleRequestAsync(request, _service.HandleAsync);
+        await _handler.HandleCommandAsync(request, _service.HandleAsync);
 
     [HttpPut("displayname")]
     public async Task<IActionResult> Put(V1.UpdateUserDisplayName request) =>
-        await _handler.HandleRequestAsync(request, _service.HandleAsync);
+        await _handler.HandleCommandAsync(request, _service.HandleAsync);
 
     [HttpPut("photo")]
     public async Task<IActionResult> Put(V1.UpdateUserProfilePhoto request) =>
-        await _handler.HandleRequestAsync(request, _service.HandleAsync);
+        await _handler.HandleCommandAsync(request, _service.HandleAsync);
 }

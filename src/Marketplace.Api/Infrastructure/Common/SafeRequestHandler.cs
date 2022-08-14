@@ -8,7 +8,7 @@ internal sealed class SafeRequestHandler : IRequestHandler
 
     public SafeRequestHandler(ILogger<SafeRequestHandler> logger) => _logger = logger;
 
-    public async Task<IActionResult> HandleRequestAsync<TRequest>(TRequest request, Func<TRequest, Task> handler)
+    public async Task<IActionResult> HandleCommandAsync<TRequest>(TRequest request, Func<TRequest, Task> handler)
     {
         try
         {
