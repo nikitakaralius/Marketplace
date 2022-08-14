@@ -11,10 +11,10 @@ public sealed class ClassifiedAd : AggregateRoot
 {
     public enum AdState
     {
-        PendingReview,
-        Active,
-        Inactive,
-        MarkedAsSold
+        PendingReview = 1,
+        Active = 2,
+        Inactive = 3,
+        MarkedAsSold = 4
     }
 
     private readonly List<Picture> _pictures = new();
