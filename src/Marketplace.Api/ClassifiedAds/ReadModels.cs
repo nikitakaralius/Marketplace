@@ -1,6 +1,6 @@
 namespace Marketplace.ClassifiedAds;
 
-internal static class ReadModels
+public static class ReadModels
 {
     public class ClassifiedAdDetails
     {
