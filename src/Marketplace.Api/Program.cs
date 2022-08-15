@@ -1,3 +1,10 @@
+using Serilog;
+
+Log.Logger = new LoggerConfiguration()
+             .WriteTo.Console()
+             .MinimumLevel.Verbose()
+             .CreateLogger();
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddInfrastructure(builder.Configuration, builder.Environment);
