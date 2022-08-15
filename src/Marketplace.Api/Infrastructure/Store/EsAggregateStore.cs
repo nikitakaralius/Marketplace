@@ -5,6 +5,7 @@ namespace Marketplace.Infrastructure.Store;
 
 internal sealed class EsAggregateStore : IAggregateStore
 {
+    private const int StreamSlice = 1024;
     private readonly IEventStoreConnection _connection;
 
     public EsAggregateStore(IEventStoreConnection connection) => _connection = connection;
@@ -30,11 +31,23 @@ internal sealed class EsAggregateStore : IAggregateStore
         await _connection.AppendToStreamAsync(stream, aggregate.Version, changes);
     }
 
-    public Task<TAggregate> LoadAsync<TAggregate, TId>(TId aggregateId)
+    public async Task<TAggregate> LoadAsync<TAggregate, TId>(TId aggregateId)
         where TAggregate : AggregateRoot<TId>
         where TId : notnull
     {
-        throw new NotImplementedException();
+        string stream = StreamName<TAggregate, TId>(aggregateId);
+        var aggregate = (TAggregate) Activator.CreateInstance(typeof(TAggregate), true)!;
+        var page = await _connection.ReadStreamEventsForwardAsync(stream, 0, StreamSlice, false);
+
+        aggregate.Load(page.Events.Select(e =>
+        {
+            var meta = JsonSerializer.Deserialize<EventMetadata>(e.Event.Metadata)!;
+            var dataType = Type.GetType(meta.ClrType)!;
+            var data = JsonSerializer.Deserialize(e.Event.Data, dataType)!;
+            return (IEvent) data;
+        }).ToArray());
+
+        return aggregate;
     }
 
     private static string StreamName<TAggregate, TId>(TId aggregateId) where TId : notnull =>
