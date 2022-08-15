@@ -1,29 +1,30 @@
 using EventStore.ClientAPI;
 using Marketplace.Domain.ClassifiedAd;
+using Serilog;
+using Serilog.Events;
+using ILogger = Serilog.ILogger;
 
 namespace Marketplace.Infrastructure.Store;
 
 internal sealed class EsSubscription
 {
     private readonly IEventStoreConnection _connection;
-    private readonly ILogger<EsSubscription> _logger;
+    private static readonly ILogger Logger = Log.ForContext<EsSubscription>();
     private readonly IList<ReadModels.ClassifiedAdDetails> _items;
 
     private EventStoreAllCatchUpSubscription _subscription = null!;
 
     public EsSubscription(IEventStoreConnection connection,
-                          ILogger<EsSubscription> logger,
                           IList<ReadModels.ClassifiedAdDetails> items)
     {
         _connection = connection;
-        _logger = logger;
         _items = items;
     }
 
     public void Start()
     {
         CatchUpSubscriptionSettings settings =
-            new(2000, 500, _logger.IsEnabled(LogLevel.Debug), true, "try-out-subscription");
+            new(2000, 500, Logger.IsEnabled(LogEventLevel.Verbose), true, "try-out-subscription");
 
         _subscription = _connection.SubscribeToAllFrom(Position.Start, settings, EventAppeared);
     }
@@ -38,7 +39,7 @@ internal sealed class EsSubscription
 
         var @event = ev.Deserialize() as IEvent<ClassifiedAd>;
 
-        _logger.LogDebug("Projecting event {Type}", @event?.GetType().Name);
+        Logger.Debug("Projecting event {Type}", @event?.GetType().Name);
 
         Action project = @event switch
         {
@@ -51,10 +52,7 @@ internal sealed class EsSubscription
             },
             Events.ClassifiedAdDescriptionUpdated e => () =>
             {
-                UpdateItem(e.Id, x =>
-                {
-                    x.Description = e.Description;
-                });
+                UpdateItem(e.Id, x => { x.Description = e.Description; });
             },
             Events.ClassifiedAdPriceUpdated e => () =>
             {
@@ -64,14 +62,8 @@ internal sealed class EsSubscription
                     x.CurrencyCode = e.CurrencyCode;
                 });
             },
-            Events.ClassifiedAdTitleChanged e => () =>
-            {
-                UpdateItem(e.Id, x =>
-                {
-                    x.Title = e.Title;
-                });
-            },
-            _ => throw new ArgumentOutOfRangeException(nameof(@event))
+            Events.ClassifiedAdTitleChanged e => () => { UpdateItem(e.Id, x => { x.Title = e.Title; }); },
+            _                                 => throw new ArgumentOutOfRangeException(nameof(@event))
         };
 
         project();
