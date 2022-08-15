@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using ILogger = Serilog.ILogger;
 
 namespace Marketplace.Infrastructure.Common;
 

@@ -1,6 +1,5 @@
 using EventStore.ClientAPI;
 using Marketplace.Domain.ClassifiedAd;
-using Serilog;
 using Serilog.Events;
 using ILogger = Serilog.ILogger;
 
@@ -8,8 +7,9 @@ namespace Marketplace.Infrastructure.Store;
 
 internal sealed class EsSubscription
 {
-    private readonly IEventStoreConnection _connection;
     private static readonly ILogger Logger = Log.ForContext<EsSubscription>();
+
+    private readonly IEventStoreConnection _connection;
     private readonly IList<ReadModels.ClassifiedAdDetails> _items;
 
     private EventStoreAllCatchUpSubscription _subscription = null!;
