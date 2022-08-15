@@ -35,4 +35,21 @@ internal sealed class SafeRequestHandler : IRequestHandler
             });
         }
     }
+
+    public IActionResult HandleQuery<TResponse>(Func<TResponse> query, ILogger logger)
+    {
+        try
+        {
+            return new OkObjectResult(query());
+        }
+        catch (Exception e)
+        {
+            logger.LogError(e, "Error handling the query");
+            return new BadRequestObjectResult(new
+            {
+                error = e.Message,
+                stackTrace = e.StackTrace
+            });
+        }
+    }
 }
