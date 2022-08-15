@@ -2,7 +2,7 @@ using Marketplace.Domain.Shared;
 using Marketplace.Domain.UserProfile;
 using Marketplace.Domain.UserProfile.ValueObjects;
 using Marketplace.Infrastructure.Store;
-using static Marketplace.UserProfiles.Contracts;
+using static Marketplace.UserProfiles.Commands;
 
 namespace Marketplace.UserProfiles;
 

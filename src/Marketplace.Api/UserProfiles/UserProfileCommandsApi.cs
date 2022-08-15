@@ -1,6 +1,6 @@
 using Marketplace.Infrastructure.Common;
 using Microsoft.AspNetCore.Mvc;
-using static Marketplace.UserProfiles.Contracts;
+using static Marketplace.UserProfiles.Commands;
 using ILogger = Serilog.ILogger;
 
 namespace Marketplace.UserProfiles;
