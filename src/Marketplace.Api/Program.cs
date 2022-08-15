@@ -1,6 +1,6 @@
 Log.Logger = new LoggerConfiguration()
              .WriteTo.Console()
-             .MinimumLevel.Verbose()
+             .MinimumLevel.Debug()
              .CreateLogger();
 
 var builder = WebApplication.CreateBuilder(args);
