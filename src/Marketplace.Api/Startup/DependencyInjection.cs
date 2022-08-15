@@ -13,17 +13,30 @@ internal static class DependencyInjection
                                                        IConfiguration configuration,
                                                        IWebHostEnvironment env)
     {
-        services.AddHttpClient(nameof(Constants.PurgoMalum), client =>
-        {
-            client.BaseAddress = new("https://www.purgomalum.com/service/containsprofanity");
-        });
+        services.AddHttpClient(nameof(Constants.PurgoMalum),
+                               client =>
+                               {
+                                   client.BaseAddress = new("https://www.purgomalum.com/service/containsprofanity");
+                               });
 
         var esConnection = EventStoreConnection.Create(
             configuration.GetConnectionString("EventStore"),
             ConnectionSettings.Create().KeepReconnecting(),
             env.ApplicationName);
 
+        if (env.IsDevelopment())
+        {
+            var items = new List<ReadModels.ClassifiedAdDetails>();
+            services.AddSingleton<IEnumerable<ReadModels.ClassifiedAdDetails>>(items);
+            services.AddSingleton<IList<ReadModels.ClassifiedAdDetails>>(items);
+        }
+        else
+        {
+            throw new InvalidOperationException("In-memory storage is not allowed in production");
+        }
+
         services.AddSingleton(esConnection);
+        services.AddSingleton<EsSubscription>();
         services.AddSingleton<IAggregateStore, EsAggregateStore>();
         services.AddSingleton<ICurrencyLookup, FixedCurrencyLookup>();
         services.AddSingleton<IRequestHandler, SafeRequestHandler>();
