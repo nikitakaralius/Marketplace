@@ -2,7 +2,8 @@ services:
 
   eventstore:
     container_name: marketplace-eventstore
-    image: ghcr.io/eventstore/eventstore:21.10.0-alpha-arm64v8
+    image: ghcr.io/eventstore/eventstore:21.10.7-alpha-arm64v8
+    command: --enable-external-tcp --ext-ip=0.0.0.0 --int-ip=0.0.0.0 --disable-external-tcp-tls
     ports:
       - 2113:2113
       - 1113:1113
