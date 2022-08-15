@@ -9,13 +9,16 @@ internal sealed class EsAggregateStore : IAggregateStore
 
     public EsAggregateStore(IEventStoreConnection connection) => _connection = connection;
 
-    public Task<bool> ExistsAsync<TAggregate, TId>(TId aggregateId) where TAggregate : AggregateRoot<TId>
+    public Task<bool> ExistsAsync<TAggregate, TId>(TId aggregateId)
+        where TAggregate : AggregateRoot<TId>
+        where TId : notnull
     {
         throw new NotImplementedException();
     }
 
-    public async Task SaveAsync<TAggregate, TId>(TAggregate aggregate) where TAggregate : AggregateRoot<TId>
-                                                                       where TId : notnull
+    public async Task SaveAsync<TAggregate, TId>(TAggregate aggregate)
+        where TAggregate : AggregateRoot<TId>
+        where TId : notnull
     {
         var changes = aggregate.Changes()
                                .Select(e => ConvertToEventData(e))
@@ -27,7 +30,9 @@ internal sealed class EsAggregateStore : IAggregateStore
         await _connection.AppendToStreamAsync(stream, aggregate.Version, changes);
     }
 
-    public Task<TAggregate> LoadAsync<TAggregate, TId>(TId aggregateId) where TAggregate : AggregateRoot<TId>
+    public Task<TAggregate> LoadAsync<TAggregate, TId>(TId aggregateId)
+        where TAggregate : AggregateRoot<TId>
+        where TId : notnull
     {
         throw new NotImplementedException();
     }
