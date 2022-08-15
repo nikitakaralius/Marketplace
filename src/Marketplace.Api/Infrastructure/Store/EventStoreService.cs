@@ -2,11 +2,11 @@ using EventStore.ClientAPI;
 
 namespace Marketplace.Infrastructure.Store;
 
-internal sealed class EsStoreHostedService : IHostedService
+internal sealed class EventStoreService : IHostedService
 {
     private readonly IEventStoreConnection _connection;
 
-    public EsStoreHostedService(IEventStoreConnection connection) =>
+    public EventStoreService(IEventStoreConnection connection) =>
         _connection = connection;
 
     public Task StartAsync(CancellationToken cancellationToken) =>

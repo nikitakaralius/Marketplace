@@ -33,7 +33,7 @@ internal static class DependencyInjection
 
         services.AddTransient<IContentModeration, PurgoMalumContentModeration>();
 
-        services.AddHostedService<EsStoreHostedService>();
+        services.AddHostedService<EventStoreService>();
 
         services.AddControllers();
         services.AddSwaggerGen(c =>
