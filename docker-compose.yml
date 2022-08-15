@@ -1,11 +1,14 @@
 services:
 
-  postgres:
-    container_name: marketplace-postgres
-    image: postgres
+  eventstore:
+    container_name: marketplace-eventstore
+    image: ghcr.io/eventstore/eventstore:21.10.7-alpha-arm64v8
+    command: --enable-external-tcp --ext-ip=0.0.0.0 --int-ip=0.0.0.0 --disable-external-tcp-tls
     ports:
-    - 5432:5432
-    volumes:
-    - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - 2113:2113
+      - 1113:1113
     environment:
-      POSTGRES_PASSWORD: pa$$word!
+      - EVENTSTORE_HTTP_PORT=2113
+      - EVENTSTORE_EXT_TCP_PORT=1113
+      - EVENTSTORE_INSECURE=true
+      - EVENTSTORE_ENABLE_ATOM_PUB_OVER_HTTP=true

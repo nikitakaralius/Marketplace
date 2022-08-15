@@ -1,23 +1,20 @@
 using Marketplace.Domain.Shared;
 using Marketplace.Domain.UserProfile;
 using Marketplace.Domain.UserProfile.ValueObjects;
+using Marketplace.Infrastructure.Store;
 using static Marketplace.UserProfiles.Contracts;
 
 namespace Marketplace.UserProfiles;
 
 public sealed class UserProfilesApplicationService : IApplicationService<V1.ICommand>
 {
-    private readonly IUserProfileRepository _repository;
-    private readonly IUnitOfWork _uow;
     private readonly IContentModeration _checkText;
+    private readonly IAggregateStore _store;
 
-    public UserProfilesApplicationService(IUserProfileRepository repository,
-                                          IUnitOfWork uow,
-                                          IContentModeration checkText)
+    public UserProfilesApplicationService(IContentModeration checkText, IAggregateStore store)
     {
-        _repository = repository;
-        _uow = uow;
         _checkText = checkText;
+        _store = store;
     }
 
     public async Task HandleAsync(V1.ICommand command)
@@ -34,7 +31,7 @@ public sealed class UserProfilesApplicationService : IApplicationService<V1.ICom
 
     private async Task<UserProfile> RegisterUserAsync(V1.RegisterUser request)
     {
-        if (await _repository.ExistsAsync(request.Id))
+        if (await _store.ExistsAsync(request.Id))
         {
             throw new InvalidOperationException($"Entity with id {request.Id} already exists");
         }
@@ -44,8 +41,7 @@ public sealed class UserProfilesApplicationService : IApplicationService<V1.ICom
             FullName.FromString(request.FullName),
             DisplayName.FromString(request.DisplayName, _checkText));
 
-        await _repository.AddAsync(profile);
-        await _uow.CommitAsync();
+        await _store.SaveAsync(profile);
 
         return profile;
     }
@@ -54,13 +50,13 @@ public sealed class UserProfilesApplicationService : IApplicationService<V1.ICom
     {
         var entity = await LoadAsync(id);
         operation(entity);
-        await _uow.CommitAsync();
+        await _store.SaveAsync(entity);
         return entity;
     }
 
     private async Task<UserProfile> LoadAsync(Guid entityId)
     {
-        var entity = await _repository.LoadAsync(entityId);
+        var entity = await _store.LoadAsync(entityId);
         return entity ?? throw new InvalidOperationException($"Entity with {entityId} cannot be found");
     }
 

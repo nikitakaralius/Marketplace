@@ -7,7 +7,7 @@ using static Marketplace.Domain.ClassifiedAd.Events;
 
 namespace Marketplace.Domain.ClassifiedAd;
 
-public sealed class ClassifiedAd : AggregateRoot
+public sealed class ClassifiedAd : AggregateRoot<ClassifiedAdId>
 {
     public enum AdState
     {
@@ -24,8 +24,6 @@ public sealed class ClassifiedAd : AggregateRoot
     #region Properties
 
     public Guid DatabaseId { get; private set; }
-
-    public ClassifiedAdId Id { get; private set; } = null!;
 
     public UserId OwnerId { get; private set; } = null!;
 
