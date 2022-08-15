@@ -10,11 +10,13 @@ internal sealed class EsAggregateStore : IAggregateStore
 
     public EsAggregateStore(IEventStoreConnection connection) => _connection = connection;
 
-    public Task<bool> ExistsAsync<TAggregate, TId>(TId aggregateId)
+    public async Task<bool> ExistsAsync<TAggregate, TId>(TId aggregateId)
         where TAggregate : AggregateRoot<TId>
         where TId : notnull
     {
-        throw new NotImplementedException();
+        string stream = StreamName<TAggregate, TId>(aggregateId);
+        var response = await _connection.ReadEventAsync(stream, 1, false);
+        return response.Status != EventReadStatus.NoStream;
     }
 
     public async Task SaveAsync<TAggregate, TId>(TAggregate aggregate)
