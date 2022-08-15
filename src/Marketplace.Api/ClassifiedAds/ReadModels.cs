@@ -6,29 +6,29 @@ public static class ReadModels
     {
         public Guid Id { get; init; }
 
-        public string Title { get; init; } = "";
+        public string Title { get; set; } = "";
 
-        public string Description { get; init; } = "";
+        public string Description { get; set; } = "";
 
-        public decimal Price { get; init; }
+        public decimal Price { get; set; }
 
-        public string CurrencyCode { get; init; } = "";
+        public string CurrencyCode { get; set; } = "";
 
-        public string SellerDisplayName { get; init; } = "";
+        public string SellerDisplayName { get; set; } = "";
 
-        public string[] PhotoUrls { get; init; } = Array.Empty<string>();
+        public string[] PhotoUrls { get; set; } = Array.Empty<string>();
     }
 
     public class ClassifiedAdListItem
     {
         public Guid Id { get; init; }
 
-        public string Title { get; init; } = "";
+        public string Title { get; set; } = "";
 
-        public decimal Price { get; init; }
+        public decimal Price { get; set; }
 
-        public string CurrencyCode { get; init; } = "";
+        public string CurrencyCode { get; set; } = "";
 
-        public string PhotoUrl { get; init; } = "";
+        public string PhotoUrl { get; set; } = "";
     }
 }
