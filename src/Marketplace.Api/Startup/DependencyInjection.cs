@@ -3,6 +3,7 @@ using Marketplace.Domain.Shared;
 using Marketplace.Infrastructure.Common;
 using Marketplace.Infrastructure.Services;
 using Marketplace.Infrastructure.Store;
+using Marketplace.Projections;
 
 // ReSharper disable once CheckNamespace
 namespace Microsoft.Extensions.DependencyInjection;

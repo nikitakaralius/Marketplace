@@ -1,4 +1,4 @@
-namespace Marketplace.ClassifiedAds;
+namespace Marketplace.Projections;
 
 public static class ReadModels
 {
