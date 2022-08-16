@@ -2,6 +2,7 @@ namespace Marketplace.Projections;
 
 using AdEvent = Domain.ClassifiedAd.Events;
 using UserEvent = Domain.UserProfile.Events;
+using UpcastEvent = ClassifiedAdUpcastedEvents.V1;
 
 internal sealed class ClassifiedAdDetailsProjection : IProjection
 {
@@ -40,6 +41,8 @@ internal sealed class ClassifiedAdDetailsProjection : IProjection
                 UpdateMultipleItems(
                     q => q.SellerId == e.UserId,
                     ad => ad.SellerDisplayName = e.DisplayName),
+            UpcastEvent.ClassifiedAdPublished e => () =>
+                UpdateItem(e.Id, x => x.SellerPhotoUrl = e.SellerPhotoUrl),
             _ => () => { }
         };
 

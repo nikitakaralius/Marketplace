@@ -11,7 +11,7 @@ internal static class ClassifiedAdUpcastedEvents
             public Guid Id { get; init; }
             public Guid ApprovedBy { get; init; }
             public Guid OwnerId { get; init; }
-            public string SellersPhotoUrl { get; init; } = "";
+            public string SellerPhotoUrl { get; init; } = "";
         }
     }
 }

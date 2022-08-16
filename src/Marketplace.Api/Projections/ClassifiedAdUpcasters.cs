@@ -29,7 +29,7 @@ internal sealed class ClassifiedAdUpcasters : IProjection
                     Id = e.Id,
                     OwnerId = e.OwnerId,
                     ApprovedBy = e.ApprovedBy,
-                    SellersPhotoUrl = _getUserPhoto(e.OwnerId) ?? ""
+                    SellerPhotoUrl = _getUserPhoto(e.OwnerId) ?? ""
                 };
                 return _connection.AppendEventsAsync(StreamName, ExpectedVersion.Any, newEvent);
             },
