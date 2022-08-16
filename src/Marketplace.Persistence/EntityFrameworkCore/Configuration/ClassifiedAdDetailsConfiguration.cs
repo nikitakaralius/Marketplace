@@ -16,10 +16,10 @@ internal sealed class ClassifiedAdDetailsConfiguration : IEntityTypeConfiguratio
                .HasMaxLength(1500)
                .IsRequired();
 
-        builder.Property(x => x.PhotoUrls)
-               .HasConversion(
-                   v => string.Join(',', v),
-                   v => v.Split(',', StringSplitOptions.RemoveEmptyEntries)
-                         .ToList());
+        // builder.Property(x => x.PhotoUrls)
+        //        .HasConversion(
+        //            v => string.Join(',', v),
+        //            v => v.Split(',', StringSplitOptions.RemoveEmptyEntries)
+        //                  .ToList());
     }
 }
