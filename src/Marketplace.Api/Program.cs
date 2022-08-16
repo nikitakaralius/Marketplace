@@ -1,3 +1,8 @@
+Log.Logger = new LoggerConfiguration()
+             .WriteTo.Console()
+             .MinimumLevel.Debug()
+             .CreateLogger();
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddInfrastructure(builder.Configuration, builder.Environment);

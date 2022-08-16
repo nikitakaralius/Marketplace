@@ -1,4 +1,3 @@
-using System.Text.Json;
 using EventStore.ClientAPI;
 
 namespace Marketplace.Infrastructure.Store;
@@ -23,14 +22,9 @@ internal sealed class EsAggregateStore : IAggregateStore
         where TAggregate : AggregateRoot<TId>
         where TId : notnull
     {
-        var changes = aggregate.Changes()
-                               .Select(e => ConvertToEventData(e))
-                               .ToArray();
-
-        if (changes.Length == 0) return;
-
         string stream = StreamName<TAggregate, TId>(aggregate);
-        await _connection.AppendToStreamAsync(stream, aggregate.Version, changes);
+        await _connection.AppendEventsAsync(stream, aggregate.Version,
+                                            aggregate.Changes().ToArray());
     }
 
     public async Task<TAggregate> LoadAsync<TAggregate, TId>(TId aggregateId)
@@ -41,13 +35,7 @@ internal sealed class EsAggregateStore : IAggregateStore
         var aggregate = (TAggregate) Activator.CreateInstance(typeof(TAggregate), true)!;
         var page = await _connection.ReadStreamEventsForwardAsync(stream, 0, StreamSlice, false);
 
-        aggregate.Load(page.Events.Select(e =>
-        {
-            var meta = JsonSerializer.Deserialize<EventMetadata>(e.Event.Metadata)!;
-            var dataType = Type.GetType(meta.ClrType)!;
-            var data = JsonSerializer.Deserialize(e.Event.Data, dataType)!;
-            return (IEvent) data;
-        }).ToArray());
+        aggregate.Load(page.Events.Select(e => e.Deserialize()).ToArray());
 
         return aggregate;
     }
@@ -59,22 +47,4 @@ internal sealed class EsAggregateStore : IAggregateStore
         where TAggregate : AggregateRoot<TId>
         where TId : notnull =>
         $"{typeof(TAggregate).Name}-{aggregate.Id.ToString()}";
-
-    private static byte[] Serialize(object data) =>
-        JsonSerializer.SerializeToUtf8Bytes(data);
-
-    private static EventData ConvertToEventData(IEvent e) =>
-        new(eventId: Guid.NewGuid(),
-            type: e.GetType().Name,
-            isJson: true,
-            data: Serialize(e),
-            metadata: Serialize(new EventMetadata
-            {
-                ClrType = e.GetType().AssemblyQualifiedName!
-            }));
-
-    private class EventMetadata
-    {
-        public string ClrType { get; init; } = "";
-    }
 }

@@ -40,5 +40,12 @@ public static class ClassifiedAdContract
         {
             public Guid Id { get; init; }
         }
+
+        public sealed class Publish : ICommand
+        {
+            public Guid Id { get; init; }
+
+            public Guid ApprovedBy { get; init; }
+        }
     }
 }

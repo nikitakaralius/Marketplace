@@ -2,7 +2,7 @@ using Marketplace.Framework;
 
 namespace Marketplace.Domain.ClassifiedAd;
 
-using ClassifiedAdEvent = IEvent<Domain.ClassifiedAd.ClassifiedAd>;
+using ClassifiedAdEvent = IEvent<ClassifiedAd>;
 using PictureEvent = IEvent<Picture>;
 
 public static class Events
@@ -35,6 +35,13 @@ public static class Events
     public sealed class ClassifiedAdSentForReview : IEvent<ClassifiedAd>
     {
         public Guid Id { get; init; }
+    }
+
+    public class ClassifiedAdPublished : IEvent<ClassifiedAd>
+    {
+        public Guid Id { get; init; }
+        public Guid ApprovedBy { get; init; }
+        public Guid OwnerId { get; init; }
     }
 
     public sealed class PictureAddedToClassifiedAd : IEvent<ClassifiedAd>, PictureEvent

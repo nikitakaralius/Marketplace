@@ -80,6 +80,14 @@ public sealed class ClassifiedAd : AggregateRoot<ClassifiedAdId>
             Id = Id
         });
 
+    public void Publish(UserId approvedBy) =>
+        Apply(new ClassifiedAdPublished
+        {
+            Id = Id,
+            ApprovedBy = approvedBy,
+            OwnerId = OwnerId
+        });
+
     public void AddPicture(Uri pictureUri, PictureSize size) =>
         Apply(new PictureAddedToClassifiedAd
         {
@@ -127,6 +135,11 @@ public sealed class ClassifiedAd : AggregateRoot<ClassifiedAdId>
                 ApplyToEntity(picture, e);
                 _pictures.Add(picture);
             },
+            ClassifiedAdPublished e => () =>
+            {
+                ApprovedBy = new UserId(e.ApprovedBy);
+                State = AdState.Active;
+            },
             _ => throw new ArgumentOutOfRangeException(nameof(eventHappened))
         };
         when();
@@ -145,8 +158,8 @@ public sealed class ClassifiedAd : AggregateRoot<ClassifiedAdId>
                 Title != ClassifiedAdTitle.None
                 && Description != ClassifiedAdDescription.None
                 && Price.Amount > 0
-                && ApprovedBy != UserId.None
-                && FirstPicture.HasCorrectSize(),
+                && ApprovedBy != UserId.None,
+                //&& FirstPicture.HasCorrectSize(),
             _ => true
         };
 
