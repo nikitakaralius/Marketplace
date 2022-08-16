@@ -135,6 +135,11 @@ public sealed class ClassifiedAd : AggregateRoot<ClassifiedAdId>
                 ApplyToEntity(picture, e);
                 _pictures.Add(picture);
             },
+            ClassifiedAdPublished e => () =>
+            {
+                ApprovedBy = new UserId(e.ApprovedBy);
+                State = AdState.Active;
+            },
             _ => throw new ArgumentOutOfRangeException(nameof(eventHappened))
         };
         when();
