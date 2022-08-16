@@ -14,7 +14,5 @@ public sealed class ClassifiedAdDetails
 
     public string[] PhotoUrls { get; set; } = Array.Empty<string>();
 
-    public Guid SellerId { get; init; }
-
     public UserDetails Seller { get; init; } = new();
 }
