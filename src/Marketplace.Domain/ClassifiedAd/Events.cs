@@ -42,8 +42,6 @@ public static class Events
         public Guid Id { get; init; }
         public Guid ApprovedBy { get; init; }
         public Guid OwnerId { get; init; }
-
-        public string SellersPhotoUrl { get; set; }
     }
 
     public sealed class PictureAddedToClassifiedAd : IEvent<ClassifiedAd>, PictureEvent
