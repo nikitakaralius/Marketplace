@@ -37,10 +37,6 @@ internal sealed class ClassifiedAdDetailsProjection : IProjection
                 UpdateMultipleItems(
                     q => q.SellerId == e.UserId,
                     ad => ad.SellerDisplayName = e.DisplayName),
-            UserEvent.UserRegistered e => () =>
-                UpdateMultipleItems(
-                    q => q.SellerId == e.UserId,
-                    ad => ad.SellerDisplayName = e.DisplayName),
             UpcastEvent.ClassifiedAdPublished e => () =>
                 UpdateItem(e.Id, x => x.SellerPhotoUrl = e.SellerPhotoUrl),
             _ => () => { }
