@@ -5,23 +5,23 @@ namespace Marketplace.Infrastructure.Store;
 internal sealed class EventStoreService : IHostedService
 {
     private readonly IEventStoreConnection _connection;
-    private readonly ProjectionDispatcher _subscription;
+    private readonly ProjectionDispatcher _dispatcher;
 
-    public EventStoreService(IEventStoreConnection connection, ProjectionDispatcher subscription)
+    public EventStoreService(IEventStoreConnection connection, ProjectionDispatcher dispatcher)
     {
         _connection = connection;
-        _subscription = subscription;
+        _dispatcher = dispatcher;
     }
 
     public async Task StartAsync(CancellationToken cancellationToken)
     {
         await _connection.ConnectAsync();
-        _subscription.Start();
+        _dispatcher.Start();
     }
 
     public Task StopAsync(CancellationToken cancellationToken)
     {
-        _subscription.Stop();
+        _dispatcher.Stop();
         _connection.Close();
         return Task.CompletedTask;
     }
