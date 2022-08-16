@@ -2,7 +2,7 @@ using Marketplace.Framework;
 
 namespace Marketplace.Domain.ClassifiedAd;
 
-using ClassifiedAdEvent = IEvent<Domain.ClassifiedAd.ClassifiedAd>;
+using ClassifiedAdEvent = IEvent<ClassifiedAd>;
 using PictureEvent = IEvent<Picture>;
 
 public static class Events
