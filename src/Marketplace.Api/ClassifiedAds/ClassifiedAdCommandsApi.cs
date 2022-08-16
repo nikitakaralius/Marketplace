@@ -35,7 +35,11 @@ public sealed class ClassifiedAdCommandsApi : ControllerBase
     public async Task<IActionResult> Put(V1.UpdatePrice request) =>
         await _handler.HandleCommandAsync(request, _service.HandleAsync, Logger);
 
-    [HttpPut("publish")]
+    [HttpPut("requestpublish")]
     public async Task<IActionResult> Put(V1.RequestToPublish request) =>
+        await _handler.HandleCommandAsync(request, _service.HandleAsync, Logger);
+
+    [HttpPut("publish")]
+    public async Task<IActionResult> Put(V1.Publish request) =>
         await _handler.HandleCommandAsync(request, _service.HandleAsync, Logger);
 }
