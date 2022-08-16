@@ -13,7 +13,7 @@ internal sealed class ProjectionDispatcher
 
     private EventStoreAllCatchUpSubscription _subscription = null!;
 
-    public ProjectionDispatcher(IEventStoreConnection connection, IEnumerable<IProjection> projections)
+    public ProjectionDispatcher(IEventStoreConnection connection, params IProjection[] projections)
     {
         _connection = connection;
         _projections = projections;
