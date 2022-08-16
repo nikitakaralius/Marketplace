@@ -16,6 +16,8 @@ internal sealed class UserDetailsProjection : IProjection
                 _items.Add(new ReadModels.UserDetails {Id = e.UserId, DisplayName = e.DisplayName}),
             Events.UserDisplayNameUpdated e => () =>
                 UpdateItem(e.UserId, x => x.DisplayName = e.DisplayName),
+            Events.ProfilePhotoUpdated e => () =>
+                UpdateItem(e.UserId, x => x.PhotoUrl = e.PhotoUrl),
             _ => () => { }
         };
         projection();
