@@ -1,5 +1,3 @@
-using EventStore.ClientAPI;
-
 namespace Marketplace.Persistence.Checkpoints;
 
 public sealed class Checkpoint
