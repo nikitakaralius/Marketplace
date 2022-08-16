@@ -17,4 +17,8 @@
       <Folder Include="EventStore" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Marketplace.Ads\Marketplace.Ads.csproj" />
+    </ItemGroup>
+
 </Project>

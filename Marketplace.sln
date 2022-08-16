@@ -25,6 +25,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Marketplace.Framework", "sr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Marketplace.Persistence", "src\Marketplace.Persistence\Marketplace.Persistence.csproj", "{141F8420-54AC-4BFD-9C66-E20A1CC218C5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Marketplace.Ads", "src\Marketplace.Ads\Marketplace.Ads.csproj", "{A15F90BE-DEAA-4F37-9565-E5246FD09942}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,7 @@ Global
 		{18C1E707-2BDC-4E1C-9794-8F012B43875A} = {C9E996C0-6D9B-4FBF-A4D9-6A2F57615A81}
 		{F0A44CE2-B263-4034-A230-10A1AD73034D} = {CA8DE6C7-854F-4A12-A46A-AA71ABE94B0F}
 		{141F8420-54AC-4BFD-9C66-E20A1CC218C5} = {CA8DE6C7-854F-4A12-A46A-AA71ABE94B0F}
+		{A15F90BE-DEAA-4F37-9565-E5246FD09942} = {CA8DE6C7-854F-4A12-A46A-AA71ABE94B0F}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{B4DAC730-BCAE-4F4E-9B70-657F896672A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -61,5 +64,9 @@ Global
 		{141F8420-54AC-4BFD-9C66-E20A1CC218C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{141F8420-54AC-4BFD-9C66-E20A1CC218C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{141F8420-54AC-4BFD-9C66-E20A1CC218C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A15F90BE-DEAA-4F37-9565-E5246FD09942}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A15F90BE-DEAA-4F37-9565-E5246FD09942}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A15F90BE-DEAA-4F37-9565-E5246FD09942}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A15F90BE-DEAA-4F37-9565-E5246FD09942}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

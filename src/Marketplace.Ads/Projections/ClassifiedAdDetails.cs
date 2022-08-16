@@ -1,8 +1,10 @@
-namespace Marketplace.Persistence.Projections;
+namespace Marketplace.ClassifiedAds.Projections;
 
 public sealed class ClassifiedAdDetails
 {
     public Guid Id { get; init; }
+
+    public Guid SellerId { get; init; }
 
     public string Title { get; set; } = "";
 
@@ -12,7 +14,6 @@ public sealed class ClassifiedAdDetails
 
     public string CurrencyCode { get; set; } = "";
 
-    public string[] PhotoUrls { get; set; } = Array.Empty<string>();
-
-    public UserDetails Seller { get; init; } = new();
+    public List<string> PhotoUrls { get; set; } = new();
 }
+

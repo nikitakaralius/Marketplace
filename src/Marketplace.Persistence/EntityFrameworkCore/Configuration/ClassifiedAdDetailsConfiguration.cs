@@ -19,13 +19,7 @@ internal sealed class ClassifiedAdDetailsConfiguration : IEntityTypeConfiguratio
         builder.Property(x => x.PhotoUrls)
                .HasConversion(
                    v => string.Join(',', v),
-                   v => v.Split(',', StringSplitOptions.RemoveEmptyEntries));
-
-        builder.OwnsOne(x => x.Seller, s =>
-        {
-            s.Property(p => p.Id);
-            s.Property(p => p.DisplayName);
-            s.Property(p => p.PhotoUrl);
-        });
+                   v => v.Split(',', StringSplitOptions.RemoveEmptyEntries)
+                         .ToList());
     }
 }
