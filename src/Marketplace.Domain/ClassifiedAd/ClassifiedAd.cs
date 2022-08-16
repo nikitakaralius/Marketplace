@@ -80,6 +80,14 @@ public sealed class ClassifiedAd : AggregateRoot<ClassifiedAdId>
             Id = Id
         });
 
+    public void Publish() =>
+        Apply(new ClassifiedAdPublished
+        {
+            Id = Id,
+            ApprovedBy = ApprovedBy,
+            OwnerId = OwnerId
+        });
+
     public void AddPicture(Uri pictureUri, PictureSize size) =>
         Apply(new PictureAddedToClassifiedAd
         {
