@@ -158,8 +158,8 @@ public sealed class ClassifiedAd : AggregateRoot<ClassifiedAdId>
                 Title != ClassifiedAdTitle.None
                 && Description != ClassifiedAdDescription.None
                 && Price.Amount > 0
-                && ApprovedBy != UserId.None
-                && FirstPicture.HasCorrectSize(),
+                && ApprovedBy != UserId.None,
+                //&& FirstPicture.HasCorrectSize(),
             _ => true
         };
 
