@@ -22,7 +22,7 @@ internal sealed class ProjectionDispatcher
     public void Start()
     {
         CatchUpSubscriptionSettings settings =
-            new(2000, 500, Logger.IsEnabled(LogEventLevel.Verbose), true, "try-out-subscription");
+            new(2000, 500, Logger.IsEnabled(LogEventLevel.Verbose), false, "try-out-subscription");
 
         _subscription = _connection.SubscribeToAllFrom(Position.Start, settings, EventAppeared);
     }
