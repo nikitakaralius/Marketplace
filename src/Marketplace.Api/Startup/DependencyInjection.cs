@@ -61,7 +61,9 @@ internal static class DependencyInjection
 
             ProjectionDispatcher dispatcher = new(
                 esConnection,
-                new ClassifiedAdDetailsProjection(adDetails),
+                new ClassifiedAdDetailsProjection(
+                    adDetails,
+                    id => userDetails.FirstOrDefault(x => x.Id == id)?.DisplayName),
                 new UserDetailsProjection(userDetails));
 
             services.AddSingleton(dispatcher);
