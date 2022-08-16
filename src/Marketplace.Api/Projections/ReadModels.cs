@@ -40,6 +40,8 @@ public static class ReadModels
     {
         public Guid Id { get; init; }
 
-        public string DisplayName { get; set; }
+        public string DisplayName { get; set; } = "";
+
+        public string PhotoUrl { get; set; } = "";
     }
 }
