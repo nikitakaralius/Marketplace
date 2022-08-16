@@ -83,7 +83,7 @@ public sealed class ClassifiedAdsApplicationService : IApplicationService<V1.ICo
         await HandleUpdateAsync(request.Id, entity => { entity.RequestToPublish(); });
 
     private async Task<ClassifiedAd> PublishAsync(V1.Publish request) =>
-        await HandleUpdateAsync(request.Id, e => e.Publish());
+        await HandleUpdateAsync(request.Id, e => e.Publish(request.ApprovedBy));
 
     private async Task<ClassifiedAd> LoadClassifiedAd(Guid entityId)
     {

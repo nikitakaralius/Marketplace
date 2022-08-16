@@ -80,11 +80,11 @@ public sealed class ClassifiedAd : AggregateRoot<ClassifiedAdId>
             Id = Id
         });
 
-    public void Publish() =>
+    public void Publish(UserId approvedBy) =>
         Apply(new ClassifiedAdPublished
         {
             Id = Id,
-            ApprovedBy = ApprovedBy,
+            ApprovedBy = approvedBy,
             OwnerId = OwnerId
         });
 
