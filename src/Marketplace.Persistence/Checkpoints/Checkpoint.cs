@@ -8,5 +8,9 @@ public sealed class Checkpoint
 
     public string Name { get; init; } = "";
 
-    public Position Position { get; set; }
+    private long CommitPosition { get; init; }
+
+    private long PreparePosition { get; init; }
+
+    public Position Position => new(CommitPosition, PreparePosition);
 }
