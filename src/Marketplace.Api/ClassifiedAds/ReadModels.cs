@@ -6,7 +6,7 @@ public static class ReadModels
     {
         public Guid Id { get; init; }
 
-        public Guid SellerId { get; set; }
+        public Guid SellerId { get; init; }
 
         public string Title { get; set; } = "";
 
