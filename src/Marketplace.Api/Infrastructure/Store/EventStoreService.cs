@@ -5,9 +5,9 @@ namespace Marketplace.Infrastructure.Store;
 internal sealed class EventStoreService : IHostedService
 {
     private readonly IEventStoreConnection _connection;
-    private readonly EsSubscription _subscription;
+    private readonly ProjectionDispatcher _subscription;
 
-    public EventStoreService(IEventStoreConnection connection, EsSubscription subscription)
+    public EventStoreService(IEventStoreConnection connection, ProjectionDispatcher subscription)
     {
         _connection = connection;
         _subscription = subscription;

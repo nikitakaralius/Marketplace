@@ -37,7 +37,7 @@ internal static class DependencyInjection
         }
 
         services.AddSingleton(esConnection);
-        services.AddSingleton<EsSubscription>();
+        services.AddSingleton<ProjectionDispatcher>();
         services.AddSingleton<IAggregateStore, EsAggregateStore>();
         services.AddSingleton<ICurrencyLookup, FixedCurrencyLookup>();
         services.AddSingleton<IRequestHandler, SafeRequestHandler>();
