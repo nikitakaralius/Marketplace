@@ -22,12 +22,9 @@ internal sealed class EsAggregateStore : IAggregateStore
         where TAggregate : AggregateRoot<TId>
         where TId : notnull
     {
-        var changes = aggregate.Changes().Select(e => e.Serialize()).ToArray();
-
-        if (changes.Length == 0) return;
-
         string stream = StreamName<TAggregate, TId>(aggregate);
-        await _connection.AppendToStreamAsync(stream, aggregate.Version, changes);
+        await _connection.AppendEventsAsync(stream, aggregate.Version,
+                                            aggregate.Changes().ToArray());
     }
 
     public async Task<TAggregate> LoadAsync<TAggregate, TId>(TId aggregateId)
