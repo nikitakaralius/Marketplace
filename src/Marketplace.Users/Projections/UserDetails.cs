@@ -1,4 +1,4 @@
-namespace Marketplace.Persistence.Projections;
+namespace Marketplace.Users.Projections;
 
 public sealed class UserDetails
 {
