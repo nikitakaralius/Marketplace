@@ -64,7 +64,10 @@ internal static class DependencyInjection
                 new ClassifiedAdDetailsProjection(
                     adDetails,
                     id => userDetails.FirstOrDefault(x => x.Id == id)?.DisplayName),
-                new UserDetailsProjection(userDetails));
+                new UserDetailsProjection(userDetails),
+                new ClassifiedAdUpcasters(
+                    esConnection,
+                    id => userDetails.FirstOrDefault(x => x.Id == id)?.PhotoUrl));
 
             services.AddSingleton(dispatcher);
 
