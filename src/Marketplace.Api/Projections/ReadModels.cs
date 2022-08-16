@@ -6,8 +6,6 @@ public static class ReadModels
     {
         public Guid Id { get; init; }
 
-        public Guid SellerId { get; init; }
-
         public string Title { get; set; } = "";
 
         public string Description { get; set; } = "";
@@ -16,9 +14,13 @@ public static class ReadModels
 
         public string CurrencyCode { get; set; } = "";
 
+        public string[] PhotoUrls { get; set; } = Array.Empty<string>();
+
+        public Guid SellerId { get; init; }
+
         public string SellerDisplayName { get; set; } = "";
 
-        public string[] PhotoUrls { get; set; } = Array.Empty<string>();
+        public string SellerPhotoUrl { get; set; } = "";
     }
 
     public class ClassifiedAdListItem
