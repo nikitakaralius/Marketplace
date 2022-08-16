@@ -27,6 +27,7 @@ public sealed class ClassifiedAdsApplicationService : IApplicationService<V1.ICo
             V1.UpdateDescription r => await UpdateDescriptionAsync(r),
             V1.UpdatePrice r       => await UpdatePriceAsync(r),
             V1.RequestToPublish r  => await RequestToPublishAsync(r),
+            V1.Publish r           => await PublishAsync(r),
             _ =>
                 throw new InvalidOperationException($"Command type {command.GetType().Name} is unknown")
         };
@@ -80,6 +81,9 @@ public sealed class ClassifiedAdsApplicationService : IApplicationService<V1.ICo
 
     private async Task<ClassifiedAd> RequestToPublishAsync(V1.RequestToPublish request) =>
         await HandleUpdateAsync(request.Id, entity => { entity.RequestToPublish(); });
+
+    private async Task<ClassifiedAd> PublishAsync(V1.Publish request) =>
+        await HandleUpdateAsync(request.Id, e => e.Publish());
 
     private async Task<ClassifiedAd> LoadClassifiedAd(Guid entityId)
     {
