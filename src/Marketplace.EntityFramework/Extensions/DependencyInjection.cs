@@ -1,3 +1,4 @@
+using Marketplace.ClassifiedAds;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Marketplace.EntityFramework.Extensions;

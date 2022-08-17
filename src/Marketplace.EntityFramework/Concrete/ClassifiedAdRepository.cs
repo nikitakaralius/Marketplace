@@ -1,3 +1,5 @@
+using Marketplace.ClassifiedAds;
+
 namespace Marketplace.EntityFramework.Concrete;
 
 internal sealed class ClassifiedAdRepository : IClassifiedAdRepository

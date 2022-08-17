@@ -1,6 +1,4 @@
-using Marketplace.ClassifiedAds.Projections;
-
-namespace Marketplace.Infrastructure.Persistence;
+namespace Marketplace.ClassifiedAds.Projections;
 
 public interface IClassifiedAdRepository
 {
