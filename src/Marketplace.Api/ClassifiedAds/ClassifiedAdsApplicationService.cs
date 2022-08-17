@@ -3,7 +3,7 @@ using Marketplace.Domain.ClassifiedAd.ValueObjects;
 using Marketplace.Domain.Shared;
 using Marketplace.Domain.UserProfile.ValueObjects;
 using Marketplace.Infrastructure.Persistence;
-using Marketplace.Infrastructure.Store;
+using Marketplace.EventStore.Extensions;
 using static Marketplace.ClassifiedAds.ClassifiedAdContract;
 
 namespace Marketplace.ClassifiedAds;
