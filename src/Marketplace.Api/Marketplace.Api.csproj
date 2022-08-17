@@ -19,6 +19,9 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Marketplace.Domain\Marketplace.Domain.csproj" />
+      <ProjectReference Include="..\Marketplace.EntityFramework\Marketplace.EntityFramework.csproj" />
+      <ProjectReference Include="..\Marketplace.EventStore\Marketplace.EventStore.csproj" />
+      <ProjectReference Include="..\Marketplace.ExternalServices\Marketplace.ExternalServices.csproj" />
       <ProjectReference Include="..\Marketplace.Infrastructure\Marketplace.Infrastructure.csproj" />
     </ItemGroup>
 
