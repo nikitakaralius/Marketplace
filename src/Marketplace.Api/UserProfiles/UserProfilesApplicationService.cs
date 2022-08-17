@@ -1,6 +1,7 @@
 using Marketplace.Domain.Shared;
 using Marketplace.Domain.UserProfile;
 using Marketplace.Domain.UserProfile.ValueObjects;
+using Marketplace.Infrastructure.Persistence;
 using Marketplace.Infrastructure.Store;
 using static Marketplace.UserProfiles.Commands;
 

@@ -1,4 +1,5 @@
 using EventStore.ClientAPI;
+using Marketplace.Infrastructure.Persistence;
 
 namespace Marketplace.Infrastructure.Store;
 

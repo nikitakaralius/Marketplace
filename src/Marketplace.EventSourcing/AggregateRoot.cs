@@ -1,4 +1,4 @@
-namespace Marketplace.Infrastructure;
+namespace Marketplace.EventSourcing;
 
 public abstract class AggregateRoot<TId> : IInternalEventHandler
 {

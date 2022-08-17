@@ -1,4 +1,4 @@
-namespace Marketplace.Infrastructure;
+namespace Marketplace.EventSourcing;
 
 public interface IEvent
 {

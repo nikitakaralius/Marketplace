@@ -1,5 +1,5 @@
 using Marketplace.Domain.UserProfile.ValueObjects;
-using Marketplace.Infrastructure;
+using Marketplace.EventSourcing;
 using static Marketplace.Domain.UserProfile.Events;
 
 namespace Marketplace.Domain.UserProfile;

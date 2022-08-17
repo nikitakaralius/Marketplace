@@ -2,7 +2,7 @@ using Marketplace.Domain.ClassifiedAd.Rules;
 using Marketplace.Domain.ClassifiedAd.ValueObjects;
 using Marketplace.Domain.Shared;
 using Marketplace.Domain.UserProfile.ValueObjects;
-using Marketplace.Infrastructure;
+using Marketplace.EventSourcing;
 using static Marketplace.Domain.ClassifiedAd.Events;
 
 namespace Marketplace.Domain.ClassifiedAd;

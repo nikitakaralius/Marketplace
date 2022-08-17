@@ -1,4 +1,4 @@
-namespace Marketplace.Infrastructure;
+namespace Marketplace.Infrastructure.Persistence;
 
 public interface IAggregateStore
 {

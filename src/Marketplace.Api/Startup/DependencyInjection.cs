@@ -1,6 +1,7 @@
 using EventStore.ClientAPI;
 using Marketplace.Domain.Shared;
 using Marketplace.Infrastructure.Common;
+using Marketplace.Infrastructure.Persistence;
 using Marketplace.Infrastructure.Services;
 using Marketplace.Infrastructure.Store;
 using Marketplace.Projections;
