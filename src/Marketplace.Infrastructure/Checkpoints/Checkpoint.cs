@@ -6,7 +6,7 @@ public sealed class Checkpoint
 
     public string Name { get; init; } = "";
 
-    private long CommitPosition { get; init; }
+    public long CommitPosition { get; set; }
 
-    private long PreparePosition { get; init; }
+    public long PreparePosition { get; set; }
 }
