@@ -1,14 +1,14 @@
-using EventStore.ClientAPI;
-using Marketplace.Infrastructure.Persistence;
+using Marketplace.EventStore.Extensions;
+using Marketplace.EventStore.Serialization;
 
-namespace Marketplace.Infrastructure.Store;
+namespace Marketplace.EventStore.Concrete;
 
-internal sealed class EsAggregateStore : IAggregateStore
+internal sealed class AggregateStore : IAggregateStore
 {
     private const int StreamSlice = 1024;
     private readonly IEventStoreConnection _connection;
 
-    public EsAggregateStore(IEventStoreConnection connection) => _connection = connection;
+    public AggregateStore(IEventStoreConnection connection) => _connection = connection;
 
     public async Task<bool> ExistsAsync<TAggregate, TId>(TId aggregateId)
         where TAggregate : AggregateRoot<TId>

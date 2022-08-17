@@ -8,9 +8,12 @@
 
     <ItemGroup>
       <PackageReference Include="EventStore.Client" Version="21.2.2" />
+      <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="6.0.0" />
+      <PackageReference Include="Serilog" Version="2.11.0" />
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Marketplace.Domain\Marketplace.Domain.csproj" />
       <ProjectReference Include="..\Marketplace.EventSourcing\Marketplace.EventSourcing.csproj" />
       <ProjectReference Include="..\Marketplace.Infrastructure\Marketplace.Infrastructure.csproj" />
     </ItemGroup>

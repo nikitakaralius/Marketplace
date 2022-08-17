@@ -1,6 +1,6 @@
-using EventStore.ClientAPI;
+using Microsoft.Extensions.Hosting;
 
-namespace Marketplace.Infrastructure.Store;
+namespace Marketplace.EventStore.Concrete;
 
 internal sealed class EventStoreService : IHostedService
 {

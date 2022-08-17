@@ -1,8 +1,9 @@
-using EventStore.ClientAPI;
+using Marketplace.EventStore.Serialization;
+using Serilog;
 using Serilog.Events;
 using ILogger = Serilog.ILogger;
 
-namespace Marketplace.Infrastructure.Store;
+namespace Marketplace.EventStore.Concrete;
 
 internal sealed class ProjectionDispatcher
 {

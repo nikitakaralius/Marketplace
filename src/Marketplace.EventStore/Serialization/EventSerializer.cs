@@ -1,7 +1,6 @@
 using System.Text.Json;
-using EventStore.ClientAPI;
 
-namespace Marketplace.Infrastructure.Store;
+namespace Marketplace.EventStore.Serialization;
 
 internal static class EventSerializer
 {

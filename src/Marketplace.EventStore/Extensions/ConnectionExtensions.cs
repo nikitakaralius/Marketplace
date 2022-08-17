@@ -1,8 +1,8 @@
-using EventStore.ClientAPI;
+using Marketplace.EventStore.Serialization;
 
-namespace Marketplace.Infrastructure.Store;
+namespace Marketplace.EventStore.Extensions;
 
-internal static class EventStoreExtensions
+internal static class ConnectionExtensions
 {
     public static Task AppendEventsAsync(
         this IEventStoreConnection connection,
