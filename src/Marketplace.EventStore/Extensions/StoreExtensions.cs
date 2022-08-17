@@ -5,7 +5,7 @@ using Marketplace.Domain.UserProfile.ValueObjects;
 
 namespace Marketplace.EventStore.Extensions;
 
-internal static class StoreExtensions
+public static class StoreExtensions
 {
     public static Task<bool> ExistsAsync(this IAggregateStore store, ClassifiedAdId id) =>
         store.ExistsAsync<ClassifiedAd, ClassifiedAdId>(id);
