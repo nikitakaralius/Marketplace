@@ -5,9 +5,9 @@ namespace Marketplace.EntityFramework.Extensions;
 public static class DependencyInjection
 {
     public static IServiceCollection AddEntityFrameworkModule(this IServiceCollection services,
-                                                    Action<PersistenceOptions> configure)
+                                                    Action<EntityFrameworkOptions> configure)
     {
-        PersistenceOptions options = new();
+        EntityFrameworkOptions options = new();
         configure(options);
 
         services.AddDbContext<MarketplaceDbContext>(
@@ -21,9 +21,7 @@ public static class DependencyInjection
     }
 }
 
-public sealed class PersistenceOptions
+public sealed class EntityFrameworkOptions
 {
     public string PostgresConnectionString { get; set; } = "";
-
-    public string EventStoreConnectionString { get; set; } = "";
 }
