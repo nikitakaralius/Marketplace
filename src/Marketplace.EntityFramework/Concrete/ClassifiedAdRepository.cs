@@ -1,5 +1,3 @@
-using Marketplace.ClassifiedAds;
-
 namespace Marketplace.EntityFramework.Concrete;
 
 internal sealed class ClassifiedAdRepository : IClassifiedAdRepository
@@ -14,4 +12,7 @@ internal sealed class ClassifiedAdRepository : IClassifiedAdRepository
 
     public async Task<ClassifiedAdDetails?> ByIdAsync(Guid id) =>
         await _context.ClassifiedAds.FindAsync(id);
+
+    public async Task SaveChangesAsync() =>
+        await _context.SaveChangesAsync();
 }
