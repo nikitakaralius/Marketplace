@@ -1,8 +1,8 @@
-using Marketplace.Persistence.EntityFrameworkCore;
+using Marketplace.EntityFramework.EntityFrameworkCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Marketplace.Persistence.Extensions;
+namespace Marketplace.EntityFramework.Extensions;
 
 public static class ApplicationBuilderExtensions
 {

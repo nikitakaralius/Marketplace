@@ -1,4 +1,4 @@
-namespace Marketplace.Persistence.Checkpoints;
+namespace Marketplace.EntityFramework.Checkpoints;
 
 public sealed class Checkpoint
 {

@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Marketplace.Persistence.EntityFrameworkCore.Configuration;
+namespace Marketplace.EntityFramework.EntityFrameworkCore.Configuration;
 
 internal sealed class UserDetailsConfiguration : IEntityTypeConfiguration<UserDetails>
 {

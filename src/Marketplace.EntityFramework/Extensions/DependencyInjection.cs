@@ -1,7 +1,7 @@
-using Marketplace.Persistence.EntityFrameworkCore;
+using Marketplace.EntityFramework.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Marketplace.Persistence.Extensions;
+namespace Marketplace.EntityFramework.Extensions;
 
 public static class DependencyInjection
 {

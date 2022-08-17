@@ -1,6 +1,7 @@
-using Marketplace.Persistence.EntityFrameworkCore.Configuration;
+using Marketplace.EntityFramework.Checkpoints;
+using Marketplace.EntityFramework.EntityFrameworkCore.Configuration;
 
-namespace Marketplace.Persistence.EntityFrameworkCore;
+namespace Marketplace.EntityFramework.EntityFrameworkCore;
 
 internal sealed class MarketplaceDbContext : DbContext
 {
