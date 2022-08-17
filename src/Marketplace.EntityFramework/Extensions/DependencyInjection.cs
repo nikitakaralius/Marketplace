@@ -4,7 +4,7 @@ namespace Marketplace.EntityFramework.Extensions;
 
 public static class DependencyInjection
 {
-    public static IServiceCollection AddPersistence(this IServiceCollection services,
+    public static IServiceCollection AddEntityFrameworkModule(this IServiceCollection services,
                                                     Action<PersistenceOptions> configure)
     {
         PersistenceOptions options = new();
