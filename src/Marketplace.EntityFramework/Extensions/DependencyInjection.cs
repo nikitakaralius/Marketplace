@@ -1,4 +1,3 @@
-using Marketplace.EntityFramework.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Marketplace.EntityFramework.Extensions;

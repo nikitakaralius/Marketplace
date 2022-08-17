@@ -1,7 +1,6 @@
-using Marketplace.EntityFramework.Checkpoints;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Marketplace.EntityFramework.EntityFrameworkCore.Configuration;
+namespace Marketplace.EntityFramework.Configuration;
 
 internal sealed class CheckpointConfiguration : IEntityTypeConfiguration<Checkpoint>
 {
