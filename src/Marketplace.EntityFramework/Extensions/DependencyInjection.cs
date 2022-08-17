@@ -24,5 +24,8 @@ public static class DependencyInjection
 
 public sealed class EntityFrameworkOptions
 {
-    public string PostgresConnectionString { get; set; } = "";
+    public string PostgresConnectionString { get; private set; } = "";
+
+    public void UsePostgres(string connectionString) =>
+        PostgresConnectionString = connectionString;
 }

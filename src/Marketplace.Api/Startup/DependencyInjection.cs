@@ -1,4 +1,7 @@
 // ReSharper disable once CheckNamespace
+
+using Marketplace.EntityFramework.Extensions;
+
 namespace Microsoft.Extensions.DependencyInjection;
 
 internal static class DependencyInjection
@@ -7,7 +10,11 @@ internal static class DependencyInjection
                                                        IConfiguration configuration,
                                                        IWebHostEnvironment env)
     {
-
+        services.AddEntityFrameworkModule(opt =>
+        {
+            string connectionString = configuration.GetConnectionString("Postgres");
+            opt.UsePostgres(connectionString);
+        });
 
 
         services.AddSingleton<IRequestHandler, SafeRequestHandler>();
