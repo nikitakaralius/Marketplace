@@ -26,7 +26,13 @@ internal static class DependencyInjection
 
         services.AddExternalServicesModule();
 
+        services.AddWebApiModule();
 
+        return services;
+    }
+
+    private static IServiceCollection AddWebApiModule(this IServiceCollection services)
+    {
         services.AddSingleton<IRequestHandler, SafeRequestHandler>();
         services.AddScoped<ClassifiedAdsApplicationService>();
         services.AddScoped<UserProfilesApplicationService>();
