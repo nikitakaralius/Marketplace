@@ -5,29 +5,29 @@ namespace Marketplace.Users.Projections;
 
 internal sealed class UserDetailsProjection : IProjection
 {
-    private readonly IList<UserDetails> _items;
+    private readonly IUserRepository _repository;
 
-    public UserDetailsProjection(IList<UserDetails> items) => _items = items;
+    public UserDetailsProjection(IUserRepository repository) => _repository = repository;
 
-    public Task ProjectAsync(IEvent @event)
+    public async Task ProjectAsync(IEvent @event)
     {
-        Action projection = @event switch
+        Func<Task> projection = @event switch
         {
             Events.UserRegistered e => () =>
-                _items.Add(new UserDetails {Id = e.UserId, DisplayName = e.DisplayName}),
+                _repository.AddAsync(new UserDetails {Id = e.UserId, DisplayName = e.DisplayName}),
             Events.UserDisplayNameUpdated e => () =>
                 UpdateItem(e.UserId, x => x.DisplayName = e.DisplayName),
             Events.ProfilePhotoUpdated e => () =>
                 UpdateItem(e.UserId, x => x.PhotoUrl = e.PhotoUrl),
-            _ => () => { }
+            _ => () => Task.CompletedTask
         };
-        projection();
-        return Task.CompletedTask;
+        await projection();
+        await _repository.SaveChangesAsync();
     }
 
-    private void UpdateItem(Guid id, Action<UserDetails> update)
+    private async Task UpdateItem(Guid id, Action<UserDetails> update)
     {
-        var item = _items.FirstOrDefault(x => x.Id == id);
+        var item = await _repository.ByIdAsync(id);
         if (item is null) return;
         update(item);
     }
