@@ -10,4 +10,9 @@
       <PackageReference Include="EventStore.Client" Version="21.2.2" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Marketplace.EventSourcing\Marketplace.EventSourcing.csproj" />
+      <ProjectReference Include="..\Marketplace.Infrastructure\Marketplace.Infrastructure.csproj" />
+    </ItemGroup>
+
 </Project>
