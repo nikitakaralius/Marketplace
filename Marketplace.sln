@@ -21,7 +21,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Marketplace.Domain", "src\M
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Marketplace.Tests", "tests\Marketplace.Tests\Marketplace.Tests.csproj", "{18C1E707-2BDC-4E1C-9794-8F012B43875A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Marketplace.Framework", "src\Marketplace.Framework\Marketplace.Framework.csproj", "{F0A44CE2-B263-4034-A230-10A1AD73034D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Marketplace.Infrastructure", "src\Marketplace.Infrastructure\Marketplace.Infrastructure.csproj", "{F0A44CE2-B263-4034-A230-10A1AD73034D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Marketplace.Persistence", "src\Marketplace.Persistence\Marketplace.Persistence.csproj", "{141F8420-54AC-4BFD-9C66-E20A1CC218C5}"
 EndProject

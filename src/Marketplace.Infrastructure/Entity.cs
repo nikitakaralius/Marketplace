@@ -1,4 +1,4 @@
-namespace Marketplace.Framework;
+namespace Marketplace.Infrastructure;
 
 public abstract class Entity : IInternalEventHandler
 {

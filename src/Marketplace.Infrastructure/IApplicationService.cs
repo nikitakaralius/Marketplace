@@ -1,4 +1,4 @@
-namespace Marketplace.Framework;
+namespace Marketplace.Infrastructure;
 
 public interface IApplicationService<in TCommand>
 {

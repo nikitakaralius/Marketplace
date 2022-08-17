@@ -1,4 +1,4 @@
-using Marketplace.Framework;
+using Marketplace.Infrastructure;
 
 namespace Marketplace.Domain.ClassifiedAd;
 
