@@ -1,6 +1,5 @@
 // ReSharper disable once CheckNamespace
 
-using Marketplace.EntityFramework.Extensions;
 using Marketplace.EventStore.Extensions;
 using Marketplace.ExternalServices.Extensions;
 
