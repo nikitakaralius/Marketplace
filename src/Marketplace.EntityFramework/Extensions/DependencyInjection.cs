@@ -13,6 +13,10 @@ public static class DependencyInjection
         services.AddDbContext<MarketplaceDbContext>(
             o => o.UseNpgsql(options.PostgresConnectionString));
 
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
+        services.AddScoped<IClassifiedAdRepository, ClassifiedAdRepository>();
+        services.AddScoped<ICheckpointStore, CheckpointStore>();
+
         return services;
     }
 }

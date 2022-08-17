@@ -1,5 +1,3 @@
-using Marketplace.Infrastructure.Persistence;
-
 namespace Marketplace.EntityFramework.Concrete;
 
 internal sealed class CheckpointStore : ICheckpointStore
