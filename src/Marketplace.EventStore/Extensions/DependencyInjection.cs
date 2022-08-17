@@ -1,4 +1,5 @@
 using Marketplace.ClassifiedAds.Projections;
+using Marketplace.Infrastructure.Checkpoints;
 using Marketplace.Users.Projections;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -24,6 +25,7 @@ public static class DependencyInjection
         {
             var adRepository = s.GetRequiredService<IClassifiedAdRepository>();
             var userRepository = s.GetRequiredService<IUserRepository>();
+            var store = s.GetRequiredService<ICheckpointStore>();
 
             IProjection[] projections =
             {
@@ -31,7 +33,7 @@ public static class DependencyInjection
                 new UserDetailsProjection(userRepository)
             };
 
-            return new ProjectionDispatcher(esConnection, projections);
+            return new ProjectionDispatcher(esConnection, store, projections);
         });
 
         services.AddHostedService<EventStoreService>();

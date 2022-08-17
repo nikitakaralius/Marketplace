@@ -16,7 +16,7 @@ internal sealed class EventStoreService : IHostedService
     public async Task StartAsync(CancellationToken cancellationToken)
     {
         await _connection.ConnectAsync();
-        _dispatcher.Start();
+        await _dispatcher.StartAsync();
     }
 
     public Task StopAsync(CancellationToken cancellationToken)
