@@ -42,7 +42,7 @@ public static class DependencyInjection
 
 public class EventStoreOptions
 {
-    public string ConnectionString { get; init; } = "";
+    public string ConnectionString { get; set; } = "";
 
-    public string ConnectionName { get; init; } = "";
+    public string ConnectionName { get; set; } = "";
 }

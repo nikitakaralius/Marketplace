@@ -1,6 +1,7 @@
 // ReSharper disable once CheckNamespace
 
 using Marketplace.EntityFramework.Extensions;
+using Marketplace.EventStore.Extensions;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
@@ -14,6 +15,12 @@ internal static class DependencyInjection
         {
             string connectionString = configuration.GetConnectionString("Postgres");
             opt.UsePostgres(connectionString);
+        });
+
+        services.AddEventStoreModule(opt =>
+        {
+            opt.ConnectionString = configuration.GetConnectionString("EventStore");
+            opt.ConnectionName = env.ApplicationName;
         });
 
 
