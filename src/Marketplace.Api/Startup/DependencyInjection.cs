@@ -2,6 +2,7 @@
 
 using Marketplace.EntityFramework.Extensions;
 using Marketplace.EventStore.Extensions;
+using Marketplace.ExternalServices.Extensions;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
@@ -22,6 +23,8 @@ internal static class DependencyInjection
             opt.ConnectionString = configuration.GetConnectionString("EventStore");
             opt.ConnectionName = env.ApplicationName;
         });
+
+        services.AddExternalServicesModule();
 
 
         services.AddSingleton<IRequestHandler, SafeRequestHandler>();
