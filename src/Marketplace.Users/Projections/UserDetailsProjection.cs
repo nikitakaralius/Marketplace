@@ -3,7 +3,7 @@ using Marketplace.EventSourcing;
 
 namespace Marketplace.Users.Projections;
 
-internal sealed class UserDetailsProjection : IProjection
+public sealed class UserDetailsProjection : IProjection
 {
     private readonly IUserRepository _repository;
 
