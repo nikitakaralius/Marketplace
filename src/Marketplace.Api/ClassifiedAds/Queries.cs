@@ -1,5 +1,3 @@
-using Marketplace.Projections;
-
 namespace Marketplace.ClassifiedAds;
 
 internal static class Queries
