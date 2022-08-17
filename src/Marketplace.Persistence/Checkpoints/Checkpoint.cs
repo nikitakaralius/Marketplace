@@ -9,6 +9,4 @@ public sealed class Checkpoint
     private long CommitPosition { get; init; }
 
     private long PreparePosition { get; init; }
-
-    public Position Position => new(CommitPosition, PreparePosition);
 }
