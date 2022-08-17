@@ -14,7 +14,6 @@ internal static class DependencyInjection
 
         services.AddEventStore(configuration, env);
 
-        services.AddSingleton<IAggregateStore, EsAggregateStore>();
         services.AddSingleton<IRequestHandler, SafeRequestHandler>();
 
         services.AddScoped<ClassifiedAdsApplicationService>();
@@ -39,11 +38,6 @@ internal static class DependencyInjection
                                                     IConfiguration configuration,
                                                     IWebHostEnvironment env)
     {
-        var esConnection = EventStoreConnection.Create(
-            configuration.GetConnectionString("EventStore"),
-            ConnectionSettings.Create().KeepReconnecting(),
-            env.ApplicationName);
-
         if (env.IsDevelopment())
         {
             List<ReadModels.ClassifiedAdDetails> adDetails = new();
@@ -68,9 +62,6 @@ internal static class DependencyInjection
         {
             throw new InvalidOperationException("In-memory storage is not allowed in production");
         }
-
-        services.AddSingleton(esConnection);
-        services.AddHostedService<EventStoreService>();
 
         return services;
     }
