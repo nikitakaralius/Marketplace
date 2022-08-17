@@ -1,8 +1,9 @@
+using Marketplace.WebApi.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
-using static Marketplace.ClassifiedAds.ClassifiedAdContract;
+using static Marketplace.WebApi.ClassifiedAds.ClassifiedAdContract;
 using ILogger = Serilog.ILogger;
 
-namespace Marketplace.ClassifiedAds;
+namespace Marketplace.WebApi.ClassifiedAds;
 
 [ApiController, Route("ad")]
 public sealed class ClassifiedAdCommandsApi : ControllerBase

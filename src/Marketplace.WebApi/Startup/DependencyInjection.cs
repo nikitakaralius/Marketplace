@@ -2,6 +2,9 @@
 
 using Marketplace.EventStore.Extensions;
 using Marketplace.ExternalServices.Extensions;
+using Marketplace.WebApi.ClassifiedAds;
+using Marketplace.WebApi.Infrastructure;
+using Marketplace.WebApi.UserProfiles;
 
 namespace Microsoft.Extensions.DependencyInjection;
 

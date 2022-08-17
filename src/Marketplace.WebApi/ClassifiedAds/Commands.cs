@@ -1,4 +1,4 @@
-namespace Marketplace.ClassifiedAds;
+namespace Marketplace.WebApi.ClassifiedAds;
 
 public static class ClassifiedAdContract
 {

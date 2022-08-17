@@ -1,4 +1,4 @@
-namespace Marketplace.UserProfiles;
+namespace Marketplace.WebApi.UserProfiles;
 
 public static class Commands
 {

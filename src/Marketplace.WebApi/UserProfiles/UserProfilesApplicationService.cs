@@ -1,11 +1,11 @@
 using Marketplace.Domain.Shared;
 using Marketplace.Domain.UserProfile;
 using Marketplace.Domain.UserProfile.ValueObjects;
-using Marketplace.Infrastructure.Persistence;
 using Marketplace.EventStore.Extensions;
-using static Marketplace.UserProfiles.Commands;
+using Marketplace.Infrastructure.Persistence;
+using static Marketplace.WebApi.UserProfiles.Commands;
 
-namespace Marketplace.UserProfiles;
+namespace Marketplace.WebApi.UserProfiles;
 
 public sealed class UserProfilesApplicationService : IApplicationService<V1.ICommand>
 {

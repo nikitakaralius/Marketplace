@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using ILogger = Serilog.ILogger;
 
-namespace Marketplace.Infrastructure;
+namespace Marketplace.WebApi.Infrastructure;
 
 public interface IRequestHandler
 {

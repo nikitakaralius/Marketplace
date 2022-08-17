@@ -2,13 +2,13 @@ using Marketplace.Domain.ClassifiedAd;
 using Marketplace.Domain.ClassifiedAd.ValueObjects;
 using Marketplace.Domain.Shared;
 using Marketplace.Domain.UserProfile.ValueObjects;
-using Marketplace.Infrastructure.Persistence;
 using Marketplace.EventStore.Extensions;
-using static Marketplace.ClassifiedAds.ClassifiedAdContract;
+using Marketplace.Infrastructure.Persistence;
+using static Marketplace.WebApi.ClassifiedAds.ClassifiedAdContract;
 
-namespace Marketplace.ClassifiedAds;
+namespace Marketplace.WebApi.ClassifiedAds;
 
-public sealed class ClassifiedAdsApplicationService : IApplicationService<V1.ICommand>
+public sealed class ClassifiedAdsApplicationService : IApplicationService<ClassifiedAdContract.V1.ICommand>
 {
     private readonly ICurrencyLookup _currencyLookup;
     private readonly IAggregateStore _store;

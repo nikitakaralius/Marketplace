@@ -1,8 +1,9 @@
+using Marketplace.WebApi.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
-using static Marketplace.UserProfiles.Commands;
+using static Marketplace.WebApi.UserProfiles.Commands;
 using ILogger = Serilog.ILogger;
 
-namespace Marketplace.UserProfiles;
+namespace Marketplace.WebApi.UserProfiles;
 
 [ApiController, Route("profile")]
 public sealed class UserProfileCommandsApi : ControllerBase
