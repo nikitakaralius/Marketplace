@@ -1,3 +1,5 @@
+using Marketplace.EventSourcing;
+
 namespace Marketplace.Infrastructure.Persistence;
 
 public interface IAggregateStore
