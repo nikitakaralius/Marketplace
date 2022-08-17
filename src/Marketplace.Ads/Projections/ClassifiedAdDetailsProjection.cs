@@ -3,20 +3,20 @@ using Marketplace.EventSourcing;
 namespace Marketplace.ClassifiedAds.Projections;
 
 using AdEvent = Domain.ClassifiedAd.Events;
-using UserEvent = Domain.UserProfile.Events;
 
 internal sealed class ClassifiedAdDetailsProjection : IProjection
 {
-    private readonly IList<ClassifiedAdDetails> _items;
+    private readonly IClassifiedAdRepository _repository;
 
-    public ClassifiedAdDetailsProjection(IList<ClassifiedAdDetails> items) => _items = items;
+    public ClassifiedAdDetailsProjection(IClassifiedAdRepository repository) =>
+        _repository = repository;
 
-    public Task ProjectAsync(IEvent @event)
+    public async Task ProjectAsync(IEvent @event)
     {
-        Action project = @event switch
+        Func<Task> project = @event switch
         {
             AdEvent.ClassifiedAdCreated e => () =>
-                _items.Add(new ClassifiedAdDetails
+                _repository.AddAsync(new ClassifiedAdDetails
                 {
                     Id = e.Id,
                     SellerId = e.OwnerId
@@ -27,17 +27,16 @@ internal sealed class ClassifiedAdDetailsProjection : IProjection
                 UpdateItem(e.Id, x => (x.Price, x.CurrencyCode) = (e.Price, e.CurrencyCode)),
             AdEvent.ClassifiedAdTitleChanged e => () =>
                 UpdateItem(e.Id, x => x.Title = e.Title),
-            _ => () => { }
+            _ => () => Task.CompletedTask
         };
 
-        project();
-
-        return Task.CompletedTask;
+        await project();
+        await _repository.SaveChangesAsync();
     }
 
-    private void UpdateItem(Guid id, Action<ClassifiedAdDetails> update)
+    private async Task UpdateItem(Guid id, Action<ClassifiedAdDetails> update)
     {
-        var item = _items.FirstOrDefault(x => x.Id == id);
+        var item = await _repository.ByIdAsync(id);
         if (item is null) return;
         update(item);
     }
