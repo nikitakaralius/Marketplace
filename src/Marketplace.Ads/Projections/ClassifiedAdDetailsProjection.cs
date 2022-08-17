@@ -4,7 +4,7 @@ namespace Marketplace.ClassifiedAds.Projections;
 
 using AdEvent = Domain.ClassifiedAd.Events;
 
-internal sealed class ClassifiedAdDetailsProjection : IProjection
+public sealed class ClassifiedAdDetailsProjection : IProjection
 {
     private readonly IClassifiedAdRepository _repository;
 
