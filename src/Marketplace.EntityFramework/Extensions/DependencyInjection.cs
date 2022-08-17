@@ -17,6 +17,7 @@ public static class DependencyInjection
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<IClassifiedAdRepository, ClassifiedAdRepository>();
         services.AddScoped<ICheckpointStore, CheckpointStore>();
+        services.AddScoped<IUserRepository, UserRepository>();
 
         return services;
     }
