@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using ILogger = Serilog.ILogger;
 
-namespace Marketplace.Infrastructure.Common;
+namespace Marketplace.Infrastructure;
 
 internal sealed class SafeRequestHandler : IRequestHandler
 {

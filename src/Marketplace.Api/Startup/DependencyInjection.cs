@@ -1,10 +1,5 @@
 using EventStore.ClientAPI;
-using Marketplace.Domain.Shared;
-using Marketplace.Infrastructure.Common;
 using Marketplace.Infrastructure.Persistence;
-using Marketplace.Infrastructure.Services;
-using Marketplace.Infrastructure.Store;
-using Marketplace.Users.Projections;
 
 // ReSharper disable once CheckNamespace
 namespace Microsoft.Extensions.DependencyInjection;
@@ -15,22 +10,16 @@ internal static class DependencyInjection
                                                        IConfiguration configuration,
                                                        IWebHostEnvironment env)
     {
-        services.AddHttpClient(nameof(Constants.PurgoMalum),
-                               client =>
-                               {
-                                   client.BaseAddress = new("https://www.purgomalum.com/service/containsprofanity");
-                               });
+
 
         services.AddEventStore(configuration, env);
 
         services.AddSingleton<IAggregateStore, EsAggregateStore>();
-        services.AddSingleton<ICurrencyLookup, FixedCurrencyLookup>();
         services.AddSingleton<IRequestHandler, SafeRequestHandler>();
 
         services.AddScoped<ClassifiedAdsApplicationService>();
         services.AddScoped<UserProfilesApplicationService>();
 
-        services.AddTransient<IContentModeration, PurgoMalumContentModeration>();
 
         services.AddControllers();
         services.AddSwaggerGen(c =>

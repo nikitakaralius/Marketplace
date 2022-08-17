@@ -1,4 +1,3 @@
-using Marketplace.Infrastructure.Common;
 using Microsoft.AspNetCore.Mvc;
 using ILogger = Serilog.ILogger;
 

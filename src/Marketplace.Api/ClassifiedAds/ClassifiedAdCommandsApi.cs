@@ -1,4 +1,3 @@
-using Marketplace.Infrastructure.Common;
 using Microsoft.AspNetCore.Mvc;
 using static Marketplace.ClassifiedAds.ClassifiedAdContract;
 using ILogger = Serilog.ILogger;

@@ -1,7 +1,6 @@
-using Marketplace.Domain.Shared;
 using Microsoft.AspNetCore.WebUtilities;
 
-namespace Marketplace.Infrastructure.Services;
+namespace Marketplace.ExternalServices.Concrete;
 
 internal sealed class PurgoMalumContentModeration : IContentModeration
 {
