@@ -1,4 +1,5 @@
 using Marketplace.ClassifiedAds.Projections;
+using Marketplace.EventStore.Appliers;
 using Marketplace.Infrastructure.Checkpoints;
 using Marketplace.Users.Projections;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,11 +22,12 @@ public static class DependencyInjection
         services.AddSingleton(esConnection);
         services.AddSingleton<IAggregateStore, AggregateStore>();
 
-        services.AddTransient(s =>
+        services.AddSingleton(s =>
         {
-            var adRepository = s.GetRequiredService<IClassifiedAdRepository>();
-            var userRepository = s.GetRequiredService<IUserRepository>();
-            var store = s.GetRequiredService<ICheckpointStore>();
+            var factory = s.GetRequiredService<IServiceScopeFactory>();
+            var adRepository = new AdRepositoryApplier(factory);
+            var userRepository = new UserRepositoryApplier(factory);
+            var store = new CheckpointStoreApplier(factory);
 
             IProjection[] projections =
             {
