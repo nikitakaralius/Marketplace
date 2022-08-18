@@ -20,6 +20,6 @@ public sealed class ClassifiedAdQueriesApi : ControllerBase
     }
 
     [HttpGet]
-    public IActionResult Get([FromQuery] QueryModels.GetPublicClassifiedAd request) =>
-        _handler.HandleQuery(() => _repository.ByIdAsync(request.ClassifiedAdId), Logger);
+    public async Task<IActionResult> Get([FromQuery] QueryModels.GetPublicClassifiedAd request) =>
+        await _handler.HandleQueryAsync(() => _repository.ByIdAsync(request.ClassifiedAdId), Logger);
 }
