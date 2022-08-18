@@ -15,12 +15,12 @@ internal sealed class ProjectionDispatcher
 
     private readonly IEnumerable<IProjection> _projections;
     private readonly IEventStoreConnection _connection;
-    private readonly ICheckpointStore _store;
+    private readonly IApplyOn<ICheckpointStore> _store;
 
     private EventStoreAllCatchUpSubscription _subscription = null!;
 
     public ProjectionDispatcher(IEventStoreConnection connection,
-                                ICheckpointStore store,
+                                IApplyOn<ICheckpointStore> store,
                                 IEnumerable<IProjection> projections)
     {
         _connection = connection;
@@ -33,7 +33,7 @@ internal sealed class ProjectionDispatcher
         CatchUpSubscriptionSettings settings =
             new(2000, 500, Logger.IsEnabled(LogEventLevel.Verbose), false, "try-out-subscription");
 
-        var checkpoint = await _store.CheckpointByNameAsync(CheckpointName);
+        var checkpoint = await _store.ReceiveAsync(store => store.CheckpointByNameAsync(CheckpointName));
         _subscription = _connection.SubscribeToAllFrom(checkpoint.ToPosition(), settings, EventAppeared);
     }
 
@@ -51,6 +51,6 @@ internal sealed class ProjectionDispatcher
         Logger.Debug("Projecting event {Type}", @event.GetType().Name);
 
         await Task.WhenAll(_projections.Select(x => x.ProjectAsync(@event)));
-        await _store.StoreAsync(ToCheckpoint(re));
+        await _store.ApplyAsync(store => store.StoreAsync(ToCheckpoint(re)));
     }
 }
