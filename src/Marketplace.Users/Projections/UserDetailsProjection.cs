@@ -5,16 +5,16 @@ namespace Marketplace.Users.Projections;
 
 public sealed class UserDetailsProjection : IProjection
 {
-    private readonly IUserRepository _repository;
+    private readonly IApplyOn<IUserRepository> _repository;
 
-    public UserDetailsProjection(IUserRepository repository) => _repository = repository;
+    public UserDetailsProjection(IApplyOn<IUserRepository> repository) => _repository = repository;
 
     public async Task ProjectAsync(IEvent @event)
     {
         Func<Task> projection = @event switch
         {
             Events.UserRegistered e => () =>
-                _repository.AddAsync(new UserDetails {Id = e.UserId, DisplayName = e.DisplayName}),
+                AddItem(new UserDetails {Id = e.UserId, DisplayName = e.DisplayName}),
             Events.UserDisplayNameUpdated e => () =>
                 UpdateItem(e.UserId, x => x.DisplayName = e.DisplayName),
             Events.ProfilePhotoUpdated e => () =>
@@ -22,13 +22,21 @@ public sealed class UserDetailsProjection : IProjection
             _ => () => Task.CompletedTask
         };
         await projection();
-        await _repository.SaveChangesAsync();
     }
 
-    private async Task UpdateItem(Guid id, Action<UserDetails> update)
-    {
-        var item = await _repository.ByIdAsync(id);
-        if (item is null) return;
-        update(item);
-    }
+    private async Task AddItem(UserDetails item) =>
+        await _repository.ApplyAsync(async r =>
+        {
+            await r.AddAsync(item);
+            await r.SaveChangesAsync();
+        });
+
+    private async Task UpdateItem(Guid id, Action<UserDetails> update) =>
+        await _repository.ApplyAsync(async r =>
+        {
+            var item = await r.ByIdAsync(id);
+            if (item is null) return;
+            update(item);
+            await r.SaveChangesAsync();
+        });
 }

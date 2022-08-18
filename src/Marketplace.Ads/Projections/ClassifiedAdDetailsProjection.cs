@@ -6,9 +6,9 @@ using AdEvent = Domain.ClassifiedAd.Events;
 
 public sealed class ClassifiedAdDetailsProjection : IProjection
 {
-    private readonly IClassifiedAdRepository _repository;
+    private readonly IApplyOn<IClassifiedAdRepository> _repository;
 
-    public ClassifiedAdDetailsProjection(IClassifiedAdRepository repository) =>
+    public ClassifiedAdDetailsProjection(IApplyOn<IClassifiedAdRepository> repository) =>
         _repository = repository;
 
     public async Task ProjectAsync(IEvent @event)
@@ -16,7 +16,7 @@ public sealed class ClassifiedAdDetailsProjection : IProjection
         Func<Task> project = @event switch
         {
             AdEvent.ClassifiedAdCreated e => () =>
-                _repository.AddAsync(new ClassifiedAdDetails
+                AddItem(new ClassifiedAdDetails
                 {
                     Id = e.Id,
                     SellerId = e.OwnerId
@@ -31,13 +31,21 @@ public sealed class ClassifiedAdDetailsProjection : IProjection
         };
 
         await project();
-        await _repository.SaveChangesAsync();
     }
 
-    private async Task UpdateItem(Guid id, Action<ClassifiedAdDetails> update)
-    {
-        var item = await _repository.ByIdAsync(id);
-        if (item is null) return;
-        update(item);
-    }
+    private async Task AddItem(ClassifiedAdDetails item) =>
+        await _repository.ApplyAsync(async r =>
+        {
+            await r.AddAsync(item);
+            await r.SaveChangesAsync();
+        });
+
+    private async Task UpdateItem(Guid id, Action<ClassifiedAdDetails> update) =>
+        await _repository.ApplyAsync(async r =>
+        {
+            var item = await r.ByIdAsync(id);
+            if (item is null) return;
+            update(item);
+            await r.SaveChangesAsync();
+        });
 }
