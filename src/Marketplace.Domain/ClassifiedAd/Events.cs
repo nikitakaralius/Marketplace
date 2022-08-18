@@ -1,4 +1,4 @@
-using Marketplace.Framework;
+using Marketplace.EventSourcing;
 
 namespace Marketplace.Domain.ClassifiedAd;
 

@@ -14,3 +14,13 @@ services:
       - EVENTSTORE_ENABLE_ATOM_PUB_OVER_HTTP=true
       - EVENTSTORE_RUN_PROJECTIONS=All
       - EVENTSTORE_START_STANDARD_PROJECTIONS=true
+
+  postgres:
+    container_name: marketplace-postgres
+    image: postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    environment:
+      POSTGRES_PASSWORD: pa$$word!

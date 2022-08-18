@@ -7,6 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Marketplace.Domain\Marketplace.Domain.csproj" />
       <ProjectReference Include="..\Marketplace.EventSourcing\Marketplace.EventSourcing.csproj" />
     </ItemGroup>
 

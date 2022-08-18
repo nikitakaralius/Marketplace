@@ -15,13 +15,25 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{CA8DE6C7-854
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{C9E996C0-6D9B-4FBF-A4D9-6A2F57615A81}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Marketplace.Api", "src\Marketplace.Api\Marketplace.Api.csproj", "{B4DAC730-BCAE-4F4E-9B70-657F896672A0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Marketplace.WebApi", "src\Marketplace.WebApi\Marketplace.WebApi.csproj", "{B4DAC730-BCAE-4F4E-9B70-657F896672A0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Marketplace.Domain", "src\Marketplace.Domain\Marketplace.Domain.csproj", "{3F70E36B-C8A1-462A-BC6C-27099108BE03}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Marketplace.Tests", "tests\Marketplace.Tests\Marketplace.Tests.csproj", "{18C1E707-2BDC-4E1C-9794-8F012B43875A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Marketplace.Framework", "src\Marketplace.Framework\Marketplace.Framework.csproj", "{F0A44CE2-B263-4034-A230-10A1AD73034D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Marketplace.Infrastructure", "src\Marketplace.Infrastructure\Marketplace.Infrastructure.csproj", "{F0A44CE2-B263-4034-A230-10A1AD73034D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Marketplace.EntityFramework", "src\Marketplace.EntityFramework\Marketplace.EntityFramework.csproj", "{141F8420-54AC-4BFD-9C66-E20A1CC218C5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Marketplace.Ads", "src\Marketplace.Ads\Marketplace.Ads.csproj", "{A15F90BE-DEAA-4F37-9565-E5246FD09942}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Marketplace.Users", "src\Marketplace.Users\Marketplace.Users.csproj", "{B7F21134-608E-4797-A99A-859295D2283D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Marketplace.EventSourcing", "src\Marketplace.EventSourcing\Marketplace.EventSourcing.csproj", "{2CB72AB1-0944-4D2B-B767-2093D71C81DA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Marketplace.EventStore", "src\Marketplace.EventStore\Marketplace.EventStore.csproj", "{4C4A8D2A-16C8-4E00-A76C-3473E850BF18}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Marketplace.ExternalServices", "src\Marketplace.ExternalServices\Marketplace.ExternalServices.csproj", "{A1E646D9-568F-450E-AC08-5AA17EBEE90E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,6 +48,12 @@ Global
 		{3F70E36B-C8A1-462A-BC6C-27099108BE03} = {CA8DE6C7-854F-4A12-A46A-AA71ABE94B0F}
 		{18C1E707-2BDC-4E1C-9794-8F012B43875A} = {C9E996C0-6D9B-4FBF-A4D9-6A2F57615A81}
 		{F0A44CE2-B263-4034-A230-10A1AD73034D} = {CA8DE6C7-854F-4A12-A46A-AA71ABE94B0F}
+		{141F8420-54AC-4BFD-9C66-E20A1CC218C5} = {CA8DE6C7-854F-4A12-A46A-AA71ABE94B0F}
+		{A15F90BE-DEAA-4F37-9565-E5246FD09942} = {CA8DE6C7-854F-4A12-A46A-AA71ABE94B0F}
+		{B7F21134-608E-4797-A99A-859295D2283D} = {CA8DE6C7-854F-4A12-A46A-AA71ABE94B0F}
+		{2CB72AB1-0944-4D2B-B767-2093D71C81DA} = {CA8DE6C7-854F-4A12-A46A-AA71ABE94B0F}
+		{4C4A8D2A-16C8-4E00-A76C-3473E850BF18} = {CA8DE6C7-854F-4A12-A46A-AA71ABE94B0F}
+		{A1E646D9-568F-450E-AC08-5AA17EBEE90E} = {CA8DE6C7-854F-4A12-A46A-AA71ABE94B0F}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{B4DAC730-BCAE-4F4E-9B70-657F896672A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -54,5 +72,29 @@ Global
 		{F0A44CE2-B263-4034-A230-10A1AD73034D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F0A44CE2-B263-4034-A230-10A1AD73034D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F0A44CE2-B263-4034-A230-10A1AD73034D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{141F8420-54AC-4BFD-9C66-E20A1CC218C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{141F8420-54AC-4BFD-9C66-E20A1CC218C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{141F8420-54AC-4BFD-9C66-E20A1CC218C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{141F8420-54AC-4BFD-9C66-E20A1CC218C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A15F90BE-DEAA-4F37-9565-E5246FD09942}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A15F90BE-DEAA-4F37-9565-E5246FD09942}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A15F90BE-DEAA-4F37-9565-E5246FD09942}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A15F90BE-DEAA-4F37-9565-E5246FD09942}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B7F21134-608E-4797-A99A-859295D2283D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7F21134-608E-4797-A99A-859295D2283D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7F21134-608E-4797-A99A-859295D2283D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7F21134-608E-4797-A99A-859295D2283D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2CB72AB1-0944-4D2B-B767-2093D71C81DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2CB72AB1-0944-4D2B-B767-2093D71C81DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2CB72AB1-0944-4D2B-B767-2093D71C81DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2CB72AB1-0944-4D2B-B767-2093D71C81DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C4A8D2A-16C8-4E00-A76C-3473E850BF18}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C4A8D2A-16C8-4E00-A76C-3473E850BF18}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C4A8D2A-16C8-4E00-A76C-3473E850BF18}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C4A8D2A-16C8-4E00-A76C-3473E850BF18}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1E646D9-568F-450E-AC08-5AA17EBEE90E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1E646D9-568F-450E-AC08-5AA17EBEE90E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1E646D9-568F-450E-AC08-5AA17EBEE90E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1E646D9-568F-450E-AC08-5AA17EBEE90E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

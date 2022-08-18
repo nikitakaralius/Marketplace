@@ -1,5 +1,5 @@
 using Marketplace.Domain.ClassifiedAd.ValueObjects;
-using Marketplace.Framework;
+using Marketplace.EventSourcing;
 
 namespace Marketplace.Domain.ClassifiedAd;
 
